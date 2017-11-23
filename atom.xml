@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zaizizaizai.github.io/"/>
-  <updated>2017-11-23T10:08:42.348Z</updated>
+  <updated>2017-11-23T12:43:55.053Z</updated>
   <id>https://zaizizaizai.github.io/</id>
   
   <author>
@@ -15,6 +15,31 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>博客说明</title>
+    <link href="https://zaizizaizai.github.io/2017/11/23/%E5%8D%9A%E5%AE%A2%E8%AF%B4%E6%98%8E/"/>
+    <id>https://zaizizaizai.github.io/2017/11/23/博客说明/</id>
+    <published>2017-11-23T12:30:44.000Z</published>
+    <updated>2017-11-23T12:43:55.053Z</updated>
+    
+    <content type="html"><![CDATA[<p>#博客评论说明<br>由于多说、跟帖等评论插件都倒了，就转向了友言。结果友言服务器是国外的，得翻墙才能用。就转向了畅言，可是这<br>搜狐畅言得用域名（我怕还没来的及买域名了-_-）。最后还是回到大爱的git了。<br>过程：<br>多说、跟帖–&gt;友言–&gt;畅言–&gt;gitment</p><p>2017-11-23</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;p&gt;#博客评论说明&lt;br&gt;由于多说、跟帖等评论插件都倒了，就转向了友言。结果友言服务器是国外的，得翻墙才能用。就转向了畅言，可是这&lt;br&gt;搜狐畅言得用域名（我怕还没来的及买域名了-_-）。最后还是回到大爱的git了。&lt;br&gt;过程：&lt;br&gt;多说、跟帖–&amp;gt;友言–&amp;gt;畅言–
+      
+    
+    </summary>
+    
+      <category term="博客说明" scheme="https://zaizizaizai.github.io/categories/%E5%8D%9A%E5%AE%A2%E8%AF%B4%E6%98%8E/"/>
+    
+    
+      <category term="博客说明" scheme="https://zaizizaizai.github.io/tags/%E5%8D%9A%E5%AE%A2%E8%AF%B4%E6%98%8E/"/>
+    
+  </entry>
   
   <entry>
     <title>深入理解MongoDB</title>
