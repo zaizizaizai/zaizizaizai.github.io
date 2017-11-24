@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[扎心了]]></title>
+    <url>%2F2017%2F11%2F24%2F%E6%89%8E%E5%BF%83%E4%BA%86%2F</url>
+    <content type="text"><![CDATA[今天真扎心了]]></content>
+      <categories>
+        <category>随想</category>
+      </categories>
+      <tags>
+        <tag>日记</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[博客说明]]></title>
     <url>%2F2017%2F11%2F23%2F%E5%8D%9A%E5%AE%A2%E8%AF%B4%E6%98%8E%2F</url>
-    <content type="text"><![CDATA[#博客评论说明由于多说、跟帖等评论插件都倒了，就转向了友言。结果友言服务器是国外的，得翻墙才能用。就转向了畅言，可是这搜狐畅言得用域名（我怕还没来的及买域名了-_-）。最后还是回到大爱的git了。过程：多说、跟帖–&gt;友言–&gt;畅言–&gt;gitment 2017-11-23]]></content>
+    <content type="text"><![CDATA[博客评论说明由于多说、跟帖等评论插件都倒了，就转向了友言。结果友言服务器是国外的，得翻墙才能用。就转向了畅言，可是这搜狐畅言得用域名（我怕还没来的及买域名了-_-）。最后还是回到大爱的git了。过程：多说、跟帖–&gt;友言–&gt;畅言–&gt;gitment 2017-11-23]]></content>
       <categories>
         <category>博客说明</category>
       </categories>
@@ -20,6 +31,7 @@
       </categories>
       <tags>
         <tag>数据库</tag>
+        <tag>书籍</tag>
       </tags>
   </entry>
   <entry>
@@ -31,7 +43,7 @@
       </categories>
       <tags>
         <tag>web</tag>
-        <tag>网络安全</tag>
+        <tag>网络安全，书籍</tag>
       </tags>
   </entry>
   <entry>
