@@ -104,7 +104,7 @@
 <meta property="og:site_name" content="zaizizaizai">
 <meta property="og:description" content="点我转向原文章转译：pinocchio对于初入前端的学习者来说，设计网页自适应不同分辨率的终端是比较难解决的一件事。自适应网页设计指的是可以自动识别屏幕宽度、并做出相应调整的网页设计。      以下是自适应网页设计的方法： 一、允许网页宽度自动调整   在网页代码的头部，加入viewport元标签       &amp;lt;meta name=&amp;quot;viewport&amp;quot; content">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-11-26T05:43:02.419Z">
+<meta property="og:updated_time" content="2017-11-26T06:01:13.810Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="自适应网页设计">
 <meta name="twitter:description" content="点我转向原文章转译：pinocchio对于初入前端的学习者来说，设计网页自适应不同分辨率的终端是比较难解决的一件事。自适应网页设计指的是可以自动识别屏幕宽度、并做出相应调整的网页设计。      以下是自适应网页设计的方法： 一、允许网页宽度自动调整   在网页代码的头部，加入viewport元标签       &amp;lt;meta name=&amp;quot;viewport&amp;quot; content">
@@ -441,7 +441,8 @@
 <p>　　 上面的代码指定，字体大小是页面默认大小的100%，即16像素。<br>　　     <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　 	<span class="selector-tag">h1</span> &#123;</span><br><span class="line">　　 	    <span class="attribute">font-size</span>: <span class="number">1.5em</span>;</span><br><span class="line">　　 	&#125;</span><br></pre></td></tr></table></figure></p>
 <p>　　 然后，h1的大小是默认大小的1.5倍，即24像素（24/16=1.5）。<br>　　     <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　 	<span class="selector-tag">small</span> &#123;</span><br><span class="line">　　 	    <span class="attribute">font-size</span>: <span class="number">0.875em</span>;</span><br><span class="line">　　 	&#125;</span><br></pre></td></tr></table></figure></p>
 <h1 id="四、流动布局（fluid-grid）"><a href="#四、流动布局（fluid-grid）" class="headerlink" title="四、流动布局（fluid grid）"></a>四、流动布局（fluid grid）</h1><p>   “流动布局”的含义是，各个区块的位置都是浮动的，不是固定不变的。<br>       <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.main</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">70%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.leftBar</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">25%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<pre><code>float的好处是，如果宽度太小，放不下两个元素，后面的元素会自动滚动到前面元素的下方，不会在水平方向     overflow（溢出），避免了水平滚动条的出现。
+<pre><code>float的好处是，如果宽度太小，放不下两个元素，后面的元素会自动滚动到前面元素的下方，不会在水平方向
+overflow（溢出），避免了水平滚动条的出现。
 </code></pre><h1 id="五、选择加载css"><a href="#五、选择加载css" class="headerlink" title="五、选择加载css"></a>五、选择加载css</h1><p>   “自适应网页设计”的核心，就是CSS3引入的Media Query模块。<br>   它的意思就是，自动探测屏幕宽度，然后加载相应的CSS文件。<br>       <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;link <span class="attribute">rel</span>=<span class="string">"stylesheet"</span> <span class="attribute">type</span>=<span class="string">"text/css"</span></span><br><span class="line">　 <span class="attribute">media</span>=<span class="string">"screen and (max-device-width: 400px)"</span></span><br><span class="line">　　<span class="attribute">href</span>=<span class="string">"tinyScreen.css"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
 <p>   上面的代码意思是，如果屏幕宽度小于400像素（max-device-width: 400px），就加载tinyScreen.css文件。<br>　　     <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　     &lt;link <span class="attribute">rel</span>=<span class="string">"stylesheet"</span> <span class="attribute">type</span>=<span class="string">"text/css"</span></span><br><span class="line">　　　　     <span class="attribute">media</span>=<span class="string">"screen and (min-width: 400px) and (max-device-width: 600px)"</span></span><br><span class="line">　　　　     <span class="attribute">href</span>=<span class="string">"smallScreen.css"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
 <p>   如果屏幕宽度在400像素到600像素之间，则加载smallScreen.css文件。<br>   除了用html标签加载CSS文件，还可以在现有CSS文件中加载。<br>      <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　     @import url(<span class="string">"tinyScreen.css"</span>)<span class="built_in"> screen </span><span class="keyword">and</span> (max-device-width: 400px);</span><br></pre></td></tr></table></figure></p>
@@ -569,7 +570,7 @@
                alt="pinocchio" />
           <p class="site-author-name" itemprop="name">pinocchio</p>
            
-              <p class="site-description motion-element" itemprop="description">长江大学15级，目前web方向</p>
+              <p class="site-description motion-element" itemprop="description">目前web小菜鸟，热爱编程</p>
           
         </div>
         <nav class="site-state motion-element">
@@ -577,7 +578,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -588,7 +589,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-count">6</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -599,7 +600,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">10</span>
+                <span class="site-state-item-count">11</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
