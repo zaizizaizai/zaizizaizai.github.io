@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[npm重新安装模块]]></title>
+    <url>%2F2017%2F11%2F26%2Fnpm%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%2F</url>
+    <content type="text"><![CDATA[npm删除模块，重新安装错误经过 使用hexo模块的时候，不小心将已经配置好的blog文件删除。在网上查找资料，运行npm cache clean –force，出现错误（不能使用hexo命令）。然后我就准备重装hexo，把usr/bin和local里hexo相关文件删除，用npm重新下载hexo，但还是和之前一样出错 解决 需要删除hexo相关文件和packagejson里的依赖，再重新下载hexo，就可以使用了 具体位置（linux环境）：/home/zaizizaizai/.npm-global/bin和/home/zaizizaizai/.npm-global/lib 补充：此路径为隐藏目录，在home区需要按快捷键ctrl+h显示隐藏文件，或者通过命令行进行操作]]></content>
+      <categories>
+        <category>node.js</category>
+      </categories>
+      <tags>
+        <tag>node.js</tag>
+        <tag>配置</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[自适应网页设计]]></title>
+    <url>%2F2017%2F11%2F26%2F%E8%87%AA%E9%80%82%E5%BA%94%E7%BD%91%E9%A1%B5%E8%AE%BE%E8%AE%A1%2F</url>
+    <content type="text"><![CDATA[点我转向原文章转译：pinocchio对于初入前端的学习者来说，设计网页自适应不同分辨率的终端是比较难解决的一件事。自适应网页设计指的是可以自动识别屏幕宽度、并做出相应调整的网页设计。 以下是自适应网页设计的方法： 一、允许网页宽度自动调整 在网页代码的头部，加入viewport元标签 &lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt; viewport是网页默认的宽度和高度，上面这行代码的意思是，网页宽度默认等于屏幕宽度（width=device- width），原始缩放比例（initial-scale=1）为1.0，即网页初始大小占屏幕面积的100%。 所有主流浏览器(IE9)都支持这个设置。对于老式浏览器（IE6、7、8），需要使用css3-mediaqueries.js。 二、不使用绝对宽度 若在头部加入了viewport元标签，网页会自动更具屏幕宽度调整布局，所以不能使用具有绝对宽度的元素。 即css代码不能制定像素宽度 width:xxx px; 只能使用百分比宽度 width: xx%; 或者 width:auto; 三、相对大小的字体 字体也不能使用绝对大小（px），而只能使用相对大小（em）。 123body &#123; font: normal 100% Helvetica, Arial, sans-serif; &#125; 上面的代码指定，字体大小是页面默认大小的100%，即16像素。 123 h1 &#123; font-size: 1.5em; &#125; 然后，h1的大小是默认大小的1.5倍，即24像素（24/16=1.5）。 123 small &#123; font-size: 0.875em; &#125; 四、流动布局（fluid grid） “流动布局”的含义是，各个区块的位置都是浮动的，不是固定不变的。 123456789.main &#123; float: right; width: 70%;&#125;.leftBar &#123; float: left; width: 25%;&#125; float的好处是，如果宽度太小，放不下两个元素，后面的元素会自动滚动到前面元素的下方，不会在水平方向 overflow（溢出），避免了水平滚动条的出现。 五、选择加载css “自适应网页设计”的核心，就是CSS3引入的Media Query模块。 它的意思就是，自动探测屏幕宽度，然后加载相应的CSS文件。 123&lt;link rel="stylesheet" type="text/css" media="screen and (max-device-width: 400px)" href="tinyScreen.css" /&gt; 上面的代码意思是，如果屏幕宽度小于400像素（max-device-width: 400px），就加载tinyScreen.css文件。 123 &lt;link rel="stylesheet" type="text/css" media="screen and (min-width: 400px) and (max-device-width: 600px)" href="smallScreen.css" /&gt; 如果屏幕宽度在400像素到600像素之间，则加载smallScreen.css文件。 除了用html标签加载CSS文件，还可以在现有CSS文件中加载。 1 @import url("tinyScreen.css") screen and (max-device-width: 400px); 六、CSS的@media规则 同一个CSS文件中，也可以根据不同的屏幕分辨率，选择应用不同的CSS规则。 12345678910 @media screen and (max-device-width: 400px) &#123; .column &#123; float: none; width:auto; &#125; #sidebar &#123; display:none; &#125; &#125; 上面的代码意思是，如果屏幕宽度小于400像素，则column块取消浮动（float:none）、宽度自动调节（width:auto），sidebar块不显示（display:none）。 七、图片的自适应（fluid image） 除了布局和文本，”自适应网页设计”还必须实现图片的自动缩放。 这只要一行CSS代码： img { max-width: 100%;} 这行代码对于大多数嵌入网页的视频也有效，所以可以写成： img, object { max-width: 100%;} 老版本的IE不支持max-width，所以只好写成： img { width: 100%; } 此外，windows平台缩放图片时，可能出现图像失真现象。这时，可以尝试使用IE的专有命令： img { -ms-interpolation-mode: bicubic; } 或者，Ethan Marcotte的imgSizer.js。 1234 addLoadEvent(function() &#123; var imgs = document.getElementById("content").getElementsByTagName("img"); imgSizer.collate(imgs); &#125;);]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>web，转载，网页设计</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[扎心了]]></title>
     <url>%2F2017%2F11%2F24%2F%E6%89%8E%E5%BF%83%E4%BA%86%2F</url>
     <content type="text"><![CDATA[今天真扎心了]]></content>
