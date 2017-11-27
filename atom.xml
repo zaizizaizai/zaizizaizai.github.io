@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zaizizaizai.github.io/"/>
-  <updated>2017-11-26T08:42:18.329Z</updated>
+  <updated>2017-11-27T04:32:50.650Z</updated>
   <id>https://zaizizaizai.github.io/</id>
   
   <author>
@@ -15,6 +15,33 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>电梯模拟程序</title>
+    <link href="https://zaizizaizai.github.io/2017/11/27/%E7%94%B5%E6%A2%AF%E6%A8%A1%E6%8B%9F%E7%A8%8B%E5%BA%8F/"/>
+    <id>https://zaizizaizai.github.io/2017/11/27/电梯模拟程序/</id>
+    <published>2017-11-27T03:38:23.000Z</published>
+    <updated>2017-11-27T04:32:50.650Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="whim"><a href="#whim" class="headerlink" title="whim"></a>whim</h1><p>今天在等电梯的时候，突然对电梯工作流程感兴趣，想写个电梯模拟小程序。<br>先来占个坑，写个大致思路,等考完试再来完成</p><p>//这楼有20层<br><code>int max_floor = 20;</code></p><h2 id="楼层构造一个类"><a href="#楼层构造一个类" class="headerlink" title="楼层构造一个类"></a>楼层构造一个类</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//楼层</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">floor</span> &#123;</span></span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">      <span class="comment">//楼层</span></span><br><span class="line">      <span class="keyword">int</span> <span class="built_in">floor</span> = <span class="number">0</span>;</span><br><span class="line">      <span class="comment">//有人上1，还是下2,或是没人按电梯0</span></span><br><span class="line">      <span class="keyword">int</span> uds = <span class="number">0</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="电梯构造一个类"><a href="#电梯构造一个类" class="headerlink" title="电梯构造一个类"></a>电梯构造一个类</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//电梯</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">elevator</span> &#123;</span></span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">      <span class="keyword">int</span> current_floor = <span class="number">0</span>;</span><br><span class="line">      <span class="comment">//三个状态，上升1，下降2，静止0</span></span><br><span class="line">      <span class="keyword">int</span> uds = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">      <span class="comment">//上升</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">up</span><span class="params">()</span></span>;</span><br><span class="line">      <span class="comment">//下降</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">()</span></span>;   </span><br><span class="line">      <span class="comment">//判断电梯上升还是下降</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">UpDown</span><span class="params">()</span></span>;     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><h2 id="判断函数构造一个类"><a href="#判断函数构造一个类" class="headerlink" title="判断函数构造一个类"></a>判断函数构造一个类</h2><p>因为有两个电梯，所以把判断函数拿出来单独构造一个类。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断电梯哪个电梯去载人，上升还是下降</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">select</span> </span>&#123;</span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">      <span class="comment">//判断哪个电梯去载人</span></span><br><span class="line">      <span class="keyword">void</span> which（）；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><h2 id="函数部分"><a href="#函数部分" class="headerlink" title="函数部分"></a>函数部分</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> elevator::up()</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">//用参数判断是否到达</span></span><br><span class="line">   <span class="keyword">int</span> arrived = <span class="number">0</span>;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">20</span>; i++)&#123;</span><br><span class="line">      <span class="comment">//判断是否到达目的楼层(类之间引用问题)</span></span><br><span class="line">      <span class="keyword">if</span>(current_floor != <span class="built_in">floor</span>.<span class="built_in">floor</span>)&#123;</span><br><span class="line">          current_floor++;</span><br><span class="line">      &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">         arrived = <span class="number">1</span>;</span><br><span class="line">         <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> arrived;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><p>大致思路就先写到这，后续加上。</p><p>真的蛮好玩诶！</p>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;whim&quot;&gt;&lt;a href=&quot;#whim&quot; class=&quot;headerlink&quot; title=&quot;whim&quot;&gt;&lt;/a&gt;whim&lt;/h1&gt;&lt;p&gt;今天在等电梯的时候，突然对电梯工作流程感兴趣，想写个电梯模拟小程序。&lt;br&gt;先来占个坑，写个大致思路,等考完试再来完成&lt;/p
+      
+    
+    </summary>
+    
+      <category term="whim" scheme="https://zaizizaizai.github.io/categories/whim/"/>
+    
+    
+      <category term="项目" scheme="https://zaizizaizai.github.io/tags/%E9%A1%B9%E7%9B%AE/"/>
+    
+      <category term="whim" scheme="https://zaizizaizai.github.io/tags/whim/"/>
+    
+  </entry>
   
   <entry>
     <title>nodejs+mysql实现小型web后台程序</title>
