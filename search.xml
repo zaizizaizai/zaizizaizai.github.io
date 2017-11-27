@@ -20,7 +20,8 @@
         <category>项目</category>
       </categories>
       <tags>
-        <tag>项目，web</tag>
+        <tag>项目</tag>
+        <tag>web</tag>
       </tags>
   </entry>
   <entry>
@@ -43,7 +44,9 @@
         <category>web</category>
       </categories>
       <tags>
-        <tag>web，转载，网页设计</tag>
+        <tag>web</tag>
+        <tag>转载</tag>
+        <tag>网页设计</tag>
       </tags>
   </entry>
   <entry>
@@ -76,8 +79,8 @@
         <category>数据库</category>
       </categories>
       <tags>
-        <tag>数据库</tag>
         <tag>书籍</tag>
+        <tag>数据库</tag>
       </tags>
   </entry>
   <entry>
@@ -89,7 +92,8 @@
       </categories>
       <tags>
         <tag>web</tag>
-        <tag>网络安全，书籍</tag>
+        <tag>网络安全</tag>
+        <tag>书籍</tag>
       </tags>
   </entry>
   <entry>
