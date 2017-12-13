@@ -1,6 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[webpack笔记]]></title>
+    <url>%2F2017%2F12%2F13%2Fwebpack%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[webpack使用中的错误：1.npm run dev 出错打包错误in ./src/index.js12345Module build failed: TypeError: fileSystem.statSync is not a function at module.exports (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/utils/exists.js:7:25) at find (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/resolve-rc.js:13:9) at Object.module.exports (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/index.js:113:132) @ multi main 原因及解决方法：babel-loader7.x版本与webpack1.x不兼容，将babel-loader版本降到6.x]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>webpack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[node笔记]]></title>
+    <url>%2F2017%2F12%2F13%2Fnode%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[安装以及升级node，npm：1.安装nodejssudo apt install nodejs-legacy2.安装npmsudo apt install npm3.清楚cachesudo npm cache clean -f4.安装n包sudo npm install -g n5.获取nodejs稳定版sudo n stable6.升级npmsudo npm install -g npm]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>node</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Git笔记]]></title>
+    <url>%2F2017%2F12%2F13%2FGit%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[显示仓库中的页面1、把文件放在**.github.io仓库2、在文件路径前面加http://htmlpreview.github.io/?然后访问，如： http://htmlpreview.github.io/?https://github.com/**/example/index.html]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>Git</tag>
+        <tag>笔记</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Ubuntu笔记]]></title>
+    <url>%2F2017%2F12%2F13%2FUbuntu%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[系统操作：1.在图形化界面下获取最高权限 sudo nautilus2.显示/隐藏文件 Ctrl+hnpm:1.在使用npm下载包的时候出现无权限修改文件问题 在npm前面加上sudo2017-09-25]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>ubuntu</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[电梯模拟程序]]></title>
     <url>%2F2017%2F11%2F27%2F%E7%94%B5%E6%A2%AF%E6%A8%A1%E6%8B%9F%E7%A8%8B%E5%BA%8F%2F</url>
     <content type="text"><![CDATA[whim今天在等电梯的时候，突然对电梯工作流程感兴趣，想写个电梯模拟小程序。先来占个坑，写个大致思路,等考完试再来完成 //这楼有20层int max_floor = 20; 楼层构造一个类12345678//楼层class floor &#123; private: //楼层 int floor = 0; //有人上1，还是下2,或是没人按电梯0 int uds = 0；&#125; 电梯构造一个类1234567891011121314//电梯class elevator &#123; private: int current_floor = 0; //三个状态，上升1，下降2，静止0 int uds = 0; public: //上升 void up(); //下降 void down(); //判断电梯上升还是下降 void UpDown(); &#125; 判断函数构造一个类因为有两个电梯，所以把判断函数拿出来单独构造一个类。123456//判断电梯哪个电梯去载人，上升还是下降class select &#123; public: //判断哪个电梯去载人 void which（）；&#125; 函数部分1234567891011121314151617void elevator::up()&#123; //用参数判断是否到达 int arrived = 0; for (int i = 1; i &lt;= 20; i++)&#123; //判断是否到达目的楼层(类之间引用问题) if(current_floor != floor.floor)&#123; current_floor++; &#125;else &#123; arrived = 1; continue; &#125; &#125; return arrived;&#125; 大致思路就先写到这，后续加上。 真的蛮好玩诶！]]></content>
@@ -47,17 +95,6 @@
         <tag>web</tag>
         <tag>转载</tag>
         <tag>网页设计</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title><![CDATA[扎心了]]></title>
-    <url>%2F2017%2F11%2F24%2F%E6%89%8E%E5%BF%83%E4%BA%86%2F</url>
-    <content type="text"><![CDATA[今天真扎心了]]></content>
-      <categories>
-        <category>随想</category>
-      </categories>
-      <tags>
-        <tag>日记</tag>
       </tags>
   </entry>
   <entry>

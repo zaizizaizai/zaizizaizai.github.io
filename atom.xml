@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zaizizaizai.github.io/"/>
-  <updated>2017-11-27T04:32:50.650Z</updated>
+  <updated>2017-12-13T04:45:42.181Z</updated>
   <id>https://zaizizaizai.github.io/</id>
   
   <author>
@@ -15,6 +15,114 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>webpack笔记</title>
+    <link href="https://zaizizaizai.github.io/2017/12/13/webpack%E7%AC%94%E8%AE%B0/"/>
+    <id>https://zaizizaizai.github.io/2017/12/13/webpack笔记/</id>
+    <published>2017-12-13T04:37:18.000Z</published>
+    <updated>2017-12-13T04:45:42.181Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="webpack使用中的错误："><a href="#webpack使用中的错误：" class="headerlink" title="webpack使用中的错误："></a>webpack使用中的错误：</h1><h2 id="1-npm-run-dev-出错"><a href="#1-npm-run-dev-出错" class="headerlink" title="1.npm run dev 出错"></a>1.npm run dev 出错</h2><h3 id="打包错误"><a href="#打包错误" class="headerlink" title="打包错误"></a>打包错误</h3><pre><code><figure class="highlight plain"><figcaption><span>in ./src/index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Module build failed: TypeError: fileSystem.statSync is not a function</span><br><span class="line">    at module.exports (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/utils/exists.js:7:25)</span><br><span class="line">    at find (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/resolve-rc.js:13:9)</span><br><span class="line">    at Object.module.exports (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/index.js:113:132)</span><br><span class="line"> @ multi main</span><br></pre></td></tr></table></figure></code></pre><h3 id="原因及解决方法："><a href="#原因及解决方法：" class="headerlink" title="原因及解决方法："></a>原因及解决方法：</h3><h3 id="babel-loader7-x版本与webpack1-x不兼容，将babel-loader版本降到6-x"><a href="#babel-loader7-x版本与webpack1-x不兼容，将babel-loader版本降到6-x" class="headerlink" title="babel-loader7.x版本与webpack1.x不兼容，将babel-loader版本降到6.x"></a>babel-loader7.x版本与webpack1.x不兼容，将babel-loader版本降到6.x</h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;webpack使用中的错误：&quot;&gt;&lt;a href=&quot;#webpack使用中的错误：&quot; class=&quot;headerlink&quot; title=&quot;webpack使用中的错误：&quot;&gt;&lt;/a&gt;webpack使用中的错误：&lt;/h1&gt;&lt;h2 id=&quot;1-npm-run-dev-出错&quot;
+      
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://zaizizaizai.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="笔记" scheme="https://zaizizaizai.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="webpack" scheme="https://zaizizaizai.github.io/tags/webpack/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>node笔记</title>
+    <link href="https://zaizizaizai.github.io/2017/12/13/node%E7%AC%94%E8%AE%B0/"/>
+    <id>https://zaizizaizai.github.io/2017/12/13/node笔记/</id>
+    <published>2017-12-13T04:34:23.000Z</published>
+    <updated>2017-12-13T04:44:46.989Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="安装以及升级node，npm："><a href="#安装以及升级node，npm：" class="headerlink" title="安装以及升级node，npm："></a>安装以及升级node，npm：</h1><h2 id="1-安装nodejs"><a href="#1-安装nodejs" class="headerlink" title="1.安装nodejs"></a>1.安装nodejs</h2><h3 id="sudo-apt-install-nodejs-legacy"><a href="#sudo-apt-install-nodejs-legacy" class="headerlink" title="sudo apt install nodejs-legacy"></a><code>sudo apt install nodejs-legacy</code></h3><h2 id="2-安装npm"><a href="#2-安装npm" class="headerlink" title="2.安装npm"></a>2.安装npm</h2><h3 id="sudo-apt-install-npm"><a href="#sudo-apt-install-npm" class="headerlink" title="sudo apt install npm"></a><code>sudo apt install npm</code></h3><h2 id="3-清楚cache"><a href="#3-清楚cache" class="headerlink" title="3.清楚cache"></a>3.清楚cache</h2><h3 id="sudo-npm-cache-clean-f"><a href="#sudo-npm-cache-clean-f" class="headerlink" title="sudo npm cache clean -f"></a><code>sudo npm cache clean -f</code></h3><h2 id="4-安装n包"><a href="#4-安装n包" class="headerlink" title="4.安装n包"></a>4.安装n包</h2><h3 id="sudo-npm-install-g-n"><a href="#sudo-npm-install-g-n" class="headerlink" title="sudo npm install -g n"></a><code>sudo npm install -g n</code></h3><h2 id="5-获取nodejs稳定版"><a href="#5-获取nodejs稳定版" class="headerlink" title="5.获取nodejs稳定版"></a>5.获取nodejs稳定版</h2><h3 id="sudo-n-stable"><a href="#sudo-n-stable" class="headerlink" title="sudo n stable"></a><code>sudo n stable</code></h3><h2 id="6-升级npm"><a href="#6-升级npm" class="headerlink" title="6.升级npm"></a>6.升级npm</h2><h3 id="sudo-npm-install-g-npm"><a href="#sudo-npm-install-g-npm" class="headerlink" title="sudo npm install -g npm"></a><code>sudo npm install -g npm</code></h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;安装以及升级node，npm：&quot;&gt;&lt;a href=&quot;#安装以及升级node，npm：&quot; class=&quot;headerlink&quot; title=&quot;安装以及升级node，npm：&quot;&gt;&lt;/a&gt;安装以及升级node，npm：&lt;/h1&gt;&lt;h2 id=&quot;1-安装nodejs&quot;&gt;&lt;
+      
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://zaizizaizai.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="笔记" scheme="https://zaizizaizai.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="node" scheme="https://zaizizaizai.github.io/tags/node/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Git笔记</title>
+    <link href="https://zaizizaizai.github.io/2017/12/13/Git%E7%AC%94%E8%AE%B0/"/>
+    <id>https://zaizizaizai.github.io/2017/12/13/Git笔记/</id>
+    <published>2017-12-13T04:26:38.000Z</published>
+    <updated>2017-12-13T04:40:54.855Z</updated>
+    
+    <content type="html"><![CDATA[<h1 id="显示仓库中的页面"><a href="#显示仓库中的页面" class="headerlink" title="显示仓库中的页面"></a>显示仓库中的页面</h1><h3 id="1、把文件放在-github-io仓库"><a href="#1、把文件放在-github-io仓库" class="headerlink" title="1、把文件放在**.github.io仓库"></a>1、把文件放在**.github.io仓库</h3><h3 id="2、在文件路径前面加http-htmlpreview-github-io"><a href="#2、在文件路径前面加http-htmlpreview-github-io" class="headerlink" title="2、在文件路径前面加http://htmlpreview.github.io/?"></a>2、在文件路径前面加<a href="http://htmlpreview.github.io/?" target="_blank" rel="noopener">http://htmlpreview.github.io/?</a></h3><pre><code>然后访问，如：http://htmlpreview.github.io/?https://github.com/**/example/index.html</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h1 id=&quot;显示仓库中的页面&quot;&gt;&lt;a href=&quot;#显示仓库中的页面&quot; class=&quot;headerlink&quot; title=&quot;显示仓库中的页面&quot;&gt;&lt;/a&gt;显示仓库中的页面&lt;/h1&gt;&lt;h3 id=&quot;1、把文件放在-github-io仓库&quot;&gt;&lt;a href=&quot;#1、把文件放在-gi
+      
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://zaizizaizai.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="Git" scheme="https://zaizizaizai.github.io/tags/Git/"/>
+    
+      <category term="笔记" scheme="https://zaizizaizai.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ubuntu笔记</title>
+    <link href="https://zaizizaizai.github.io/2017/12/13/Ubuntu%E7%AC%94%E8%AE%B0/"/>
+    <id>https://zaizizaizai.github.io/2017/12/13/Ubuntu笔记/</id>
+    <published>2017-12-13T04:22:50.000Z</published>
+    <updated>2017-12-13T04:26:08.423Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="系统操作："><a href="#系统操作：" class="headerlink" title="系统操作："></a>系统操作：</h2><h3 id="1-在图形化界面下获取最高权限-sudo-nautilus"><a href="#1-在图形化界面下获取最高权限-sudo-nautilus" class="headerlink" title="1.在图形化界面下获取最高权限   sudo nautilus"></a>1.在图形化界面下获取最高权限   sudo nautilus</h3><h3 id="2-显示-隐藏文件-Ctrl-h"><a href="#2-显示-隐藏文件-Ctrl-h" class="headerlink" title="2.显示/隐藏文件    Ctrl+h"></a>2.显示/隐藏文件    Ctrl+h</h3><h2 id="npm"><a href="#npm" class="headerlink" title="npm:"></a>npm:</h2><h3 id="1-在使用npm下载包的时候出现无权限修改文件问题-在npm前面加上sudo"><a href="#1-在使用npm下载包的时候出现无权限修改文件问题-在npm前面加上sudo" class="headerlink" title="1.在使用npm下载包的时候出现无权限修改文件问题   在npm前面加上sudo"></a>1.在使用npm下载包的时候出现无权限修改文件问题   在npm前面加上sudo</h3><pre><code>2017-09-25</code></pre>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;系统操作：&quot;&gt;&lt;a href=&quot;#系统操作：&quot; class=&quot;headerlink&quot; title=&quot;系统操作：&quot;&gt;&lt;/a&gt;系统操作：&lt;/h2&gt;&lt;h3 id=&quot;1-在图形化界面下获取最高权限-sudo-nautilus&quot;&gt;&lt;a href=&quot;#1-在图形化界面下获取最
+      
+    
+    </summary>
+    
+      <category term="笔记" scheme="https://zaizizaizai.github.io/categories/%E7%AC%94%E8%AE%B0/"/>
+    
+    
+      <category term="笔记" scheme="https://zaizizaizai.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="ubuntu" scheme="https://zaizizaizai.github.io/tags/ubuntu/"/>
+    
+  </entry>
   
   <entry>
     <title>电梯模拟程序</title>
@@ -124,31 +232,6 @@
       <category term="转载" scheme="https://zaizizaizai.github.io/tags/%E8%BD%AC%E8%BD%BD/"/>
     
       <category term="网页设计" scheme="https://zaizizaizai.github.io/tags/%E7%BD%91%E9%A1%B5%E8%AE%BE%E8%AE%A1/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>扎心了</title>
-    <link href="https://zaizizaizai.github.io/2017/11/24/%E6%89%8E%E5%BF%83%E4%BA%86/"/>
-    <id>https://zaizizaizai.github.io/2017/11/24/扎心了/</id>
-    <published>2017-11-24T03:51:26.000Z</published>
-    <updated>2017-11-24T04:05:13.287Z</updated>
-    
-    <content type="html"><![CDATA[<h1 id="今天真扎心了"><a href="#今天真扎心了" class="headerlink" title="今天真扎心了"></a>今天真扎心了</h1>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;h1 id=&quot;今天真扎心了&quot;&gt;&lt;a href=&quot;#今天真扎心了&quot; class=&quot;headerlink&quot; title=&quot;今天真扎心了&quot;&gt;&lt;/a&gt;今天真扎心了&lt;/h1&gt;
-      
-    
-    </summary>
-    
-      <category term="随想" scheme="https://zaizizaizai.github.io/categories/%E9%9A%8F%E6%83%B3/"/>
-    
-    
-      <category term="日记" scheme="https://zaizizaizai.github.io/tags/%E6%97%A5%E8%AE%B0/"/>
     
   </entry>
   
