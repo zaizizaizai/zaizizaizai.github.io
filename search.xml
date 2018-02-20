@@ -1,11 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[node要点总结]]></title>
+    <url>%2F2018%2F02%2F20%2Fnode%E8%A6%81%E7%82%B9%E6%80%BB%E7%BB%93%2F</url>
+    <content type="text"><![CDATA[node开发技能图1、常用前端技术： html5 css3 jQuery 2、js高级话题： 面向对象 闭包 作用域 设计模式 3、其他后端技术： mongodb redis apache nignix mysql 4、node内置核心库： 全局对象 时事件 流 网络 子程序 5、常用知名第三方库： async express koa 6、node高级话题： 异步 部署 性能调优 异常调试 node事件循环机制* javaScript高级话题(面向对象、作用域、闭包、设计模式)面向对象1、常用js类定义的方法？构造函数原型法： 1234567891011121314151617 function Person () &#123; this.name = 'pinocchio'; &#125; Person.prototype.sayName = function () &#123; alert(this.name);; &#125; var person = new Person (); person.sayName(); 对象创建: var Person = &#123; name: 'pinocchio', sayName: function () &#123; alert(this.name); &#125; &#125;; var person = Object.create(Person); person.sayName(); 2、js类继承的方法？原型链法(Person是Animal的子集，即子类)： 12345678910111213141516171819202122232425262728293031323334 function Animal () &#123; this.name = 'animal'; &#125; Animal.prototype.sayName = function () &#123; alter(this.name); &#125; function Person () &#123;&#125; Person.prototype = Animal.prototype; //人继承动物 Person.prototype = constructor = 'Person'; //更新构造函数为人属性复制法(单纯复制，两者无继承关系)： function Animal () &#123; this.name = 'animal'; &#125; Animal.prototype.sayName = function () &#123; alter(this.name); &#125;; function Person () &#123;&#125; //复制动物所有属性到人 for (prop in Animal.prototype) &#123; Person.prototype[prop] = Animal.prototype[prototype]; &#125; //更新构造函数为人 Person.prototype.constructor = 'Person'; 构造器应用法: function Animal () &#123; this.name = 'animal'; &#125; Animal.prototype.sayName = function () &#123; alter(this.name); &#125;; function Person () &#123; //apply,call,bind方法都行，有细微区别 Animal.call(this); &#125; 3、js类多重继承的方法怎么实现？ 通过类继承里面的属性复制法来实现，可以继承所有父类的prototype属性 作用域 4、js里作用域是什么样？函数作用域， 123456789var globalVar = 'global var';function test() &#123; alert(globalVar); // undefined, 因为globalVar在本函数内被重定义了，导致全局失效，这里使用函数内的变量值，可是此时还没定义 var globalVar = 'overrided var'; // globalVar在本函数内被重定义 alert(globalVar); // overrided var&#125;alert(globalVar); // global var，使用全局变量 5、js中this指的是什么？this指的是对象本身 6、apply，call，bind有什么区别？apply 、 call 、bind 三者都是用来改变函数的this对象的指向的； 三者第一个参数都是this要指向的对象，也就是想指定的上下文； 三者都可以利用后续参数传参； apply,call是直接执行函数调用，bind是绑定，执行需要再次调用．apply和call的区别是apply接受数组作为参数，而call是接受逗号分隔的无限多个参数列表 12345678910111213141516function Person () &#123;&#125;Person.prototype.sayName() &#123; alert(this.name);&#125;//普通对象，不是Person实例var obj = &#123; name: 'pinocchio'&#125;;//applyPerson.prototype.sayName.apply(obj, [param1, param2, param3]);//callPerson.prototype.sayName.call(obj, param1, param2, param3);//bind,先绑定，再执行var sn = Person.prototype.sayName.bind(obj);sn([param1, param2, param3]);sn(param1, param2, param3); 7、caller，callee和arguments分别是什么？123456789101112caller,callee之间的关系就像是employer和employee之间的关系，就是调用与被调用的关系，二者返回的都是函数对象引用．arguments是函数的所有参数列表，它是一个类数组的变量．function parent(param1, param2, param3) &#123; child(param1, param2, param3);&#125;function child() &#123; console.log(arguments); // &#123; '0': 'mqin1', '1': 'mqin2', '2': 'mqin3' &#125; console.log(arguments.callee); // [Function: child] console.log(child.caller); // [Function: parent]&#125;parent('mqin1', 'mqin2', 'mqin3'); 闭包8、什么是闭包？闭包有什么用处？通俗的说，闭包就是作用域范围，因为js是函数作用域，所以函数就是闭包．全局函数的作用域范围就是全局，所以无须讨论．更多的应用其实是在内嵌函数，这就会涉及到内嵌作用域，或者叫作用域链。 这就会带来另外一个问题，什么时候引用结束？如果不结束，就会一直占用内存，引起内存泄漏．不用的时候就引用设为空。 9、defineProperty, hasOwnProperty, propertyIsEnumerable都是做什么用的？Object.defineProperty(obj, prop, descriptor)用来给对象定义属性,有value,writable,configurable,enumerable,set/get等.hasOwnProerty用于检查某一属性是不是存在于对象本身，继承来的 父亲的属性不算．propertyIsEnumerable用来检测某一属性是否可遍历，也就是能不能用for..in循环来取到. 设计模式10、js常用设计模式的实现思路，单例，工厂，代理，装饰，观察者模式等1) 单例： 任意对象都是单例，无须特别处理`var obj = {name: &apos;michaelqin&apos;, age: 30};` 2) 工厂: 就是同样形式参数返回不同的实例12345678910111213function Person() &#123; this.name = 'Person1'; &#125;function Animal() &#123; this.name = 'Animal1'; &#125;function Factory() &#123;&#125;Factory.prototype.getInstance = function(className) &#123; return eval('new ' + className + '()');&#125;var factory = new Factory();var obj1 = factory.getInstance('Person');var obj2 = factory.getInstance('Animal');console.log(obj1.name); // Person1console.log(obj2.name); // Animal1 3) 代理: 就是新建个类调用老类的接口,包一下1234567891011121314151617function Person() &#123; &#125;Person.prototype.sayName = function() &#123; console.log('michaelqin'); &#125;Person.prototype.sayAge = function() &#123; console.log(30); &#125;function PersonProxy() &#123; this.person = new Person(); var that = this; this.callMethod = function(functionName) &#123; console.log('before proxy:', functionName); that.person[functionName](); // 代理 console.log('after proxy:', functionName); &#125;&#125;var pp = new PersonProxy();pp.callMethod('sayName'); // 代理调用Person的方法sayName()pp.callMethod('sayAge'); // 代理调用Person的方法sayAge() 4) 观察者: 就是事件模式，比如按钮的onclick这样的应用.12345678910111213141516171819202122232425262728293031323334353637function Publisher() &#123; this.listeners = [];&#125;Publisher.prototype = &#123; 'addListener': function(listener) &#123; this.listeners.push(listener); &#125;, 'removeListener': function(listener) &#123; delete this.listeners[listener]; &#125;, 'notify': function(obj) &#123; for(var i = 0; i &lt; this.listeners.length; i++) &#123; var listener = this.listeners[i]; if (typeof listener !== 'undefined') &#123; listener.process(obj); &#125; &#125; &#125;&#125;; // 发布者function Subscriber() &#123;&#125;Subscriber.prototype = &#123; 'process': function(obj) &#123; console.log(obj); &#125;&#125;; // 订阅者var publisher = new Publisher();publisher.addListener(new Subscriber());publisher.addListener(new Subscriber());publisher.notify(&#123;name: 'michaelqin', ageo: 30&#125;); // 发布一个对象到所有订阅者publisher.notify('2 subscribers will both perform process'); // 发布一个字符串到所有订阅者 11、列举数组相关的常用方法push/pop, shift/unshift, split/join, slice/splice/concat, sort/reverse, map/reduce, forEach, filter 12、列举字符串相关的常用方法indexOf/lastIndexOf/charAt, split/match/test, slice/substring/substr, toLowerCase/toUpperCase node核心内置库类（事件， 流， 文件， 网络）node概览：1、node架构主要分为三层，应用app &gt;&gt; V8及node内置架构 &gt;&gt; 操作系统. V8是node运行的环境，可以理解为node虚拟机． node内置架构又可分为三层: 核心模块(javascript实现) &gt;&gt; c++绑定 &gt;&gt; libuv + CAes + http. 2、node的核心模块EventEmitter, Stream, FS, Net, 全局对象 node全局对象：1、node有哪些全局对象？process、 console、 Buffer 2、process有哪些方法？process.stdin, process.stdout, process.stderr, process.on, process.env, process.argv, process.arch, process.platform, process.exit 3、console有哪些常用方法?console.log/console.info, console.error/console.warning, console.time/console.timeEnd, console.trace, console.table 4、node有哪些定时功能?setTimeout/clearTimeout, setInterval/clearInterval, setImmediate/clearImmediate, process.nextTick 5、node中的事件循环是什么样子的?process.nextTick &gt;&gt; setImmidate &gt;&gt; setTimeout/SetInterval 6、node中的Buffer如何应用?Buffer是用来处理二进制数据的，比如图片，mp3,数据库文件等.Buffer支持各种编码解码，二进制字符串互转 EventEmitter:1、什么是EventEmitter?EventEmitter是node中一个实现观察者模式的类，主要功能是监听和发射消息，用于处理多模块交互问题. 2、如何实现一个EventEmitter?主要分三步：定义一个子类， 调用构造函数， 继承EventEmitter 123456789101112131415var util = require('util'), EventEmitter = require('event').EventEmitter;//构造函数function MyEmitter () &#123; EventEmitter.call(this);&#125;//继承util.inherits(MyEmitter, EventEmitter);var em = new MyEmitter();//接受事件em.on('hello', function(data) &#123; console.log('收到事件hello的数据：'， data);&#125;);em.emit('hello', 'EventEmitter传递消息真方便'); 3、EventEmitter有哪些典型应用？模块之间传递消息 回调函数内外传递消息 处理流数据 观察者模式发射触发机制 4、怎么捕获EventEmitter的错误事件？监听error事件即可，若有多个EventEmitter，可用domain来统一处理。 123456789101112var domain = require('domain');var myDomain = domain.create();//接受事件并打印myDomain.on('error', function(err)&#123; console.log('domain接受到的事件', err);&#125;);myDomain.run(function() &#123; var emitter1 = new MyEmitter(); emitter1.emit('error', '错误事件来自emitter1'); var emitter2 = new MyEmitter(); emitter2.emit('error', '错误事件来自emitter2');&#125;);]]></content>
+      <categories>
+        <category>node笔记</category>
+      </categories>
+      <tags>
+        <tag>node</tag>
+        <tag>笔记</tag>
+        <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Immutable详解及React中实践]]></title>
+    <url>%2F2017%2F12%2F17%2FImmutable%E8%AF%A6%E8%A7%A3%E5%8F%8AReact%E4%B8%AD%E5%AE%9E%E8%B7%B5%2F</url>
+    <content type="text"><![CDATA[1、js中数据可变状态概念：js中的对象一般是可变的，由于使用了引用赋值，新的对象简单的引用了原始的对象，改变的新对象将影响到原始对 象。 例如： 1234foo = &#123;a:1&#125;;bar = foo;bar.a = 2;console.log(foor.a); //输出2 优缺点：优点：节约内存 缺点：当应用复杂后，会造成非常大的隐患 解决办法：shallowCopy（浅拷贝），deepCopy（深拷贝） 两种方法可将对象置为不可变对象，但同时也造成cpu和内存的浪费 2、Immutable.Data]]></content>
+      <categories>
+        <category>React笔记</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>Immutable</tag>
+        <tag>React</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[React笔记]]></title>
+    <url>%2F2017%2F12%2F17%2FReact%E7%AC%94%E8%AE%B0%2F</url>
+    <content type="text"><![CDATA[数据类型 state/props state—组件本身的数据 props—从其他组件传入的组件 生命周期 getDefaultProps //获得默认数据 getInitialState //设置State数据 componentWillMount //在component即将挂在到页面上时 render componentDidMount //ui真正挂载到文档流 componentWillUnmount //文件销毁 组件间通信 widget之间通过props通信 子组件与父组件的通信 事件订阅 React-router url模式： browserHistory //yoursite.com/a/b hashHistory //yoursite.com/#a/b 两种组件：（装载页面的组件） IndexRouter //默认（没有存url） Router 写法： &lt; Link to = “url”&gt; 注释： 页面切换时，组件会被销毁，再次进入时重新加载。若要实现某功能一直运行，不受页面切换的影响，则将该功 能置于根节点上。 事件订阅 //TODO:完善整个概念]]></content>
+      <categories>
+        <category>笔记</category>
+      </categories>
+      <tags>
+        <tag>笔记，React</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[webpack笔记]]></title>
     <url>%2F2017%2F12%2F13%2Fwebpack%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[webpack使用中的错误：1.npm run dev 出错打包错误in ./src/index.js12345Module build failed: TypeError: fileSystem.statSync is not a function at module.exports (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/utils/exists.js:7:25) at find (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/resolve-rc.js:13:9) at Object.module.exports (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/index.js:113:132) @ multi main 原因及解决方法：babel-loader7.x版本与webpack1.x不兼容，将babel-loader版本降到6.x]]></content>
       <categories>
-        <category>笔记</category>
+        <category>webpack笔记</category>
       </categories>
       <tags>
         <tag>笔记</tag>
@@ -17,11 +54,11 @@
     <url>%2F2017%2F12%2F13%2Fnode%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[安装以及升级node，npm：1.安装nodejssudo apt install nodejs-legacy2.安装npmsudo apt install npm3.清楚cachesudo npm cache clean -f4.安装n包sudo npm install -g n5.获取nodejs稳定版sudo n stable6.升级npmsudo npm install -g npm]]></content>
       <categories>
-        <category>笔记</category>
+        <category>node笔记</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>node</tag>
+        <tag>笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -29,11 +66,11 @@
     <url>%2F2017%2F12%2F13%2FGit%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[显示仓库中的页面1、把文件放在**.github.io仓库2、在文件路径前面加http://htmlpreview.github.io/?然后访问，如： http://htmlpreview.github.io/?https://github.com/**/example/index.html]]></content>
       <categories>
-        <category>笔记</category>
+        <category>Git笔记</category>
       </categories>
       <tags>
-        <tag>Git</tag>
         <tag>笔记</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -41,7 +78,7 @@
     <url>%2F2017%2F12%2F13%2FUbuntu%E7%AC%94%E8%AE%B0%2F</url>
     <content type="text"><![CDATA[系统操作：1.在图形化界面下获取最高权限 sudo nautilus2.显示/隐藏文件 Ctrl+hnpm:1.在使用npm下载包的时候出现无权限修改文件问题 在npm前面加上sudo2017-09-25]]></content>
       <categories>
-        <category>笔记</category>
+        <category>Linux笔记</category>
       </categories>
       <tags>
         <tag>笔记</tag>
