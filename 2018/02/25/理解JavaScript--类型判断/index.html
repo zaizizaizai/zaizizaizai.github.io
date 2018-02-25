@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="笔记,JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="zaizizaizai" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="一、类型判断　　  JavaScript原始类型:Undefined、Null、Boolean、Number、String、Symbol  JavaScript引用类型:Object    1.原始类型与引用类型1.1　　原始类型又被称为基本类型，原始类型保存的变量和值直接保存在栈内存(Stack)中,且空间相互独立,">
+<meta name="keywords" content="笔记,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解javaScript--类型判断">
+<meta property="og:url" content="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--类型判断/index.html">
+<meta property="og:site_name" content="zaizizaizai">
+<meta property="og:description" content="一、类型判断　　  JavaScript原始类型:Undefined、Null、Boolean、Number、String、Symbol  JavaScript引用类型:Object    1.原始类型与引用类型1.1　　原始类型又被称为基本类型，原始类型保存的变量和值直接保存在栈内存(Stack)中,且空间相互独立,通过值来访问,通过一个例子来解释. 12var person = &apos;Messi&apos;">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://omrbgpqyl.bkt.clouddn.com/18-2-20/84377115.jpg">
+<meta property="og:image" content="http://omrbgpqyl.bkt.clouddn.com/18-2-20/34304948.jpg">
+<meta property="og:image" content="http://omrbgpqyl.bkt.clouddn.com/17-9-13/15517231.jpg">
+<meta property="og:updated_time" content="2018-02-25T03:06:47.517Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解javaScript--类型判断">
+<meta name="twitter:description" content="一、类型判断　　  JavaScript原始类型:Undefined、Null、Boolean、Number、String、Symbol  JavaScript引用类型:Object    1.原始类型与引用类型1.1　　原始类型又被称为基本类型，原始类型保存的变量和值直接保存在栈内存(Stack)中,且空间相互独立,通过值来访问,通过一个例子来解释. 12var person = &apos;Messi&apos;">
+<meta name="twitter:image" content="http://omrbgpqyl.bkt.clouddn.com/18-2-20/84377115.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--类型判断/"/>
+
+
+
+
+
+  <title>理解javaScript--类型判断 | zaizizaizai</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a424ce025cdc03482bf24891d3304bf2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zaizizaizai</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">a dream of a child</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--类型判断/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">理解javaScript--类型判断</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T10:44:41+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/25/理解JavaScript--类型判断/" class="leancloud_visitors" data-flag-title="理解javaScript--类型判断">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="一、类型判断"><a href="#一、类型判断" class="headerlink" title="一、类型判断"></a>一、类型判断</h1><p>　　</p>
+<blockquote>
+<p>JavaScript原始类型:Undefined、Null、Boolean、Number、String、Symbol </p>
+<p>JavaScript引用类型:Object </p>
+</blockquote>
+<hr>
+<h4 id="1-原始类型与引用类型"><a href="#1-原始类型与引用类型" class="headerlink" title="1.原始类型与引用类型"></a>1.原始类型与引用类型</h4><h6 id="1-1"><a href="#1-1" class="headerlink" title="1.1"></a>1.1</h6><p>　　<strong>原始类型</strong>又被称为<strong>基本类型</strong>，原始类型保存的变量和值直接保存在<strong>栈内存</strong>(Stack)中,且空间相互独立,通过值来访问,通过一个例子来解释.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = <span class="string">'Messi'</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = person;</span><br></pre></td></tr></table></figure>
+<p>上述代码在栈内存的示意图是这样的,可以看到,虽然<code>person</code>赋值给了<code>person1</code>.但是两个变量并没有指向同一个值,而是<code>person1</code>自己单独建立一个内存空间,虽然两个变量的值相等,但却是相互独立的.<br><img src="http://omrbgpqyl.bkt.clouddn.com/18-2-20/84377115.jpg" alt=""></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = <span class="string">'Messi'</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = person;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person); <span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(person1); <span class="comment">//'Messi'</span></span><br></pre></td></tr></table></figure>
+<p>上述代码示意图是这样的,<code>person</code>的值虽然改变,但是由于<code>person1</code>的值是独立储存的,因此不受影响.</p>
+<p>值得一提的是,虽然原始类型的值是储存在相对独立空间,但是它们之间的比较是<strong>按值</strong>比较的.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = <span class="string">'Messi'</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="string">'Messi'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(person === person1); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h6 id="1-2引用类型"><a href="#1-2引用类型" class="headerlink" title="1.2引用类型"></a>1.2引用类型</h6><p>剩下的就是引用类型了,即Object 类型,再往下细分，还可以分为：Object 类型、Array 类型、Date 类型、Function 类型 等。</p>
+<p>与原始类型不同的是,引用类型的内容是保存在<strong>堆内存</strong>中,而<strong>栈内存</strong>(Heap)中会有一个<strong>堆内存地址</strong>,通过这个地址变量被指向堆内存中<code>Object</code>真正的值,因此引用类型是按照引用访问的.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">name</span>:<span class="string">"percy"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> b;</span><br><span class="line">b = a;</span><br><span class="line">a.name = <span class="string">"zyj"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(b.name);    <span class="comment">// zyj</span></span><br><span class="line">b.age = <span class="number">22</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a.age);     <span class="comment">// 22</span></span><br><span class="line"><span class="keyword">var</span> c = &#123;</span><br><span class="line">  name: <span class="string">"zyj"</span>,</span><br><span class="line">  age: <span class="number">22</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(a === c); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>我们可以逐行分析:</p>
+<pre><code>1. `b = a`,如果是原始类型的话,`b`会在栈内自己独自创建一个内存空间保存值,但是引用类型只是`b`的产生一个对内存地址,指向堆内存中的`Object`.
+2.`a.name = &quot;zyj&quot;`,这个操作属于改变了变量的值,在原始类型中会重新建立新的内存空间(可以看上一节的示意图),而引用类型只需要自己在堆内存中更新自己的属性即可.
+3.最后创建了一个新的对象`c`,看似跟`b` `a`一样,但是在堆内存中确实两个相互独立的`Object`,引用类型是按照**引用比较**,由于`a` `c`引用的是不同的`Object`所以得到的结果是`fasle`.  
+</code></pre><h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://omrbgpqyl.bkt.clouddn.com/18-2-20/34304948.jpg" alt=""></h2><h4 id="2-类型中的坑"><a href="#2-类型中的坑" class="headerlink" title="2. 类型中的坑"></a>2. 类型中的坑</h4><p>2.1 数组中的坑<br>数组是JavaScript中最常见的类型之一了,但是在我们实践过程中同样会遇到各种各样的麻烦.</p>
+<p><strong>稀疏数组</strong>:指的是含有空白或空缺单元的数组<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a.length); <span class="comment">//0</span></span><br><span class="line"></span><br><span class="line">a[<span class="number">4</span>] = a[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a.length); <span class="comment">//5</span></span><br><span class="line"></span><br><span class="line">a.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(elem); <span class="comment">//undefined</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//[,,,,undefined]</span></span><br></pre></td></tr></table></figure></p>
+<p>这里需要注意:</p>
+<ol>
+<li>一开始建立的空数组<code>a</code>的长度为0,这可以理解,但是在<code>a[4] = a[5]</code>之后出现了问题,<code>a</code>的长度变成了5,此时<code>a</code>数组是<code>[,,,,undefined]</code>这种形态.</li>
+<li>我们通过遍历,只得到了<code>undefined</code>这一个值,这个<code>undefind</code>是由于<code>a[4] = a[5]</code>赋值,由于<code>a[5]</code>没有定义值为<code>undefined</code>被赋给了<code>a[4]</code>,可以等价为<code>a[4] = undefined</code>.</li>
+</ol>
+<p><strong>字符串索引</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [];</span><br><span class="line">a[<span class="number">0</span>] = <span class="string">'Bale'</span>;</span><br><span class="line">a[<span class="string">'age'</span>] = <span class="number">28</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a.length); <span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(a[<span class="string">'age'</span>]); <span class="comment">//28</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//[ 'Bale', age: 28 ]</span></span><br></pre></td></tr></table></figure>
+<p>数组不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.</p>
+<p>2.2 数字中的坑<br><strong>二进制浮点数</strong></p>
+<p>JavaScript 中的数字类型是基于“二进制浮点数”实现的,使用的是“双精度”格式,这就带来了一些反常的问题,我们那一道经典面试提来讲解下.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">0.1</span> + <span class="number">0.2</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">0.3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a === b); <span class="comment">//false</span></span><br></pre></td></tr></table></figure></p>
+<p>这是个出人意料的结果,实际上a的值约为<code>0.30000000000000004</code>这并不是一个整数值,这就是<code>二进制浮点数</code>带来的副作用.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">0.1</span> + <span class="number">0.2</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">0.3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a === b); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>.isInteger(a*<span class="number">10</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>.isInteger(b*<span class="number">10</span>)); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//0.30000000000000004</span></span><br></pre></td></tr></table></figure>
+<p>我们可以用<code>Number.isInteger()</code>来判断一个数字是否为整数.</p>
+<p><strong>NaN</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>/<span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">//Number</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(a)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p><code>NaN</code>属于特殊的<code>Number</code>类型,我们可以把它理解为<code>坏数值</code>,因为它属于数值计算中的错误,更加特殊的是它自己都不等价于自己<code>NaN === NaN //false</code>,我们只能用<code>isNaN()</code>来检测一个数字是否为<code>NaN</code>.</p>
+<hr>
+<h4 id="3-类型转换原理"><a href="#3-类型转换原理" class="headerlink" title="3.类型转换原理"></a>3.类型转换原理</h4><p><strong>类型转换</strong>指的是将一种类型转换为另一种类型,例如:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">String</span>(b);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">//string</span></span><br></pre></td></tr></table></figure></p>
+<p>当然,<strong>类型转换</strong>分为显式和隐式,但是不管是隐式转换还是显式转换,都会遵循一定的原理,由于JavaScript是一门动态类型的语言,可以随时赋予任意值,但是各种运算符或条件判断中是需要特定类型的,因此JavaScript引擎会在运算时为变量设定类型.</p>
+<p>这看起来很美好,JavaScript引擎帮我们搞定了<code>类型</code>的问题,但是引擎毕竟不是ASI(超级人工智能),它的很多动作会跟我们预期相去甚远,我们可以从一到面试题开始.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125;+[] <span class="comment">//0</span></span><br></pre></td></tr></table></figure>
+<p>答案是0</p>
+<p>是什么原因造成了上述结果呢?那么我们得从ECMA-262中提到的转换规则和抽象操作说起,有兴趣的童鞋可以仔细阅读下这浩如烟海的<a href="http://ecma-international.org/ecma-262/5.1/" target="_blank" rel="noopener">语言规范</a>,如果没这个耐心还是往下看.</p>
+<p>这是JavaScript种类型转换可以从<strong>原始类型</strong>转为<strong>引用类型</strong>,同样可以将<strong>引用类型</strong>转为<strong>原始类型</strong>,转为原始类型的抽象操作为<code>ToPrimitive</code>,而后续更加细分的操作为:<code>ToNumber ToString ToBoolean</code>,这三种抽象操作的转换表如下所示<br><img src="http://omrbgpqyl.bkt.clouddn.com/17-9-13/15517231.jpg" alt=""></p>
+<p>如果想应付面试,我觉得这张表就差不多了,但是为了更深入的探究JavaScript引擎是如何处理代码中类型转换问题的,就需要看 ECMA-262详细的规范,从而探究其内部原理,我们从这段内部原理示意代码开始.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ECMA-262, section 9.1, page 30. Use null/undefined for no hint,</span></span><br><span class="line"><span class="comment">// (1) for number hint, and (2) for string hint.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ToPrimitive</span>(<span class="params">x, hint</span>) </span>&#123;  </span><br><span class="line">  <span class="comment">// Fast case check.</span></span><br><span class="line">  <span class="keyword">if</span> (IS_STRING(x)) <span class="keyword">return</span> x;</span><br><span class="line">  <span class="comment">// Normal behavior.</span></span><br><span class="line">  <span class="keyword">if</span> (!IS_SPEC_OBJECT(x)) <span class="keyword">return</span> x;</span><br><span class="line">  <span class="keyword">if</span> (IS_SYMBOL_WRAPPER(x)) <span class="keyword">throw</span> MakeTypeError(kSymbolToPrimitive);</span><br><span class="line">  <span class="keyword">if</span> (hint == NO_HINT) hint = (IS_DATE(x)) ? STRING_HINT : NUMBER_HINT;</span><br><span class="line">  <span class="keyword">return</span> (hint == NUMBER_HINT) ? DefaultNumber(x) : DefaultString(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ECMA-262, section 8.6.2.6, page 28.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DefaultNumber</span>(<span class="params">x</span>) </span>&#123;  </span><br><span class="line">  <span class="keyword">if</span> (!IS_SYMBOL_WRAPPER(x)) &#123;</span><br><span class="line">    <span class="keyword">var</span> valueOf = x.valueOf;</span><br><span class="line">    <span class="keyword">if</span> (IS_SPEC_FUNCTION(valueOf)) &#123;</span><br><span class="line">      <span class="keyword">var</span> v = %_CallFunction(x, valueOf);</span><br><span class="line">      <span class="keyword">if</span> (IsPrimitive(v)) <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> toString = x.toString;</span><br><span class="line">    <span class="keyword">if</span> (IS_SPEC_FUNCTION(toString)) &#123;</span><br><span class="line">      <span class="keyword">var</span> s = %_CallFunction(x, toString);</span><br><span class="line">      <span class="keyword">if</span> (IsPrimitive(s)) <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">throw</span> MakeTypeError(kCannotConvertToPrimitive);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ECMA-262, section 8.6.2.6, page 28.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DefaultString</span>(<span class="params">x</span>) </span>&#123;  </span><br><span class="line">  <span class="keyword">if</span> (!IS_SYMBOL_WRAPPER(x)) &#123;</span><br><span class="line">    <span class="keyword">var</span> toString = x.toString;</span><br><span class="line">    <span class="keyword">if</span> (IS_SPEC_FUNCTION(toString)) &#123;</span><br><span class="line">      <span class="keyword">var</span> s = %_CallFunction(x, toString);</span><br><span class="line">      <span class="keyword">if</span> (IsPrimitive(s)) <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> valueOf = x.valueOf;</span><br><span class="line">    <span class="keyword">if</span> (IS_SPEC_FUNCTION(valueOf)) &#123;</span><br><span class="line">      <span class="keyword">var</span> v = %_CallFunction(x, valueOf);</span><br><span class="line">      <span class="keyword">if</span> (IsPrimitive(v)) <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">throw</span> MakeTypeError(kCannotConvertToPrimitive);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码的逻辑是这样的：</p>
+<ol>
+<li>如果变量为字符串，直接返回.</li>
+<li>如果<code>!IS_SPEC_OBJECT(x)</code>，直接返回.</li>
+<li>如果<code>IS_SYMBOL_WRAPPER(x)</code>，则抛出异常.</li>
+<li>否则会根据传入的<code>hint</code>来调用<code>DefaultNumber</code>和<code>DefaultString</code>，比如如果为<code>Date</code>对象，会调用<code>DefaultString</code>.</li>
+<li><code>DefaultNumber</code>：首<code>先x.valueOf</code>，如果为<code>primitive</code>，则返回<code>valueOf</code>后的值，否则继续调用<code>x.toString</code>，如果为<code>primitive</code>，则返回<code>toString</code>后的值，否则抛出异常</li>
+<li><code>DefaultString</code>：和<code>DefaultNumber</code>正好相反，先调用<code>toString</code>，如果不是<code>primitive</code>再调用<code>valueOf</code>.</li>
+</ol>
+<p>那讲了实现原理，这个<code>ToPrimitive</code>有什么用呢？实际很多操作会调用<code>ToPrimitive</code>，比如加、相等或比较操。在进行加操作时会将左右操作数转换为<code>primitive</code>，然后进行相加。</p>
+<p>下面来个实例，({}) + 1（将{}放在括号中是为了内核将其认为一个代码块）会输出啥？可能日常写代码并不会这样写，不过网上出过类似的面试题。</p>
+<p>加操作只有左右运算符同时为<code>String或Number</code>时会执行对应的<code>%_StringAdd或%NumberAdd</code>，下面看下<code>({}) + 1</code>内部会经过哪些步骤：</p>
+<p><code>{}</code>和<code>1</code>首先会调用ToPrimitive<br><code>{}</code>会走到<code>DefaultNumber</code>，首先会调用<code>valueOf</code>，返回的是<code>Object</code> <code>{}</code>，不是primitive类型，从而继续走到<code>toString</code>，返回<code>[object Object]</code>，是<code>String</code>类型<br>最后加操作，结果为<code>[object Object]1</code><br>再比如有人问你<code>[] + 1</code>输出啥时，你可能知道应该怎么去计算了，先对<code>[]</code>调用<code>ToPrimitive</code>，返回空字符串，最后结果为”1”。</p>
+<hr>
+<p>本系列主要参考：</p>
+<ol>
+<li><a href="https://segmentfault.com/a/1190000010352325" target="_blank" rel="noopener">JavaScript 类型的那些事</a></li>
+</ol>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/20/详解promise/" rel="next" title="详解promise">
+                <i class="fa fa-chevron-left"></i> 详解promise
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/25/理解JavaScript--预解释/" rel="prev" title="理解JavaScript--预解释">
+                理解JavaScript--预解释 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+       
+         <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+         <div id="gitment-container" style="display:none"></div>
+       
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/dog.jpg"
+               alt="pinocchio" />
+          <p class="site-author-name" itemprop="name">pinocchio</p>
+           
+              <p class="site-description motion-element" itemprop="description">喜欢web，热爱编程</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zaizizaizai" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      Github
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="zaizizaizai@163.com" target="_blank" title="E-mail">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      E-mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#一、类型判断"><span class="nav-number">1.</span> <span class="nav-text">一、类型判断</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-原始类型与引用类型"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">1.原始类型与引用类型</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#1-1"><span class="nav-number">1.0.0.1.0.1.</span> <span class="nav-text">1.1</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#1-2引用类型"><span class="nav-number">1.0.0.1.0.2.</span> <span class="nav-text">1.2引用类型</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.1.</span> <span class="nav-text"></span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-类型中的坑"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">2. 类型中的坑</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-类型转换原理"><span class="nav-number">1.1.0.2.</span> <span class="nav-text">3.类型转换原理</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pinocchio</span>
+</div>
+
+
+<div class="powered-by">
+  <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+</div>
+
+<div class="theme-info">
+  <!--主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>-->
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+   
+   
+   
+   
+   <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+   <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+   
+       <script type="text/javascript">
+           function ShowGitment(){
+               document.getElementById("gitment-display-button").style.display = "none";
+               document.getElementById("gitment-container").style.display = "block";
+               var gitment = new Gitment({
+                   id: document.location.href, 
+                   owner: 'zaizizaizai',
+                   repo: 'https://github.com/zaizizaizai/zaizizaizai.github.io',
+                   oauth: {
+                       client_id: '99a4ed9392e86260d470',
+                       client_secret: '808b1009e229efdf5d14516a0706c101a1056b99',
+                   }});
+               gitment.render('gitment-container');
+           }
+       </script>
+   
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("V2xxC5ludJHh8x195zQs3nEa-gzGzoHsz", "BgC5g2t5PWARmVQNEqzo7cKj");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

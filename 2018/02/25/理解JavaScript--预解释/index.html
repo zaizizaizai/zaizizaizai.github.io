@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="笔记,JavaScript," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="zaizizaizai" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="二、预解释 1.从一个实例开始仔细阅读以下JavaScript代码,你觉得运行结果会是什么呢?是 1 还是2?123456var a= 1;function f() &amp;#123;  console.log(a);  var a = 2;&amp;#125;f(); 答案是undefined. 那么到底是什么原因">
+<meta name="keywords" content="笔记,JavaScript">
+<meta property="og:type" content="article">
+<meta property="og:title" content="理解JavaScript--预解释">
+<meta property="og:url" content="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--预解释/index.html">
+<meta property="og:site_name" content="zaizizaizai">
+<meta property="og:description" content="二、预解释 1.从一个实例开始仔细阅读以下JavaScript代码,你觉得运行结果会是什么呢?是 1 还是2?123456var a= 1;function f() &amp;#123;  console.log(a);  var a = 2;&amp;#125;f(); 答案是undefined. 那么到底是什么原因导致了这个让人意外的结果呢?这就要从JavaScript解释阶段说起。  2.JavaScrip">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-02-25T03:11:26.263Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="理解JavaScript--预解释">
+<meta name="twitter:description" content="二、预解释 1.从一个实例开始仔细阅读以下JavaScript代码,你觉得运行结果会是什么呢?是 1 还是2?123456var a= 1;function f() &amp;#123;  console.log(a);  var a = 2;&amp;#125;f(); 答案是undefined. 那么到底是什么原因导致了这个让人意外的结果呢?这就要从JavaScript解释阶段说起。  2.JavaScrip">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--预解释/"/>
+
+
+
+
+
+  <title>理解JavaScript--预解释 | zaizizaizai</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a424ce025cdc03482bf24891d3304bf2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zaizizaizai</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">a dream of a child</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--预解释/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">理解JavaScript--预解释</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T11:58:39+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/25/理解JavaScript--预解释/" class="leancloud_visitors" data-flag-title="理解JavaScript--预解释">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="二、预解释"><a href="#二、预解释" class="headerlink" title="二、预解释"></a>二、预解释</h1><hr>
+<h4 id="1-从一个实例开始"><a href="#1-从一个实例开始" class="headerlink" title="1.从一个实例开始"></a>1.从一个实例开始</h4><p>仔细阅读以下JavaScript代码,你觉得运行结果会是什么呢?是 <code>1</code> 还是<code>2</code>?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a= <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">f();</span><br></pre></td></tr></table></figure></p>
+<p>答案是undefined.</p>
+<p>那么到底是什么原因导致了这个让人意外的结果呢?这就要从JavaScript解释阶段说起。</p>
+<hr>
+<h4 id="2-JavaScript预解释"><a href="#2-JavaScript预解释" class="headerlink" title="2.JavaScript预解释"></a>2.JavaScript预解释</h4><p>我们可以大致把JavaScript在浏览器中运行的过程分为两个阶段<code>预解释阶段</code>（有人说准确的说法是应该是Parser，我们以预解释方便理解） <code>执行阶段</code>,在JavaScript引擎对JavaScript代码进行执行之前,需要进行预先处理,然后再对处理后的代码进行执行。</p>
+<blockquote>
+<p> 我们平时书写的JavaScript代码并不是JavaScript执行的代码(V8引擎读取一行执行一行这种理解是错误的),它需要预解释后,再由引擎进行执行.</p>
+</blockquote>
+<p>具体的解释过程涉及到浏览器内核的技术不属于前端领域,不过我们可以浅显的理解一下V8在处理JavaScript的一般过程:</p>
+<p>以上例中的<code>var a = 2;</code>为例,我们一般人的理解为<strong>声明了一个值为2的变量a</strong>,但是在JavaScript引擎处理时却分为了两个步骤:</p>
+<blockquote>
+<ol>
+<li><p>读取<code>var a</code>后,在当前作用域中查找是否有相同声明,如果没有就在当前作用域集合中创建一个名为<code>a</code>的变量,否则忽略此声明继续进行解析.</p>
+</li>
+<li><p>接下来,V8引擎会处理<code>a = 2</code>的赋值操作,首先会询问当前作用域中是否有名为<code>a</code>的变量,如果有进行赋值,否则继续向上级作用域询问.</p>
+</li>
+</ol>
+</blockquote>
+<hr>
+<h4 id="3-JavaScript执行环境"><a href="#3-JavaScript执行环境" class="headerlink" title="3.JavaScript执行环境"></a>3.JavaScript执行环境</h4><p>我们上面提到的所谓javascript预解释正是创建函数的<strong>执行环境</strong>（又称“执行上下文”），只有搞定了javascript的执行环境我们才能搞清楚一段代码在执行过后为什么产生这样的结果。</p>
+<p>我们用一段伪代码表示创立的<strong>执行环境</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">executionContextObj = &#123;</span><br><span class="line">    <span class="string">'scopeChain'</span>: &#123; <span class="comment">/* 变量对象 + 所有父级执行上下文中的变量对象 */</span> &#125;,</span><br><span class="line">    <span class="string">'variableObject'</span>: &#123; <span class="comment">/*  函数参数 / 参数, 内部变量以及函数声明 */</span> &#125;,</span><br><span class="line">    <span class="string">'this'</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>作用域链(scopeChain)包括下面提到的变量对象(variableObject)和所有父级执行上下文中的变量对象.</p>
+<p>变量对象(variableObject)是与执行上下文相关的数据作用域,一个与上下文相关的特殊对象，其中存储了在上下文中定义的变量和函数声明:<br>     变量;<br>     函数声明;<br>     函数的形参</p>
+<p>在有了这些基板概念之后我们可以梳理一下js引擎创建执行的过程:  </p>
+<ul>
+<li>创建阶段<ul>
+<li>创建Scope chain  </li>
+<li>创建variableObject</li>
+<li>设置this</li>
+</ul>
+</li>
+<li>执行阶段<ul>
+<li>变量的值、函数的引用  </li>
+<li>执行代码</li>
+</ul>
+</li>
+</ul>
+<p>而变量对象的创建细节如下:</p>
+<ul>
+<li>根据函数的参数，创建并初始化arguments object</li>
+<li>扫描函数内部代码，查找函数声明（Function declaration）<ul>
+<li>对于所有找到的函数声明，将函数名和函数引用存入变量对象中</li>
+<li>如果变量对象中已经有同名的函数，那么就进行覆盖</li>
+</ul>
+</li>
+<li>扫描函数内部代码，查找变量声明（Variable declaration）<ul>
+<li>对于所有找到的变量声明，将变量名存入变量对象中，并初始化为”undefined”</li>
+<li>如果变量名称跟已经声明的形式参数或函数相同，则变量声明不会干扰已经存在的这类属性</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="4-变量提升"><a href="#4-变量提升" class="headerlink" title="4.变量提升"></a>4.变量提升</h4><p>正是由于以上的处理,产生了大家熟知的JavaScript中的<strong>变量提升</strong>,具体以上代码的执行过程如以下伪代码所示:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// global context</span></span><br><span class="line">executionContextObj = &#123;</span><br><span class="line">    <span class="string">'scopeChain'</span>: &#123; ... &#125;,</span><br><span class="line">    <span class="string">'variableObject'</span>: &#123; <span class="attr">a</span>: <span class="literal">undefined</span>, <span class="attr">f</span>: pointer to <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) &#125;,</span></span><br><span class="line"><span class="function">    '<span class="title">this</span>': </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">&#125;<span class="comment">//首先在全局执行环境中声明了变量a以及函数f,此时a虽然被声明,但是尚未赋值</span></span><br><span class="line">x = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    executionContextObj &#123;</span><br><span class="line">    <span class="string">'scopeChain'</span>: &#123; ... &#125;,</span><br><span class="line">    <span class="string">'variableObject'</span>: &#123;        </span><br><span class="line">    <span class="built_in">arguments</span>: &#123;&#125;, </span><br><span class="line">    a: <span class="literal">undefined</span> </span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">'this'</span>: &#123;...&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//内部词法环境中声明了变量a,此时a虽然被声明,但是尚未赋值</span></span><br><span class="line">    <span class="built_in">console</span>.log(a);<span class="comment">//此时a需要被被打印出来,在作用域内寻找a变量赋值,于是被赋值undefined</span></span><br><span class="line">    a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以明显看到,<code>a</code>变量在预解释阶段已经被赋值<code>undefined</code>,在执行阶段js是自上而下单线执行，当<code>console.log(a)</code>执行之时,<code>a=2</code>还没有被执行,<code>a</code>变量的值便是预处理阶段被赋予的<code>undefined</code>,</p>
+<hr>
+<h4 id="5-函数声明与函数表达式"><a href="#5-函数声明与函数表达式" class="headerlink" title="5.函数声明与函数表达式"></a>5.函数声明与函数表达式</h4><p>我们看到,在编译器处理阶段,除了被<code>var</code>声明的变量会有变量提升这一特性之外,函数也会产生这一特性,但是函数声明与函数表达式两种范式创建的函数却表现出不同的结果.  </p>
+<p>我们先看一个实例,运行以下代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">f();</span><br><span class="line">g();</span><br><span class="line"><span class="comment">//函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//函数表达式</span></span><br><span class="line"><span class="keyword">var</span> g = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'g'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><code>f</code>成功被打印出来,而<code>g函数</code>出现了类型错误,这是什么原因呢?  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">executionContextObj = &#123;</span><br><span class="line">    <span class="string">'scopeChain'</span>: &#123; ... &#125;,</span><br><span class="line">    <span class="string">'variableObject'</span>: &#123; <span class="attr">f</span>: pointer to <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>), <span class="title">g</span>: <span class="title">undefined</span>&#125;,</span></span><br><span class="line"><span class="function">    '<span class="title">this</span>': </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f();</span><br><span class="line">g();</span><br><span class="line"><span class="comment">//函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//函数表达式</span></span><br><span class="line"><span class="keyword">var</span> g = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'g'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们看到,在预解释阶段函数声明的<code>f</code>是被指向了正确的函数得以执行,而函数表达式<code>g</code>被赋予<code>undefined</code>,<code>undefined</code>无法被当作函数执行因此报错<code>g is not a function</code>.</p>
+<hr>
+<h4 id="6-冲突处理"><a href="#6-冲突处理" class="headerlink" title="6.冲突处理"></a>6.冲突处理</h4><p>通常情况下我们不会将同一变量变量重复声明,但是出现了类似情况后,编译器会如何处理这些冲突呢?</p>
+<ol>
+<li>变量之间冲突<br>执行以下函数:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">4</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>结果显而易见,后声明变量值覆盖前者的值</p>
+<ol>
+<li>函数之间冲突<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'g'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>结果同变量冲突,后者覆盖前者.</p>
+<ol>
+<li>函数与变量之间冲突</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(f);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> f =<span class="string">'g'</span>;</span><br></pre></td></tr></table></figure>
+<p>结果如下,函数声明将覆盖变量声明.</p>
+<h2 id="Function-f"><a href="#Function-f" class="headerlink" title="[Function: f]"></a><code>[Function: f]</code></h2><h4 id="7-ES6中的let"><a href="#7-ES6中的let" class="headerlink" title="7.ES6中的let"></a>7.ES6中的let</h4><p>在ES6中出现了两个最新的声明语法<code>let</code>与<code>const</code>,我们以<code>let</code>为例,进行测试看看与<code>var</code>的区别.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">  <span class="keyword">let</span> a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">f(); <span class="comment">// ReferenceError: a is not defined</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码直接报错显示未定义,<code>let</code>与<code>const</code>拥有类似的特性,阻止了变量提升,当代码执行到<code>console.log(a)</code>时,执行换将中<code>a</code>还从未被定义,因此产生了错误.</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/JavaScript/" rel="tag"># JavaScript</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/02/25/理解JavaScript--类型判断/" rel="next" title="理解javaScript--类型判断">
+                <i class="fa fa-chevron-left"></i> 理解javaScript--类型判断
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/25/理解JavaScript-作用域/" rel="prev" title="理解JavaScript--作用域">
+                理解JavaScript--作用域 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+       
+         <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+         <div id="gitment-container" style="display:none"></div>
+       
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/dog.jpg"
+               alt="pinocchio" />
+          <p class="site-author-name" itemprop="name">pinocchio</p>
+           
+              <p class="site-description motion-element" itemprop="description">喜欢web，热爱编程</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zaizizaizai" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      Github
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="zaizizaizai@163.com" target="_blank" title="E-mail">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      E-mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#二、预解释"><span class="nav-number">1.</span> <span class="nav-text">二、预解释</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-从一个实例开始"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">1.从一个实例开始</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-JavaScript预解释"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">2.JavaScript预解释</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-JavaScript执行环境"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">3.JavaScript执行环境</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-变量提升"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">4.变量提升</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-函数声明与函数表达式"><span class="nav-number">1.0.0.5.</span> <span class="nav-text">5.函数声明与函数表达式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-冲突处理"><span class="nav-number">1.0.0.6.</span> <span class="nav-text">6.冲突处理</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Function-f"><span class="nav-number">1.1.</span> <span class="nav-text">[Function: f]</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#7-ES6中的let"><span class="nav-number">1.1.0.1.</span> <span class="nav-text">7.ES6中的let</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pinocchio</span>
+</div>
+
+
+<div class="powered-by">
+  <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+</div>
+
+<div class="theme-info">
+  <!--主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>-->
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+   
+   
+   
+   
+   <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+   <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+   
+       <script type="text/javascript">
+           function ShowGitment(){
+               document.getElementById("gitment-display-button").style.display = "none";
+               document.getElementById("gitment-container").style.display = "block";
+               var gitment = new Gitment({
+                   id: document.location.href, 
+                   owner: 'zaizizaizai',
+                   repo: 'https://github.com/zaizizaizai/zaizizaizai.github.io',
+                   oauth: {
+                       client_id: '99a4ed9392e86260d470',
+                       client_secret: '808b1009e229efdf5d14516a0706c101a1056b99',
+                   }});
+               gitment.render('gitment-container');
+           }
+       </script>
+   
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("V2xxC5ludJHh8x195zQs3nEa-gzGzoHsz", "BgC5g2t5PWARmVQNEqzo7cKj");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
