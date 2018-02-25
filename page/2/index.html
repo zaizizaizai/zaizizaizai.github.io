@@ -329,6 +329,784 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/17/Immutable详解及React中实践/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/17/Immutable详解及React中实践/" itemprop="url">Immutable详解及React中实践</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-17T09:40:24+08:00">
+                2017-12-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/React笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">React笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/17/Immutable详解及React中实践/" class="leancloud_visitors" data-flag-title="Immutable详解及React中实践">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="1、js中数据可变状态"><a href="#1、js中数据可变状态" class="headerlink" title="1、js中数据可变状态"></a>1、js中数据可变状态</h1><h3 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h3><pre><code>js中的对象一般是可变的，由于使用了引用赋值，新的对象简单的引用了原始的对象，改变的新对象将影响到原始对
+象。
+例如：
+    <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foo = &#123;a:<span class="number">1</span>&#125;<span class="comment">;</span></span><br><span class="line"><span class="keyword">bar </span>= foo<span class="comment">;</span></span><br><span class="line"><span class="keyword">bar.a </span>= <span class="number">2</span><span class="comment">;</span></span><br><span class="line">console.log(foor.a)<span class="comment">;	//输出2</span></span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h3><pre><code>优点：节约内存
+缺点：当应用复杂后，会造成非常大的隐患
+</code></pre><h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><pre><code>shallowCopy（浅拷贝），deepCopy（深拷贝）
+两种方法可将对象置为不可变对象，但同时也造成cpu和内存的浪费
+</code></pre><h1 id="2、Immutable-Data"><a href="#2、Immutable-Data" class="headerlink" title="2、Immutable.Data"></a>2、Immutable.Data</h1>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/17/React笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/17/React笔记/" itemprop="url">React笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-17T08:54:11+08:00">
+                2017-12-17
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/17/React笔记/" class="leancloud_visitors" data-flag-title="React笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="数据类型-state-props"><a href="#数据类型-state-props" class="headerlink" title="数据类型  state/props"></a>数据类型  state/props</h1><p>  state—组件本身的数据<br>  props—从其他组件传入的组件</p>
+<h1 id="生命周期"><a href="#生命周期" class="headerlink" title="生命周期"></a>生命周期</h1><p>  getDefaultProps  //获得默认数据<br>  getInitialState  //设置State数据<br>  componentWillMount  //在component即将挂在到页面上时<br>  render<br>  componentDidMount  //ui真正挂载到文档流<br>  componentWillUnmount  //文件销毁</p>
+<h1 id="组件间通信"><a href="#组件间通信" class="headerlink" title="组件间通信"></a>组件间通信</h1><p>  widget之间通过props通信<br>  子组件与父组件的通信<br>  事件订阅</p>
+<h1 id="React-router"><a href="#React-router" class="headerlink" title="React-router"></a>React-router</h1><p>  url模式：<br>      browserHistory        //yoursite.com/a/b<br>      hashHistory        //yoursite.com/#a/b</p>
+<p>  两种组件：（装载页面的组件）<br>         IndexRouter       //默认（没有存url）<br>         Router</p>
+<p>  写法：<br>        &lt; Link to = “url”&gt;<br>  注释：<br>      页面切换时，组件会被销毁，再次进入时重新加载。若要实现某功能一直运行，不受页面切换的影响，则将该功<br>      能置于根节点上。</p>
+<h1 id="事件订阅"><a href="#事件订阅" class="headerlink" title="事件订阅"></a>事件订阅</h1><p>  //TODO:完善整个概念</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/13/webpack笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/13/webpack笔记/" itemprop="url">webpack笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T12:37:18+08:00">
+                2017-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/webpack笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">webpack笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/13/webpack笔记/" class="leancloud_visitors" data-flag-title="webpack笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="webpack使用中的错误："><a href="#webpack使用中的错误：" class="headerlink" title="webpack使用中的错误："></a>webpack使用中的错误：</h1><h2 id="1-npm-run-dev-出错"><a href="#1-npm-run-dev-出错" class="headerlink" title="1.npm run dev 出错"></a>1.npm run dev 出错</h2><h3 id="打包错误"><a href="#打包错误" class="headerlink" title="打包错误"></a>打包错误</h3><pre><code><figure class="highlight plain"><figcaption><span>in ./src/index.js</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Module build failed: TypeError: fileSystem.statSync is not a function</span><br><span class="line">    at module.exports (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/utils/exists.js:7:25)</span><br><span class="line">    at find (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/resolve-rc.js:13:9)</span><br><span class="line">    at Object.module.exports (/home/zaizizaizai/computerscience/project/react/ToDoList/node_modules/babel-loader/lib/index.js:113:132)</span><br><span class="line"> @ multi main</span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="原因及解决方法："><a href="#原因及解决方法：" class="headerlink" title="原因及解决方法："></a>原因及解决方法：</h3><h3 id="babel-loader7-x版本与webpack1-x不兼容，将babel-loader版本降到6-x"><a href="#babel-loader7-x版本与webpack1-x不兼容，将babel-loader版本降到6-x" class="headerlink" title="babel-loader7.x版本与webpack1.x不兼容，将babel-loader版本降到6.x"></a>babel-loader7.x版本与webpack1.x不兼容，将babel-loader版本降到6.x</h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/13/node笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/13/node笔记/" itemprop="url">node笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T12:34:23+08:00">
+                2017-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">node笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/13/node笔记/" class="leancloud_visitors" data-flag-title="node笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="安装以及升级node，npm："><a href="#安装以及升级node，npm：" class="headerlink" title="安装以及升级node，npm："></a>安装以及升级node，npm：</h1><h2 id="1-安装nodejs"><a href="#1-安装nodejs" class="headerlink" title="1.安装nodejs"></a>1.安装nodejs</h2><h3 id="sudo-apt-install-nodejs-legacy"><a href="#sudo-apt-install-nodejs-legacy" class="headerlink" title="sudo apt install nodejs-legacy"></a><code>sudo apt install nodejs-legacy</code></h3><h2 id="2-安装npm"><a href="#2-安装npm" class="headerlink" title="2.安装npm"></a>2.安装npm</h2><h3 id="sudo-apt-install-npm"><a href="#sudo-apt-install-npm" class="headerlink" title="sudo apt install npm"></a><code>sudo apt install npm</code></h3><h2 id="3-清楚cache"><a href="#3-清楚cache" class="headerlink" title="3.清楚cache"></a>3.清楚cache</h2><h3 id="sudo-npm-cache-clean-f"><a href="#sudo-npm-cache-clean-f" class="headerlink" title="sudo npm cache clean -f"></a><code>sudo npm cache clean -f</code></h3><h2 id="4-安装n包"><a href="#4-安装n包" class="headerlink" title="4.安装n包"></a>4.安装n包</h2><h3 id="sudo-npm-install-g-n"><a href="#sudo-npm-install-g-n" class="headerlink" title="sudo npm install -g n"></a><code>sudo npm install -g n</code></h3><h2 id="5-获取nodejs稳定版"><a href="#5-获取nodejs稳定版" class="headerlink" title="5.获取nodejs稳定版"></a>5.获取nodejs稳定版</h2><h3 id="sudo-n-stable"><a href="#sudo-n-stable" class="headerlink" title="sudo n stable"></a><code>sudo n stable</code></h3><h2 id="6-升级npm"><a href="#6-升级npm" class="headerlink" title="6.升级npm"></a>6.升级npm</h2><h3 id="sudo-npm-install-g-npm"><a href="#sudo-npm-install-g-npm" class="headerlink" title="sudo npm install -g npm"></a><code>sudo npm install -g npm</code></h3>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/13/Git笔记/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/12/13/Git笔记/" itemprop="url">Git笔记</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T12:26:38+08:00">
+                2017-12-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Git笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">Git笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/12/13/Git笔记/" class="leancloud_visitors" data-flag-title="Git笔记">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="显示仓库中的页面"><a href="#显示仓库中的页面" class="headerlink" title="显示仓库中的页面"></a>显示仓库中的页面</h1><h3 id="1、把文件放在-github-io仓库"><a href="#1、把文件放在-github-io仓库" class="headerlink" title="1、把文件放在**.github.io仓库"></a>1、把文件放在**.github.io仓库</h3><h3 id="2、在文件路径前面加http-htmlpreview-github-io"><a href="#2、在文件路径前面加http-htmlpreview-github-io" class="headerlink" title="2、在文件路径前面加http://htmlpreview.github.io/?"></a>2、在文件路径前面加<a href="http://htmlpreview.github.io/?" target="_blank" rel="noopener">http://htmlpreview.github.io/?</a></h3><pre><code>然后访问，如：
+http://htmlpreview.github.io/?https://github.com/**/example/index.html
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/13/Ubuntu笔记/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1130,640 +1908,11 @@ overflow（溢出），避免了水平滚动条的出现。
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/11/23/博客说明/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/23/博客说明/" itemprop="url">博客说明</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T20:30:44+08:00">
-                2017-11-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/博客说明/" itemprop="url" rel="index">
-                    <span itemprop="name">博客说明</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/23/博客说明/" class="leancloud_visitors" data-flag-title="博客说明">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="博客评论说明"><a href="#博客评论说明" class="headerlink" title="博客评论说明"></a>博客评论说明</h1><p>由于多说、跟帖等评论插件都倒了，就转向了友言。结果友言服务器是国外的，得翻墙才能用。就转向了畅言，可是这<br>搜狐畅言得用域名（我怕还没来的及买域名了-_-）。最后还是回到大爱的git了。<br>过程：<br>多说、跟帖–&gt;友言–&gt;畅言–&gt;gitment</p>
-<p>2017-11-23</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/11/23/深入理解MongoDB/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/23/深入理解MongoDB/" itemprop="url">深入理解MongoDB</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T18:01:16+08:00">
-                2017-11-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/数据库/" itemprop="url" rel="index">
-                    <span itemprop="name">数据库</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/23/深入理解MongoDB/" class="leancloud_visitors" data-flag-title="深入理解MongoDB">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>这是在我看完《深入理解MongoDB》后，按照自己的理解记录下来的笔记，初次接触，若有错误，敬请指出，感谢！</p>
-<h1 id="一-概述"><a href="#一-概述" class="headerlink" title="一.概述"></a>一.概述</h1><p>MongoDB 是一个基于分布式文件存储的数据库。由 C++ 语言编写。旨在为 WEB 应用提供可扩展的高性能数据存储解决方案。<br>MongoDB操作模式：<br>应用程序&lt;=&gt;mongos&lt;=&gt;集群</p>
-<h1 id="二-理解分片"><a href="#二-理解分片" class="headerlink" title="二.理解分片"></a>二.理解分片</h1><h2 id="1-什么是分片（sharding）？"><a href="#1-什么是分片（sharding）？" class="headerlink" title="1.什么是分片（sharding）？"></a>1.什么是分片（sharding）？</h2><p>分片（sharding）是MongoDB用来将大型集合分割到不同服务器上采用的方法。这样做是为实现3个目标：<br>让集群“不可见”<br>让应用程序知道要执行任何“增删改查”操作只需要发送请求给MongoDB这一个对象就行了，剩下的事就交给它了，不需要区分交给那个服务器，简化了应用程序端操作指令。在MongoDB中具体连接客户端与服务器端的就是叫做mongos的专有路由进程，mongos可以比喻为一个秘书，转发客户端的请求，和服务器端的响应。<br>保证集群总是可以读写<br>一个大的集合分为多个分片（shard），当其中一个进程/服务器出现问题，由运行在其他分区的其他副本接替换掉的部分继续工作。<br>使集群易于扩展<br>将大的集群分割为多个小的分区，当需要资源的时候，只需要添加小的空间。</p>
-<h2 id="2-分配数据"><a href="#2-分配数据" class="headerlink" title="2.分配数据"></a>2.分配数据</h2><p>sharding操作后得到分片（shard）是集群中负责数据某一子集的一台或多台服务器。换言之，一个分片包含数据的某个子集。例如一个集群包含1000份代表网站注册用户文档，其中一个分片就可能包含200份。<br>若一个分片包含多个服务器，则每个服务器拥有一份完整的数据副本。</p>
-<p><strong>一分片一区间</strong><br>分配数据最简单的方法就是让一分片负责一区间的数据。假设有四个分片，依次对应[“a”,”f”),[“f”,”n”),[“n”,”t”),[“t”,”{“)区间，{是ASCII码表中字母z后面的字符。许多用户用首字母在范围[“a”,”f”)中的名字来注册，就导致分片1较大，我们可以调整区间使分片1对应的区间缩小，从而让分片均衡。但当分片1和分片2过载时，就不太好处理。假设分片1和分片2各有500G数据，分片3和分片4各有300G数据，此时就需要分片1转移100G数据到分片2，接着从分片2转移200G数据到分片3，最后分片3转移100G数据到分片4，从而使每个分片都具有400G数据，达到均衡。这还只是4个分片，执行这个操作一共移动了400G数据。当考虑到所有分片，可想需要移动的数据量是很大的。</p>
-<p><strong>一分片多区间</strong><br>重新来考虑上面的情况，此时是一分片多区间。我们可以把分片1和分片2都划分为两个区间，分片1分别对应包含400G数据的[“a”,”d”)区间和包含100G数据的[“d”,”f”)区间，分片2分别对应包含400G数据[“f”,”j”)区间和100G数据[“j”,”n”)区间。我们就可以把分片1中的[“d”,”f”)区间的数据直接移动到分片3，把分片2中的[“,j”,”n”)区间的数据直接移动到分片4，相比上一种情况，只需要移动200G数据。添加新的分片也具有同样的优势——减少数据转移量。</p>
-<p><strong>创建块</strong><br>一个区间的数据成为一个数据块（也叫块，chunk），块默认大小为200MB（兼顾可移动性和最小开销），当一个块的区间一分为二是，就变成两个块了。当提到块出不得不说片键了，如下所示<br>{“username”:”gala”,”age”:21}<br>{“username”:”pinocchio”,”age”:25}<br>{“username”:”zaizizaizai”,”age”:16}<br>如果我们选择age字段作为片键病得到一个块区间[20,30），则得到的块为：<br>{“username”:”gala”,”age”:21}<br>{“username”:”pinocchio”,”age”:25}<br>可以把片键理解为一个选择器（标签），也可理解为属性，即挑选符合条件的数据，在这里不仅局限于把age作为片键，username也可以作为片键，且片键值不可修改。<br>随着数据的增加，当一个块变大，MongoDB会自动将其分割为2个小块。若分片间数据比例失衡，MongoDB会迁移块其他分片（由叫做平衡器的进程执行），以达到分片间数据比例总是平衡的状态。同时平衡器会忽略微小的不平衡，否则会导致恶性循环。</p>
-<h1 id="三-建立集群"><a href="#三-建立集群" class="headerlink" title="三.建立集群"></a>三.建立集群</h1><h2 id="选择片键"><a href="#选择片键" class="headerlink" title="选择片键"></a>选择片键</h2><p>片键的选择很重要，因为这关系到读操作的速度。以下介绍集中片键的几个常见反例，以便更好理解片键选择。<br><strong>小基数片键</strong><br>假设我们有3个分片，我们需要选择片键。前后端编程开发常见的建站就需要对数据分类，有用户的数据、管理员的数据、网页参数的数据，那为了方便理解和区分，就选择用户、管理员、网页参数3个片键。虽然管理员数据比较小，但用户的数据会一直增加，增加到一定程度后，MongoDB也不能分割分片里的块了，最终磁盘空间被耗尽。由于片键值数量有限，后来，就会得到一个又大又无法移动，还不能分割的块，这对数据管理造成极大的不方便。<br><strong>升序片键</strong><br>对大部分应用程序而言，新数据被访问的次数总是多于老数据，所以人们会尝试诸如时间戳或者objectID一类的字段作为片键。比如，社交软件上的发动态，每条动态包含消息、地点、时间，我们以时间段来分片。从一个数据块开始，随着时间推移，一个块满了，裂变为两个块，时间点继续增加，这个片键创造了一个单一且不可分散的热点。动态被发出，该时间点MongoDB需要对该时间点对应的块进行写操作，而当大量的动态在同一时间发出，MongoDB来不及对块进行写操作，就会造成堵塞，使应用程序瘫痪。<br><strong>随机片键</strong><br>为了避免以上的热点片键，有人选择取随机的字段来分片。采用这种字段开始还不错，但随着数据量的增加，它会变得越来越慢。现在采用随机片键，已经得到一组均匀分布于各分片的数据块。假设分片上的一个块填满并分裂了，配置服务器注意到分片2比分片1多10个块，为了抹平差距，MongoDB就将分片2中的随机5个块（块的数据量的大小不确定）经由内存发送给分片1。随着数据量的增加，这5个随机的块的数据量会很大，应发大量的磁盘IO，致使数据库变慢。<br><strong>好片键</strong><br>准升序键加搜索键<br>快速起步</p>
-<p>若想尽快上手，可用Github上的mongos-snippets，其中有个simple-setup.py能自动地启动、配置和生成一个集群，它需要MongoDB的Python驱动。</p>
-<p><strong>安装MongoDB的Python驱动</strong><br>sudo easy_install pymongo<br><strong>下载mongos-snippets库并执行以下操作</strong><br>python sharding/simple-setup.py –path=绝对路径</p>
-<p>simple-setup.py会启动一个mongos进程，地址为localhost://27017</p>
-<p>2017.10.29       pinocchio</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/11/23/web安全概略/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/23/web安全概略/" itemprop="url">web安全概略</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-23T17:47:51+08:00">
-                2017-11-23
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/23/web安全概略/" class="leancloud_visitors" data-flag-title="web安全概略">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="声明：本文章是在看《白帽子讲web安全》时所做的记录，以供复习"><a href="#声明：本文章是在看《白帽子讲web安全》时所做的记录，以供复习" class="headerlink" title="声明：本文章是在看《白帽子讲web安全》时所做的记录，以供复习"></a>声明：本文章是在看《白帽子讲web安全》时所做的记录，以供复习</h2><p>攻击方式重点：sql注入       xss</p>
-<p>技巧：<br>1.数据库里的登录ID和昵称分开</p>
-<h1 id="一-安全世界观"><a href="#一-安全世界观" class="headerlink" title="一.安全世界观"></a>一.安全世界观</h1><h2 id="1-安全是一个持续过程"><a href="#1-安全是一个持续过程" class="headerlink" title="1.安全是一个持续过程"></a>1.安全是一个持续过程</h2><h2 id="2-安全三要素"><a href="#2-安全三要素" class="headerlink" title="2.安全三要素"></a>2.安全三要素</h2><p>2.1机密性<br>2.2完整性<br>2.3可用性</p>
-<h2 id="3-安全评估"><a href="#3-安全评估" class="headerlink" title="3.安全评估"></a>3.安全评估</h2><p>  资产等级划分-&gt;威胁分析-&gt;风险分析-&gt;确认解决方案</p>
-<p>3.1资产等级划分<br>3.2威胁分析<br>3.3风险分析<br>3.4确认解决方案</p>
-<h2 id="4-白帽子兵法"><a href="#4-白帽子兵法" class="headerlink" title="4.白帽子兵法"></a>4.白帽子兵法</h2><p>4.1Secure By Default原则<br>4.1.1黑名单、白名单<br>4.1.2最小权限原则<br>4.1.3纵深防御原则<br>4.1.4数据与代码分开原则<br>4.1.5不可预测性原则</p>
-<h1 id="二-浏览器安全"><a href="#二-浏览器安全" class="headerlink" title="二.浏览器安全"></a>二.浏览器安全</h1><h2 id="2-1同源策略"><a href="#2-1同源策略" class="headerlink" title="2.1同源策略"></a>2.1同源策略</h2><h2 id="2-2浏览器沙箱"><a href="#2-2浏览器沙箱" class="headerlink" title="2.2浏览器沙箱"></a>2.2浏览器沙箱</h2><h1 id="更新中……-2017-11-18"><a href="#更新中……-2017-11-18" class="headerlink" title="更新中……   2017.11.18"></a>更新中……   2017.11.18</h1>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/11/22/终于成功了/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/22/终于成功了/" itemprop="url">终于成功了</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T12:19:55+08:00">
-                2017-11-22
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/22/终于成功了/" class="leancloud_visitors" data-flag-title="终于成功了">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="应该好了把"><a href="#应该好了把" class="headerlink" title="应该好了把"></a>应该好了把</h2><p>额，刚接触hexo，之前在csdn上写，文章格式还没弄好，见谅！<br>    后续把文章补上…^@^</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -1808,7 +1957,7 @@ overflow（溢出），避免了水平滚动条的出现。
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">19</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
