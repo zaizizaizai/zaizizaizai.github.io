@@ -329,6 +329,279 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/20/node要点总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/20/node要点总结/" itemprop="url">node要点总结</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-20T14:45:17+08:00">
+                2018-02-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">node笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/20/node要点总结/" class="leancloud_visitors" data-flag-title="node要点总结">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="node开发要点"><a href="#node开发要点" class="headerlink" title="node开发要点"></a>node开发要点</h2><pre><code>1、常用前端技术：
+    html5
+    css3
+    jQuery
+2、js高级话题：
+    面向对象
+    闭包
+    作用域
+    设计模式
+3、其他后端技术：
+    mongodb
+    redis
+    apache
+    nignix
+    mysql
+4、node内置核心库：
+    全局对象
+    时事件
+    流
+    网络
+    子程序
+5、常用知名第三方库：
+    async
+    express
+    koa
+6、node高级话题：
+    异步
+    部署
+    性能调优
+    异常调试
+</code></pre><h1 id="node事件循环机制"><a href="#node事件循环机制" class="headerlink" title="node事件循环机制"></a>node事件循环机制</h1><h1 id="javaScript高级话题-面向对象、作用域、闭包、设计模式"><a href="#javaScript高级话题-面向对象、作用域、闭包、设计模式" class="headerlink" title="* javaScript高级话题(面向对象、作用域、闭包、设计模式)"></a>* javaScript高级话题(面向对象、作用域、闭包、设计模式)</h1><h2 id="面向对象"><a href="#面向对象" class="headerlink" title="面向对象"></a>面向对象</h2><h2 id="1、常用js类定义的方法？"><a href="#1、常用js类定义的方法？" class="headerlink" title="1、常用js类定义的方法？"></a>1、常用js类定义的方法？</h2><p>构造函数原型法：<br>            <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">Person</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">			<span class="keyword">this</span>.name = <span class="string">'pinocchio'</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		Person.prototype.sayName = <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">			alert(<span class="keyword">this</span>.name);</span><br><span class="line">;					&#125;</span><br><span class="line">		<span class="keyword">var</span> person = <span class="keyword">new</span> Person ();</span><br><span class="line">		person.sayName();</span><br><span class="line">		<span class="comment">//对象创建:</span></span><br><span class="line">		<span class="keyword">var</span> Person = &#123;</span><br><span class="line">			name: <span class="string">'pinocchio'</span>,</span><br><span class="line">			sayName: <span class="function"><span class="keyword">function</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">					alert(<span class="keyword">this</span>.name);</span><br><span class="line">				&#125;</span><br><span class="line">		&#125;;</span><br><span class="line">		<span class="keyword">var</span> person = <span class="built_in">Object</span>.create(Person);</span><br><span class="line">		person.sayName();</span><br></pre></td></tr></table></figure></p>
+<h2 id="2、js类继承的方法？"><a href="#2、js类继承的方法？" class="headerlink" title="2、js类继承的方法？"></a>2、js类继承的方法？</h2><p>原型链法(Person是Animal的子集，即子类)：<br>            <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Animal</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = <span class="string">'animal'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Animal.prototype.sayName = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		alter(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span> <span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">	Person.prototype = Animal.prototype;	<span class="comment">//人继承动物</span></span><br><span class="line">	Person.prototype = constructor = <span class="string">'Person'</span>;	<span class="comment">//更新构造函数为人</span></span><br><span class="line">属性复制法(单纯复制，两者无继承关系)：</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Animal</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = <span class="string">'animal'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Animal.prototype.sayName = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		alter(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span> <span class="params">()</span> </span>&#123;&#125;</span><br><span class="line">	<span class="comment">//复制动物所有属性到人</span></span><br><span class="line">	<span class="keyword">for</span> (prop <span class="keyword">in</span> Animal.prototype) &#123;</span><br><span class="line">		Person.prototype[prop] = Animal.prototype[prototype];</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//更新构造函数为人</span></span><br><span class="line">	Person.prototype.constructor = <span class="string">'Person'</span>;	</span><br><span class="line">构造器应用法:</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Animal</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = <span class="string">'animal'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	Animal.prototype.sayName = <span class="function"><span class="keyword">function</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		alter(<span class="keyword">this</span>.name);</span><br><span class="line">	&#125;;</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">Person</span> <span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="comment">//apply,call,bind方法都行，有细微区别</span></span><br><span class="line">		Animal.call(<span class="keyword">this</span>);</span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="3、js类多重继承的方法怎么实现？"><a href="#3、js类多重继承的方法怎么实现？" class="headerlink" title="3、js类多重继承的方法怎么实现？"></a>3、js类多重继承的方法怎么实现？</h2><pre><code>通过类继承里面的属性复制法来实现，可以继承所有父类的prototype属性
+
+作用域
+</code></pre><h2 id="4、js里作用域是什么样？"><a href="#4、js里作用域是什么样？" class="headerlink" title="4、js里作用域是什么样？"></a>4、js里作用域是什么样？</h2><p>函数作用域，<br>            <figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> globalVar = <span class="string">'global var'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">test</span><span class="params">()</span> </span>&#123;</span><br><span class="line">	alert(globalVar); <span class="comment">// undefined, 因为globalVar在本函数内被重定义了，导致全局失效，这里使用函数内的变量值，可是此时还没定义</span></span><br><span class="line">	<span class="keyword">var</span> globalVar = <span class="string">'overrided var'</span>; <span class="comment">//　globalVar在本函数内被重定义</span></span><br><span class="line"></span><br><span class="line">	alert(globalVar);　<span class="comment">// overrided var</span></span><br><span class="line">&#125;</span><br><span class="line">alert(globalVar); <span class="comment">// global var，使用全局变量</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="5、js中this指的是什么？"><a href="#5、js中this指的是什么？" class="headerlink" title="5、js中this指的是什么？"></a>5、js中this指的是什么？</h2><pre><code>this指的是对象本身
+</code></pre><h2 id="6、apply，call，bind有什么区别？"><a href="#6、apply，call，bind有什么区别？" class="headerlink" title="6、apply，call，bind有什么区别？"></a>6、apply，call，bind有什么区别？</h2><pre><code>apply 、 call 、bind 三者都是用来改变函数的this对象的指向的；
+三者第一个参数都是this要指向的对象，也就是想指定的上下文；
+三者都可以利用后续参数传参；
+apply,call是直接执行函数调用，bind是绑定，执行需要再次调用．apply和call的区别是apply接受数组作为参数，而call是接受逗号分隔的无限多个参数列表
+        <figure class="highlight powershell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> Person () &#123;&#125;</span><br><span class="line">Person.prototype.sayName() &#123;</span><br><span class="line">	alert(this.name);</span><br><span class="line">&#125;</span><br><span class="line">//普通对象，不是Person实例</span><br><span class="line">var obj = &#123;</span><br><span class="line">	name: <span class="string">'pinocchio'</span></span><br><span class="line">&#125;;</span><br><span class="line">//apply</span><br><span class="line">Person.prototype.sayName.apply(obj, [param1, <span class="keyword">param</span>2, <span class="keyword">param</span>3]);</span><br><span class="line">//call</span><br><span class="line">Person.prototype.sayName.call(obj, <span class="keyword">param</span>1, <span class="keyword">param</span>2, <span class="keyword">param</span>3);</span><br><span class="line">//bind,先绑定，再执行</span><br><span class="line">var sn = Person.prototype.sayName.bind(obj);</span><br><span class="line">sn([param1, <span class="keyword">param</span>2, <span class="keyword">param</span>3]);</span><br><span class="line">sn(<span class="keyword">param</span>1, <span class="keyword">param</span>2, <span class="keyword">param</span>3);</span><br></pre></td></tr></table></figure>
+</code></pre><h2 id="7、caller，callee和arguments分别是什么？"><a href="#7、caller，callee和arguments分别是什么？" class="headerlink" title="7、caller，callee和arguments分别是什么？"></a>7、caller，callee和arguments分别是什么？</h2><pre><code><figure class="highlight qml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">caller,callee之间的关系就像是employer和employee之间的关系，就是调用与被调用的关系，二者返回的都是函数对象引用．<span class="built_in">arguments</span>是函数的所有参数列表，它是一个类数组的变量．</span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">parent</span>(<span class="params">param1, param2, param3</span>) </span>&#123;</span><br><span class="line">			child(param1, param2, param3);</span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="function"><span class="keyword">function</span> <span class="title">child</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">			<span class="built_in">console</span>.log(<span class="built_in">arguments</span>); <span class="comment">// &#123; '0': 'mqin1', '1': 'mqin2', '2': 'mqin3' &#125;</span></span><br><span class="line">			<span class="built_in">console</span>.log(<span class="built_in">arguments</span>.callee); <span class="comment">// [Function: child]</span></span><br><span class="line">			<span class="built_in">console</span>.log(child.caller); <span class="comment">// [Function: parent]</span></span><br><span class="line">		&#125;</span><br><span class="line"></span><br><span class="line">		<span class="built_in">parent</span>(<span class="string">'mqin1'</span>, <span class="string">'mqin2'</span>, <span class="string">'mqin3'</span>);</span><br></pre></td></tr></table></figure>
+</code></pre><h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><h2 id="8、什么是闭包？闭包有什么用处？"><a href="#8、什么是闭包？闭包有什么用处？" class="headerlink" title="8、什么是闭包？闭包有什么用处？"></a>8、什么是闭包？闭包有什么用处？</h2><pre><code>通俗的说，闭包就是作用域范围，因为js是函数作用域，所以函数就是闭包．全局函数的作用域范围就是全局，所以无须讨论．更多的应用其实是在内嵌函数，这就会涉及到内嵌作用域，或者叫作用域链。
+这就会带来另外一个问题，什么时候引用结束？如果不结束，就会一直占用内存，引起内存泄漏．不用的时候就引用设为空。    
+</code></pre><h2 id="9、defineProperty-hasOwnProperty-propertyIsEnumerable都是做什么用的？"><a href="#9、defineProperty-hasOwnProperty-propertyIsEnumerable都是做什么用的？" class="headerlink" title="9、defineProperty, hasOwnProperty, propertyIsEnumerable都是做什么用的？"></a>9、defineProperty, hasOwnProperty, propertyIsEnumerable都是做什么用的？</h2><pre><code>Object.defineProperty(obj, prop, descriptor)用来给对象定义属性,有value,writable,configurable,enumerable,set/get等.hasOwnProerty用于检查某一属性是不是存在于对象本身，继承来的
+</code></pre><p>父亲的属性不算．propertyIsEnumerable用来检测某一属性是否可遍历，也就是能不能用for..in循环来取到.</p>
+<h2 id="设计模式"><a href="#设计模式" class="headerlink" title="设计模式"></a>设计模式</h2><h2 id="10、js常用设计模式的实现思路，单例，工厂，代理，装饰，观察者模式等"><a href="#10、js常用设计模式的实现思路，单例，工厂，代理，装饰，观察者模式等" class="headerlink" title="10、js常用设计模式的实现思路，单例，工厂，代理，装饰，观察者模式等"></a>10、js常用设计模式的实现思路，单例，工厂，代理，装饰，观察者模式等</h2><h3 id="1-单例：-任意对象都是单例，无须特别处理"><a href="#1-单例：-任意对象都是单例，无须特别处理" class="headerlink" title="1) 单例：　任意对象都是单例，无须特别处理"></a>1) 单例：　任意对象都是单例，无须特别处理</h3><p><code>var obj = {name: &#39;michaelqin&#39;, age: 30};</code></p>
+<h3 id="2-工厂-就是同样形式参数返回不同的实例"><a href="#2-工厂-就是同样形式参数返回不同的实例" class="headerlink" title="2) 工厂: 就是同样形式参数返回不同的实例"></a>2) 工厂: 就是同样形式参数返回不同的实例</h3><pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123; <span class="keyword">this</span>.name = <span class="string">'Person1'</span>; &#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Animal</span>(<span class="params"></span>) </span>&#123; <span class="keyword">this</span>.name = <span class="string">'Animal1'</span>; &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Factory</span>(<span class="params"></span>) </span>&#123;&#125;</span><br><span class="line">Factory.prototype.getInstance = <span class="function"><span class="keyword">function</span>(<span class="params">className</span>) </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> <span class="built_in">eval</span>(<span class="string">'new '</span> + className + <span class="string">'()'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> factory = <span class="keyword">new</span> Factory();</span><br><span class="line"><span class="keyword">var</span> obj1 = factory.getInstance(<span class="string">'Person'</span>);</span><br><span class="line"><span class="keyword">var</span> obj2 = factory.getInstance(<span class="string">'Animal'</span>);</span><br><span class="line"><span class="built_in">console</span>.log(obj1.name); <span class="comment">// Person1</span></span><br><span class="line"><span class="built_in">console</span>.log(obj2.name); <span class="comment">// Animal1</span></span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="3-代理-就是新建个类调用老类的接口-包一下"><a href="#3-代理-就是新建个类调用老类的接口-包一下" class="headerlink" title="3) 代理: 就是新建个类调用老类的接口,包一下"></a>3) 代理: 就是新建个类调用老类的接口,包一下</h3><pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Person</span>(<span class="params"></span>) </span>&#123; &#125;</span><br><span class="line">Person.prototype.sayName = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="string">'michaelqin'</span>); &#125;</span><br><span class="line">Person.prototype.sayAge = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123; <span class="built_in">console</span>.log(<span class="number">30</span>); &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">PersonProxy</span>(<span class="params"></span>) </span>&#123; </span><br><span class="line">	<span class="keyword">this</span>.person = <span class="keyword">new</span> Person();</span><br><span class="line">	<span class="keyword">var</span> that = <span class="keyword">this</span>;</span><br><span class="line">	<span class="keyword">this</span>.callMethod = <span class="function"><span class="keyword">function</span>(<span class="params">functionName</span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'before proxy:'</span>, functionName);</span><br><span class="line">		that.person[functionName](); <span class="comment">// 代理</span></span><br><span class="line">		<span class="built_in">console</span>.log(<span class="string">'after proxy:'</span>, functionName);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pp = <span class="keyword">new</span> PersonProxy();</span><br><span class="line">pp.callMethod(<span class="string">'sayName'</span>); <span class="comment">// 代理调用Person的方法sayName()</span></span><br><span class="line">pp.callMethod(<span class="string">'sayAge'</span>); <span class="comment">// 代理调用Person的方法sayAge()</span></span><br></pre></td></tr></table></figure>
+</code></pre><h3 id="4-观察者-就是事件模式，比如按钮的onclick这样的应用"><a href="#4-观察者-就是事件模式，比如按钮的onclick这样的应用" class="headerlink" title="4) 观察者: 就是事件模式，比如按钮的onclick这样的应用."></a>4) 观察者: 就是事件模式，比如按钮的onclick这样的应用.</h3><pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Publisher</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">this</span>.listeners = [];</span><br><span class="line">&#125;</span><br><span class="line">Publisher.prototype = &#123;</span><br><span class="line">	<span class="string">'addListener'</span>: <span class="function"><span class="keyword">function</span>(<span class="params">listener</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.listeners.push(listener);</span><br><span class="line">	&#125;,</span><br><span class="line"></span><br><span class="line">	<span class="string">'removeListener'</span>: <span class="function"><span class="keyword">function</span>(<span class="params">listener</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">delete</span> <span class="keyword">this</span>.listeners[listener];</span><br><span class="line">	&#125;,</span><br><span class="line"></span><br><span class="line">	<span class="string">'notify'</span>: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">		<span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="keyword">this</span>.listeners.length; i++) &#123;</span><br><span class="line">			<span class="keyword">var</span> listener = <span class="keyword">this</span>.listeners[i];</span><br><span class="line">			<span class="keyword">if</span> (<span class="keyword">typeof</span> listener !== <span class="string">'undefined'</span>) &#123;</span><br><span class="line">				listener.process(obj);</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;; <span class="comment">// 发布者</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Subscriber</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">Subscriber.prototype = &#123;</span><br><span class="line">	<span class="string">'process'</span>: <span class="function"><span class="keyword">function</span>(<span class="params">obj</span>) </span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(obj);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;;　<span class="comment">// 订阅者</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> publisher = <span class="keyword">new</span> Publisher();</span><br><span class="line">publisher.addListener(<span class="keyword">new</span> Subscriber());</span><br><span class="line">publisher.addListener(<span class="keyword">new</span> Subscriber());</span><br><span class="line">publisher.notify(&#123;<span class="attr">name</span>: <span class="string">'michaelqin'</span>, <span class="attr">ageo</span>: <span class="number">30</span>&#125;); <span class="comment">// 发布一个对象到所有订阅者</span></span><br><span class="line">publisher.notify(<span class="string">'2 subscribers will both perform process'</span>); <span class="comment">// 发布一个字符串到所有订阅者</span></span><br></pre></td></tr></table></figure>
+</code></pre><h2 id="11、列举数组相关的常用方法"><a href="#11、列举数组相关的常用方法" class="headerlink" title="11、列举数组相关的常用方法"></a>11、列举数组相关的常用方法</h2><pre><code>push/pop, shift/unshift, split/join, slice/splice/concat, sort/reverse, map/reduce, forEach, filter
+</code></pre><h2 id="12、列举字符串相关的常用方法"><a href="#12、列举字符串相关的常用方法" class="headerlink" title="12、列举字符串相关的常用方法"></a>12、列举字符串相关的常用方法</h2><pre><code>indexOf/lastIndexOf/charAt, split/match/test, slice/substring/substr, toLowerCase/toUpperCase
+</code></pre><h1 id="node核心内置库类（事件，-流，-文件，-网络）"><a href="#node核心内置库类（事件，-流，-文件，-网络）" class="headerlink" title="node核心内置库类（事件， 流， 文件， 网络）"></a>node核心内置库类（事件， 流， 文件， 网络）</h1><h2 id="node概览："><a href="#node概览：" class="headerlink" title="node概览："></a>node概览：</h2><h2 id="1、node架构"><a href="#1、node架构" class="headerlink" title="1、node架构"></a>1、node架构</h2><pre><code>主要分为三层，应用app &gt;&gt; V8及node内置架构 &gt;&gt; 操作系统. V8是node运行的环境，可以理解为node虚拟机．
+</code></pre><p>node内置架构又可分为三层: 核心模块(javascript实现) &gt;&gt; c++绑定 &gt;&gt; libuv + CAes + http.</p>
+<h2 id="2、node的核心模块"><a href="#2、node的核心模块" class="headerlink" title="2、node的核心模块"></a>2、node的核心模块</h2><pre><code>EventEmitter, Stream, FS, Net, 全局对象
+</code></pre><h2 id="node全局对象："><a href="#node全局对象：" class="headerlink" title="node全局对象："></a>node全局对象：</h2><h2 id="1、node有哪些全局对象？"><a href="#1、node有哪些全局对象？" class="headerlink" title="1、node有哪些全局对象？"></a>1、node有哪些全局对象？</h2><pre><code>process、 console、 Buffer
+</code></pre><h2 id="2、process有哪些方法？"><a href="#2、process有哪些方法？" class="headerlink" title="2、process有哪些方法？"></a>2、process有哪些方法？</h2><pre><code>process.stdin, process.stdout, process.stderr, process.on, process.env, process.argv, process.arch, process.platform, process.exit
+</code></pre><h2 id="3、console有哪些常用方法"><a href="#3、console有哪些常用方法" class="headerlink" title="3、console有哪些常用方法?"></a>3、console有哪些常用方法?</h2><pre><code>console.log/console.info, console.error/console.warning, console.time/console.timeEnd, console.trace, console.table
+</code></pre><h2 id="4、node有哪些定时功能"><a href="#4、node有哪些定时功能" class="headerlink" title="4、node有哪些定时功能?"></a>4、node有哪些定时功能?</h2><pre><code>setTimeout/clearTimeout, setInterval/clearInterval, setImmediate/clearImmediate, process.nextTick
+</code></pre><h2 id="5、node中的事件循环是什么样子的"><a href="#5、node中的事件循环是什么样子的" class="headerlink" title="5、node中的事件循环是什么样子的?"></a>5、node中的事件循环是什么样子的?</h2><pre><code>process.nextTick &gt;&gt; setImmidate &gt;&gt; setTimeout/SetInterval
+</code></pre><h2 id="6、node中的Buffer如何应用"><a href="#6、node中的Buffer如何应用" class="headerlink" title="6、node中的Buffer如何应用?"></a>6、node中的Buffer如何应用?</h2><pre><code>Buffer是用来处理二进制数据的，比如图片，mp3,数据库文件等.Buffer支持各种编码解码，二进制字符串互转
+</code></pre><h1 id="EventEmitter"><a href="#EventEmitter" class="headerlink" title="EventEmitter:"></a>EventEmitter:</h1><h2 id="1、什么是EventEmitter"><a href="#1、什么是EventEmitter" class="headerlink" title="1、什么是EventEmitter?"></a>1、什么是EventEmitter?</h2><pre><code>EventEmitter是node中一个实现观察者模式的类，主要功能是监听和发射消息，用于处理多模块交互问题.
+</code></pre><h2 id="2、如何实现一个EventEmitter"><a href="#2、如何实现一个EventEmitter" class="headerlink" title="2、如何实现一个EventEmitter?"></a>2、如何实现一个EventEmitter?</h2><p>主要分三步：定义一个子类， 调用构造函数， 继承EventEmitter<br>            <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> util = <span class="built_in">require</span>(<span class="string">'util'</span>),	</span><br><span class="line">    EventEmitter = <span class="built_in">require</span>(<span class="string">'event'</span>).EventEmitter;</span><br><span class="line"><span class="comment">//构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">MyEmitter</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">	EventEmitter.call(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//继承</span></span><br><span class="line">util.inherits(MyEmitter, EventEmitter);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> em = <span class="keyword">new</span> MyEmitter();</span><br><span class="line"><span class="comment">//接受事件</span></span><br><span class="line">em.on(<span class="string">'hello'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">data</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'收到事件hello的数据：'</span>， data);</span><br><span class="line">&#125;);</span><br><span class="line">em.emit(<span class="string">'hello'</span>, <span class="string">'EventEmitter传递消息真方便'</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="3、EventEmitter有哪些典型应用？"><a href="#3、EventEmitter有哪些典型应用？" class="headerlink" title="3、EventEmitter有哪些典型应用？"></a>3、EventEmitter有哪些典型应用？</h2><pre><code>模块之间传递消息
+回调函数内外传递消息
+处理流数据
+观察者模式发射触发机制
+</code></pre><h2 id="4、怎么捕获EventEmitter的错误事件？"><a href="#4、怎么捕获EventEmitter的错误事件？" class="headerlink" title="4、怎么捕获EventEmitter的错误事件？"></a>4、怎么捕获EventEmitter的错误事件？</h2><p>监听error事件即可，若有多个EventEmitter，可用domain来统一处理。<br>            <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> domain = <span class="built_in">require</span>(<span class="string">'domain'</span>);</span><br><span class="line"><span class="keyword">var</span> myDomain = domain.create();</span><br><span class="line"><span class="comment">//接受事件并打印</span></span><br><span class="line">myDomain.on(<span class="string">'error'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">err</span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'domain接受到的事件'</span>, err);</span><br><span class="line">&#125;);</span><br><span class="line">myDomain.run(<span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> emitter1 = <span class="keyword">new</span> MyEmitter();	</span><br><span class="line">	emitter1.emit(<span class="string">'error'</span>, <span class="string">'错误事件来自emitter1'</span>);</span><br><span class="line">	<span class="keyword">var</span> emitter2 = <span class="keyword">new</span> MyEmitter();</span><br><span class="line">	emitter2.emit(<span class="string">'error'</span>, <span class="string">'错误事件来自emitter2'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure></p>
+<h2 id="5、EventEmitter中的newListenser事件有什么用处"><a href="#5、EventEmitter中的newListenser事件有什么用处" class="headerlink" title="5、EventEmitter中的newListenser事件有什么用处?"></a>5、EventEmitter中的newListenser事件有什么用处?</h2><p>newListener可以用来做事件机制的反射，特殊应用，事件管理等．当任何on事件添加到EventEmitter时，就会触发newListener事件，基于这种模式，我们可以做很多自定义处理.</p>
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> emitter3 = <span class="keyword">new</span> MyEmitter();</span><br><span class="line">emitter3.on(<span class="string">'newListener'</span>, <span class="function"><span class="keyword">function</span>(<span class="params">name, listener</span>) </span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"新事件的名字:"</span>, name);</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">"新事件的代码:"</span>, listener);</span><br><span class="line">	setTimeout(<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123; <span class="built_in">console</span>.log(<span class="string">"我是自定义延时处理机制"</span>); &#125;, <span class="number">1000</span>);</span><br><span class="line">&#125;);</span><br><span class="line">emitter3.on(<span class="string">'hello'</span>, <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">'hello　node'</span>);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+</code></pre><h2 id="Stream"><a href="#Stream" class="headerlink" title="Stream"></a>Stream</h2><pre><code>stream是基于事件EventEmitter的数据管理模式．由各种不同的抽象接口组成，主要包括可写，可读，可读写，可转换等几种类型．
+</code></pre><h2 id="1、Stream有什么好处？"><a href="#1、Stream有什么好处？" class="headerlink" title="1、Stream有什么好处？"></a>1、Stream有什么好处？</h2><pre><code>非阻塞式数据处理提升效率，片段处理节省内存，管道处理方便扩展
+</code></pre><h2 id="2、Stream有哪些典型应用？"><a href="#2、Stream有哪些典型应用？" class="headerlink" title="2、Stream有哪些典型应用？"></a>2、Stream有哪些典型应用？</h2><pre><code>文件处理、网络交换、数据转换、音视频处理
+</code></pre><h2 id="3、怎么捕获Stream的错误事件？"><a href="#3、怎么捕获Stream的错误事件？" class="headerlink" title="3、怎么捕获Stream的错误事件？"></a>3、怎么捕获Stream的错误事件？</h2><pre><code>监听error事件、方法同EventEmitter
+</code></pre><h2 id="4、哪些常用Stream，分别什么时候用？"><a href="#4、哪些常用Stream，分别什么时候用？" class="headerlink" title="4、哪些常用Stream，分别什么时候用？"></a>4、哪些常用Stream，分别什么时候用？</h2><pre><code>Readable为可被读流，在座位数据源时使用；
+Writeable为可被读流，在作为输出元时使用；
+Duplex为读写流，作为输入源接受被写入，同时又作为输入源被后面的流读出；
+Transform机制和Duplex一样，都是双向流，区别时Transfrom只需要实现一个函数_transfrom(chunk, encoding, callback);
+而Duplex需要分别实现_read(size)函数和_write(chunk, encoding, callback)函数.    
+</code></pre><h2 id="5、实现一个Writable-Stream"><a href="#5、实现一个Writable-Stream" class="headerlink" title="5、实现一个Writable Stream?"></a>5、实现一个Writable Stream?</h2><p>三步走:1)构造函数call Writable 2)　继承Writable 3) 实现_write(chunk, encoding, callback)函数</p>
+<pre><code>```
+var Writeable = require(&apos;stream&apos;).Writable;
+var util = require(&apos;util&apos;);
+//构造函数
+function MyWriteable(options) {
+    Writeable.call(this, options);
+}
+//继承Writeable
+util.inherits(MyWriteable, Writable);
+MyWritable.prototype._write = function(chunk, encoding, callback) {
+    // 此处可对写入的数据进行处理
+    console.log(&quot;被写入的数据是:&quot;, chunk.toString()); 
+    callback();
+};
+// stdin作为输入源，MyWritable作为输出源   
+process.stdin.pipe(new MyWritable()); 
+```            
+</code></pre><h1 id="node高级话题-异步，-部署，-性能调优，-异步调试"><a href="#node高级话题-异步，-部署，-性能调优，-异步调试" class="headerlink" title="node高级话题(异步， 部署， 性能调优， 异步调试)"></a>node高级话题(异步， 部署， 性能调优， 异步调试)</h1><h2 id="1、node中的异步与同步怎么理解？"><a href="#1、node中的异步与同步怎么理解？" class="headerlink" title="1、node中的异步与同步怎么理解？"></a>1、node中的异步与同步怎么理解？</h2><pre><code>node是单线程的，异步是通过一次次的事件循环来实现的。
+同步则是阻塞式的io，在高并发环境下会有很大的性能问题，所以同步一般只在基础框架的启动时使用，如：加载配置文件、初始化程序
+</code></pre><h2 id="2、哪些方法可以进行异步流程控制？"><a href="#2、哪些方法可以进行异步流程控制？" class="headerlink" title="2、哪些方法可以进行异步流程控制？"></a>2、哪些方法可以进行异步流程控制？</h2><pre><code>1）多层嵌套回调
+2）单独为回调写函数，函数里再回调
+3)第三方框架：async、q、promise
+</code></pre><h2 id="3、怎么绑定node程序到80端口？"><a href="#3、怎么绑定node程序到80端口？" class="headerlink" title="3、怎么绑定node程序到80端口？"></a>3、怎么绑定node程序到80端口？</h2><pre><code>1）sudo
+2）Apache/nginx代理
+3）操作系统的firewall iptables端口绑定
+4）第三方库up
+</code></pre><h2 id="4、有哪些方法可以让node程序遇到错误后自动重启"><a href="#4、有哪些方法可以让node程序遇到错误后自动重启" class="headerlink" title="4、有哪些方法可以让node程序遇到错误后自动重启?"></a>4、有哪些方法可以让node程序遇到错误后自动重启?</h2><pre><code>1) runit 
+2) forever 
+3) nohup npm start &amp;
+4）up -watch -port 80 server.js
+</code></pre><h2 id="5、怎么充分利用多个cpu？"><a href="#5、怎么充分利用多个cpu？" class="headerlink" title="5、怎么充分利用多个cpu？"></a>5、怎么充分利用多个cpu？</h2><pre><code>1个cpu运行一个node程序
+</code></pre><h2 id="6、怎样调节node执行单元的内存大小"><a href="#6、怎样调节node执行单元的内存大小" class="headerlink" title="6、怎样调节node执行单元的内存大小?"></a>6、怎样调节node执行单元的内存大小?</h2><pre><code>用--max-old-space-size 和 --max-new-space-size 来设置 v8 使用内存的上限
+</code></pre><h2 id="7、有哪些常用方法可以防止程序崩溃"><a href="#7、有哪些常用方法可以防止程序崩溃" class="headerlink" title="7、有哪些常用方法可以防止程序崩溃?"></a>7、有哪些常用方法可以防止程序崩溃?</h2><pre><code>1) try-catch-finally 
+2) EventEmitter/Stream error事件处理 
+3) domain统一控制 
+4) jshint静态检查 
+5) jasmine/mocha进行单元测试
+</code></pre><h2 id="8、怎样调试node程序"><a href="#8、怎样调试node程序" class="headerlink" title="8、怎样调试node程序?"></a>8、怎样调试node程序?</h2><pre><code>1) 监听错误事件req.on(&apos;error&apos;, function(){}), 适用EventEmitter存在的情况; 
+2) Promise.then.catch(error),适用Promise存在的情况 
+3) try-catch,适用async-await和js运行时异常，比如undefined object
+</code></pre>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/17/Immutable详解及React中实践/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1736,178 +2009,6 @@ http://htmlpreview.github.io/?https://github.com/**/example/index.html
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/11/26/自适应网页设计/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/26/自适应网页设计/" itemprop="url">自适应网页设计</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-26T13:30:50+08:00">
-                2017-11-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/26/自适应网页设计/" class="leancloud_visitors" data-flag-title="自适应网页设计">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <ul>
-<li><a href="http://www.ruanyifeng.com/blog/2012/05/responsive_web_design.html" target="_blank" rel="noopener">点我转向原文章</a><br>转译：pinocchio<br>对于初入前端的学习者来说，设计网页自适应不同分辨率的终端是比较难解决的一件事。<br>自适应网页设计指的是可以自动识别屏幕宽度、并做出相应调整的网页设计。    </li>
-</ul>
-<p>以下是自适应网页设计的方法：</p>
-<h1 id="一、允许网页宽度自动调整"><a href="#一、允许网页宽度自动调整" class="headerlink" title="一、允许网页宽度自动调整"></a>一、允许网页宽度自动调整</h1><p>   在网页代码的头部，加入viewport元标签<br>       <code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;</code><br>   viewport是网页默认的宽度和高度，上面这行代码的意思是，网页宽度默认等于屏幕宽度（width=device-    width），原始缩放比例（initial-scale=1）为1.0，即网页初始大小占屏幕面积的100%。</p>
-<p>   所有主流浏览器(IE9)都支持这个设置。对于老式浏览器（IE6、7、8），需要使用css3-mediaqueries.js。</p>
-<h1 id="二、不使用绝对宽度"><a href="#二、不使用绝对宽度" class="headerlink" title="二、不使用绝对宽度"></a>二、不使用绝对宽度</h1><p>   若在头部加入了viewport元标签，网页会自动更具屏幕宽度调整布局，所以不能使用具有绝对宽度的元素。<br>   即css代码不能制定像素宽度<br>       <code>width:xxx px;</code></p>
-<p>   只能使用百分比宽度<br>       <code>width: xx%;</code><br>   或者<br>       <code>width:auto;</code></p>
-<h1 id="三、相对大小的字体"><a href="#三、相对大小的字体" class="headerlink" title="三、相对大小的字体"></a>三、相对大小的字体</h1><p>   字体也不能使用绝对大小（px），而只能使用相对大小（em）。<br>        <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">　　　　       <span class="attribute">font</span>: normal <span class="number">100%</span> Helvetica, Arial, sans-serif;</span><br><span class="line">　　      &#125;</span><br></pre></td></tr></table></figure></p>
-<p>　　 上面的代码指定，字体大小是页面默认大小的100%，即16像素。<br>　　     <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　 	<span class="selector-tag">h1</span> &#123;</span><br><span class="line">　　 	    <span class="attribute">font-size</span>: <span class="number">1.5em</span>;</span><br><span class="line">　　 	&#125;</span><br></pre></td></tr></table></figure></p>
-<p>　　 然后，h1的大小是默认大小的1.5倍，即24像素（24/16=1.5）。<br>　　     <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　 	<span class="selector-tag">small</span> &#123;</span><br><span class="line">　　 	    <span class="attribute">font-size</span>: <span class="number">0.875em</span>;</span><br><span class="line">　　 	&#125;</span><br></pre></td></tr></table></figure></p>
-<h1 id="四、流动布局（fluid-grid）"><a href="#四、流动布局（fluid-grid）" class="headerlink" title="四、流动布局（fluid grid）"></a>四、流动布局（fluid grid）</h1><p>   “流动布局”的含义是，各个区块的位置都是浮动的，不是固定不变的。<br>       <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.main</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">70%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.leftBar</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">25%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<pre><code>float的好处是，如果宽度太小，放不下两个元素，后面的元素会自动滚动到前面元素的下方，不会在水平方向
-overflow（溢出），避免了水平滚动条的出现。
-</code></pre><h1 id="五、选择加载css"><a href="#五、选择加载css" class="headerlink" title="五、选择加载css"></a>五、选择加载css</h1><p>   “自适应网页设计”的核心，就是CSS3引入的Media Query模块。<br>   它的意思就是，自动探测屏幕宽度，然后加载相应的CSS文件。<br>       <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;link <span class="attribute">rel</span>=<span class="string">"stylesheet"</span> <span class="attribute">type</span>=<span class="string">"text/css"</span></span><br><span class="line">　 <span class="attribute">media</span>=<span class="string">"screen and (max-device-width: 400px)"</span></span><br><span class="line">　　<span class="attribute">href</span>=<span class="string">"tinyScreen.css"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>   上面的代码意思是，如果屏幕宽度小于400像素（max-device-width: 400px），就加载tinyScreen.css文件。<br>　　     <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　     &lt;link <span class="attribute">rel</span>=<span class="string">"stylesheet"</span> <span class="attribute">type</span>=<span class="string">"text/css"</span></span><br><span class="line">　　　　     <span class="attribute">media</span>=<span class="string">"screen and (min-width: 400px) and (max-device-width: 600px)"</span></span><br><span class="line">　　　　     <span class="attribute">href</span>=<span class="string">"smallScreen.css"</span> /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>   如果屏幕宽度在400像素到600像素之间，则加载smallScreen.css文件。<br>   除了用html标签加载CSS文件，还可以在现有CSS文件中加载。<br>      <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　     @import url(<span class="string">"tinyScreen.css"</span>)<span class="built_in"> screen </span><span class="keyword">and</span> (max-device-width: 400px);</span><br></pre></td></tr></table></figure></p>
-<h1 id="六、CSS的-media规则"><a href="#六、CSS的-media规则" class="headerlink" title="六、CSS的@media规则"></a>六、CSS的@media规则</h1><p>   同一个CSS文件中，也可以根据不同的屏幕分辨率，选择应用不同的CSS规则。<br>　　    <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">　　     @<span class="keyword">media</span> screen and (max-device-width: <span class="number">400px</span>) &#123;</span><br><span class="line">　　　　        <span class="selector-class">.column</span> &#123;</span><br><span class="line">　　　　　 　        <span class="attribute">float</span>: none;</span><br><span class="line">　　　　　　         <span class="attribute">width</span>:auto;</span><br><span class="line">　　　　        &#125;</span><br><span class="line">　　　</span><br><span class="line">　　　　     <span class="selector-id">#sidebar</span> &#123;</span><br><span class="line">　　　　　　      <span class="attribute">display</span>:none;</span><br><span class="line">　　　　     &#125;</span><br><span class="line">　　    &#125;</span><br></pre></td></tr></table></figure></p>
-<p>   上面的代码意思是，如果屏幕宽度小于400像素，则column块取消浮动（float:none）、宽度自动调节（width:auto），sidebar块不显示（display:none）。</p>
-<h1 id="七、图片的自适应（fluid-image）"><a href="#七、图片的自适应（fluid-image）" class="headerlink" title="七、图片的自适应（fluid image）"></a>七、图片的自适应（fluid image）</h1><p>   除了布局和文本，”自适应网页设计”还必须实现图片的自动缩放。<br>   这只要一行CSS代码：<br>　　   <code>img { max-width: 100%;}</code><br>   这行代码对于大多数嵌入网页的视频也有效，所以可以写成：<br>　　   <code>img, object { max-width: 100%;}</code><br>   老版本的IE不支持max-width，所以只好写成：<br>　　   <code>img { width: 100%; }</code><br>   此外，windows平台缩放图片时，可能出现图像失真现象。这时，可以尝试使用IE的专有命令：<br>　　   <code>img { -ms-interpolation-mode: bicubic; }</code><br>   或者，Ethan Marcotte的imgSizer.js。<br>　　   <figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">　　   addLoadEvent(<span class="name">function</span>() &#123;</span><br><span class="line">　　　　   var imgs = document.getElementById(<span class="string">"content"</span>).getElementsByTagName(<span class="string">"img"</span>)<span class="comment">;</span></span><br><span class="line">　　　　   imgSizer.collate(<span class="name">imgs</span>)<span class="comment">;</span></span><br><span class="line">　　   &#125;)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1957,7 +2058,7 @@ overflow（溢出），避免了水平滚动条的出现。
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">25</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -1968,7 +2069,7 @@ overflow（溢出），避免了水平滚动条的出现。
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -1979,7 +2080,7 @@ overflow（溢出），避免了水平滚动条的出现。
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-count">26</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>

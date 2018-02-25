@@ -6,7 +6,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://zaizizaizai.github.io/"/>
-  <updated>2018-02-25T07:39:44.459Z</updated>
+  <updated>2018-02-25T08:04:44.193Z</updated>
   <id>https://zaizizaizai.github.io/</id>
   
   <author>
@@ -15,6 +15,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>科学上网</title>
+    <link href="https://zaizizaizai.github.io/2018/02/25/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
+    <id>https://zaizizaizai.github.io/2018/02/25/科学上网/</id>
+    <published>2018-02-25T07:44:48.000Z</published>
+    <updated>2018-02-25T08:04:44.193Z</updated>
+    
+    <content type="html"><![CDATA[<h2 id="heroku上部署ss"><a href="#heroku上部署ss" class="headerlink" title="heroku上部署ss"></a>heroku上部署ss</h2><p><strong>先来占个坑</strong></p><p>之前在github上发现了一个在heroku上搭建shadowsocks的项目，自己试着搭建，发现极好用。此时原项目已被作者删除，重新找了一个。<br><strong>特点：</strong></p><blockquote><p>1、快速，youtube上4k视频无压力<br>2、无限流量<br>3、<strong>免费！免费！</strong></p></blockquote><hr><h3 id="github项目地址"><a href="#github项目地址" class="headerlink" title="github项目地址"></a><a href="https://github.com/VincentChanX/shadowsocks-over-websocket" target="_blank" rel="noopener">github项目地址</a></h3>]]></content>
+    
+    <summary type="html">
+    
+      
+      
+        &lt;h2 id=&quot;heroku上部署ss&quot;&gt;&lt;a href=&quot;#heroku上部署ss&quot; class=&quot;headerlink&quot; title=&quot;heroku上部署ss&quot;&gt;&lt;/a&gt;heroku上部署ss&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;先来占个坑&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;之前在g
+      
+    
+    </summary>
+    
+      <category term="科学上网" scheme="https://zaizizaizai.github.io/categories/%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
+    
+    
+      <category term="heroku" scheme="https://zaizizaizai.github.io/tags/heroku/"/>
+    
+      <category term="ss，科学上网" scheme="https://zaizizaizai.github.io/tags/ss%EF%BC%8C%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91/"/>
+    
+  </entry>
   
   <entry>
     <title>理解JavaScript--深克隆</title>
@@ -426,9 +454,9 @@
       <category term="Git笔记" scheme="https://zaizizaizai.github.io/categories/Git%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="笔记" scheme="https://zaizizaizai.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
-    
       <category term="Git" scheme="https://zaizizaizai.github.io/tags/Git/"/>
+    
+      <category term="笔记" scheme="https://zaizizaizai.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
     
   </entry>
   
@@ -453,9 +481,9 @@
       <category term="Linux笔记" scheme="https://zaizizaizai.github.io/categories/Linux%E7%AC%94%E8%AE%B0/"/>
     
     
-      <category term="ubuntu" scheme="https://zaizizaizai.github.io/tags/ubuntu/"/>
-    
       <category term="笔记" scheme="https://zaizizaizai.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="ubuntu" scheme="https://zaizizaizai.github.io/tags/ubuntu/"/>
     
   </entry>
   
@@ -537,36 +565,6 @@
       <category term="node.js" scheme="https://zaizizaizai.github.io/tags/node-js/"/>
     
       <category term="配置" scheme="https://zaizizaizai.github.io/tags/%E9%85%8D%E7%BD%AE/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>自适应网页设计</title>
-    <link href="https://zaizizaizai.github.io/2017/11/26/%E8%87%AA%E9%80%82%E5%BA%94%E7%BD%91%E9%A1%B5%E8%AE%BE%E8%AE%A1/"/>
-    <id>https://zaizizaizai.github.io/2017/11/26/自适应网页设计/</id>
-    <published>2017-11-26T05:30:50.000Z</published>
-    <updated>2017-11-27T04:39:59.004Z</updated>
-    
-    <content type="html"><![CDATA[<ul><li><a href="http://www.ruanyifeng.com/blog/2012/05/responsive_web_design.html" target="_blank" rel="noopener">点我转向原文章</a><br>转译：pinocchio<br>对于初入前端的学习者来说，设计网页自适应不同分辨率的终端是比较难解决的一件事。<br>自适应网页设计指的是可以自动识别屏幕宽度、并做出相应调整的网页设计。    </li></ul><p>以下是自适应网页设计的方法：</p><h1 id="一、允许网页宽度自动调整"><a href="#一、允许网页宽度自动调整" class="headerlink" title="一、允许网页宽度自动调整"></a>一、允许网页宽度自动调整</h1><p>   在网页代码的头部，加入viewport元标签<br>       <code>&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot; /&gt;</code><br>   viewport是网页默认的宽度和高度，上面这行代码的意思是，网页宽度默认等于屏幕宽度（width=device-    width），原始缩放比例（initial-scale=1）为1.0，即网页初始大小占屏幕面积的100%。</p><p>   所有主流浏览器(IE9)都支持这个设置。对于老式浏览器（IE6、7、8），需要使用css3-mediaqueries.js。</p><h1 id="二、不使用绝对宽度"><a href="#二、不使用绝对宽度" class="headerlink" title="二、不使用绝对宽度"></a>二、不使用绝对宽度</h1><p>   若在头部加入了viewport元标签，网页会自动更具屏幕宽度调整布局，所以不能使用具有绝对宽度的元素。<br>   即css代码不能制定像素宽度<br>       <code>width:xxx px;</code></p><p>   只能使用百分比宽度<br>       <code>width: xx%;</code><br>   或者<br>       <code>width:auto;</code></p><h1 id="三、相对大小的字体"><a href="#三、相对大小的字体" class="headerlink" title="三、相对大小的字体"></a>三、相对大小的字体</h1><p>   字体也不能使用绝对大小（px），而只能使用相对大小（em）。<br>        <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">body</span> &#123;</span><br><span class="line">　　　　       <span class="attribute">font</span>: normal <span class="number">100%</span> Helvetica, Arial, sans-serif;</span><br><span class="line">　　      &#125;</span><br></pre></td></tr></table></figure></p><p>　　 上面的代码指定，字体大小是页面默认大小的100%，即16像素。<br>　　     <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　 <span class="selector-tag">h1</span> &#123;</span><br><span class="line">　　     <span class="attribute">font-size</span>: <span class="number">1.5em</span>;</span><br><span class="line">　　 &#125;</span><br></pre></td></tr></table></figure></p><p>　　 然后，h1的大小是默认大小的1.5倍，即24像素（24/16=1.5）。<br>　　     <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　 <span class="selector-tag">small</span> &#123;</span><br><span class="line">　　     <span class="attribute">font-size</span>: <span class="number">0.875em</span>;</span><br><span class="line">　　 &#125;</span><br></pre></td></tr></table></figure></p><h1 id="四、流动布局（fluid-grid）"><a href="#四、流动布局（fluid-grid）" class="headerlink" title="四、流动布局（fluid grid）"></a>四、流动布局（fluid grid）</h1><p>   “流动布局”的含义是，各个区块的位置都是浮动的，不是固定不变的。<br>       <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.main</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: right;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">70%</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-class">.leftBar</span> &#123;</span><br><span class="line">    <span class="attribute">float</span>: left;</span><br><span class="line">    <span class="attribute">width</span>: <span class="number">25%</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p><pre><code>float的好处是，如果宽度太小，放不下两个元素，后面的元素会自动滚动到前面元素的下方，不会在水平方向overflow（溢出），避免了水平滚动条的出现。</code></pre><h1 id="五、选择加载css"><a href="#五、选择加载css" class="headerlink" title="五、选择加载css"></a>五、选择加载css</h1><p>   “自适应网页设计”的核心，就是CSS3引入的Media Query模块。<br>   它的意思就是，自动探测屏幕宽度，然后加载相应的CSS文件。<br>       <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;link <span class="attribute">rel</span>=<span class="string">"stylesheet"</span> <span class="attribute">type</span>=<span class="string">"text/css"</span></span><br><span class="line">　 <span class="attribute">media</span>=<span class="string">"screen and (max-device-width: 400px)"</span></span><br><span class="line">　　<span class="attribute">href</span>=<span class="string">"tinyScreen.css"</span> /&gt;</span><br></pre></td></tr></table></figure></p><p>   上面的代码意思是，如果屏幕宽度小于400像素（max-device-width: 400px），就加载tinyScreen.css文件。<br>　　     <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">　　     &lt;link <span class="attribute">rel</span>=<span class="string">"stylesheet"</span> <span class="attribute">type</span>=<span class="string">"text/css"</span></span><br><span class="line">　　　　     <span class="attribute">media</span>=<span class="string">"screen and (min-width: 400px) and (max-device-width: 600px)"</span></span><br><span class="line">　　　　     <span class="attribute">href</span>=<span class="string">"smallScreen.css"</span> /&gt;</span><br></pre></td></tr></table></figure></p><p>   如果屏幕宽度在400像素到600像素之间，则加载smallScreen.css文件。<br>   除了用html标签加载CSS文件，还可以在现有CSS文件中加载。<br>      <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">　　     @import url(<span class="string">"tinyScreen.css"</span>)<span class="built_in"> screen </span><span class="keyword">and</span> (max-device-width: 400px);</span><br></pre></td></tr></table></figure></p><h1 id="六、CSS的-media规则"><a href="#六、CSS的-media规则" class="headerlink" title="六、CSS的@media规则"></a>六、CSS的@media规则</h1><p>   同一个CSS文件中，也可以根据不同的屏幕分辨率，选择应用不同的CSS规则。<br>　　    <figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">　　     @<span class="keyword">media</span> screen and (max-device-width: <span class="number">400px</span>) &#123;</span><br><span class="line">　　　　        <span class="selector-class">.column</span> &#123;</span><br><span class="line">　　　　　 　        <span class="attribute">float</span>: none;</span><br><span class="line">　　　　　　         <span class="attribute">width</span>:auto;</span><br><span class="line">　　　　        &#125;</span><br><span class="line">　　　</span><br><span class="line">　　　　     <span class="selector-id">#sidebar</span> &#123;</span><br><span class="line">　　　　　　      <span class="attribute">display</span>:none;</span><br><span class="line">　　　　     &#125;</span><br><span class="line">　　    &#125;</span><br></pre></td></tr></table></figure></p><p>   上面的代码意思是，如果屏幕宽度小于400像素，则column块取消浮动（float:none）、宽度自动调节（width:auto），sidebar块不显示（display:none）。</p><h1 id="七、图片的自适应（fluid-image）"><a href="#七、图片的自适应（fluid-image）" class="headerlink" title="七、图片的自适应（fluid image）"></a>七、图片的自适应（fluid image）</h1><p>   除了布局和文本，”自适应网页设计”还必须实现图片的自动缩放。<br>   这只要一行CSS代码：<br>　　   <code>img { max-width: 100%;}</code><br>   这行代码对于大多数嵌入网页的视频也有效，所以可以写成：<br>　　   <code>img, object { max-width: 100%;}</code><br>   老版本的IE不支持max-width，所以只好写成：<br>　　   <code>img { width: 100%; }</code><br>   此外，windows平台缩放图片时，可能出现图像失真现象。这时，可以尝试使用IE的专有命令：<br>　　   <code>img { -ms-interpolation-mode: bicubic; }</code><br>   或者，Ethan Marcotte的imgSizer.js。<br>　　   <figure class="highlight lisp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">　　   addLoadEvent(<span class="name">function</span>() &#123;</span><br><span class="line">　　　　   var imgs = document.getElementById(<span class="string">"content"</span>).getElementsByTagName(<span class="string">"img"</span>)<span class="comment">;</span></span><br><span class="line">　　　　   imgSizer.collate(<span class="name">imgs</span>)<span class="comment">;</span></span><br><span class="line">　　   &#125;)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>]]></content>
-    
-    <summary type="html">
-    
-      
-      
-        &lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;http://www.ruanyifeng.com/blog/2012/05/responsive_web_design.html&quot; target=&quot;_blank&quot; rel=&quot;noopener&quot;&gt;点我转向原文章&lt;/a&gt;&lt;br&gt;转译：pinocc
-      
-    
-    </summary>
-    
-      <category term="web" scheme="https://zaizizaizai.github.io/categories/web/"/>
-    
-    
-      <category term="web" scheme="https://zaizizaizai.github.io/tags/web/"/>
-    
-      <category term="转载" scheme="https://zaizizaizai.github.io/tags/%E8%BD%AC%E8%BD%BD/"/>
-    
-      <category term="网页设计" scheme="https://zaizizaizai.github.io/tags/%E7%BD%91%E9%A1%B5%E8%AE%BE%E8%AE%A1/"/>
     
   </entry>
   
