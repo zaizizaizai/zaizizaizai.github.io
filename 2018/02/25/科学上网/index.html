@@ -12,6 +12,16 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
 <meta name="theme-color" content="#222">
 
+<script>
+  (function(){
+    if(''){
+      if(prompt('请输入文章密码') !== ''){
+        alert('密码错误！');
+        history.back();
+      }
+    }
+  })();
+</script>
 
 
 
@@ -78,7 +88,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="heroku,ss，科学上网," />
+  <meta name="keywords" content="heroku,ss,科学上网," />
 
 
 
@@ -97,14 +107,14 @@
 
 
 <meta name="description" content="heroku上部署ss先来占个坑 之前在github上发现了一个在heroku上搭建shadowsocks的项目，自己试着搭建，发现极好用。此时原项目已被作者删除，重新找了一个。特点：  1、快速，youtube上4k视频无压力2、无限流量3、免费！免费！   github项目地址">
-<meta name="keywords" content="heroku,ss，科学上网">
+<meta name="keywords" content="heroku,ss,科学上网">
 <meta property="og:type" content="article">
 <meta property="og:title" content="科学上网">
 <meta property="og:url" content="https://zaizizaizai.github.io/2018/02/25/科学上网/index.html">
 <meta property="og:site_name" content="zaizizaizai">
 <meta property="og:description" content="heroku上部署ss先来占个坑 之前在github上发现了一个在heroku上搭建shadowsocks的项目，自己试着搭建，发现极好用。此时原项目已被作者删除，重新找了一个。特点：  1、快速，youtube上4k视频无压力2、无限流量3、免费！免费！   github项目地址">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-25T08:04:44.193Z">
+<meta property="og:updated_time" content="2018-02-25T08:19:47.448Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="科学上网">
 <meta name="twitter:description" content="heroku上部署ss先来占个坑 之前在github上发现了一个在heroku上搭建shadowsocks的项目，自己试着搭建，发现极好用。此时原项目已被作者删除，重新找了一个。特点：  1、快速，youtube上4k视频无压力2、无限流量3、免费！免费！   github项目地址">
@@ -179,7 +189,7 @@
 
   <div class="container sidebar-position-left page-post-detail ">
     <div class="headband"></div>
-
+	
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
@@ -448,13 +458,26 @@
 
     
 
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
     <footer class="post-footer">
       
         <div class="post-tags">
           
-            <a href="/tags/heroku/" rel="tag"># heroku</a>
+            <a href="/tags/heroku/" rel="tag"><i class="fa fa-tag"></i> heroku</a>
           
-            <a href="/tags/ss，科学上网/" rel="tag"># ss，科学上网</a>
+            <a href="/tags/ss/" rel="tag"><i class="fa fa-tag"></i> ss</a>
+          
+            <a href="/tags/科学上网/" rel="tag"><i class="fa fa-tag"></i> 科学上网</a>
           
         </div>
       
@@ -476,6 +499,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/25/文章密码测试/" rel="prev" title="文章密码测试">
+                文章密码测试 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -562,7 +589,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">25</span>
+                <span class="site-state-item-count">27</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -584,7 +611,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">26</span>
+                <span class="site-state-item-count">29</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -670,7 +697,8 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright" >
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
   
   &copy;  2017 - 
   <span itemprop="copyrightYear">2018</span>
@@ -683,6 +711,9 @@
 
 <div class="powered-by">
   <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
 </div>
 
 <div class="theme-info">
@@ -690,7 +721,9 @@
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Pisces
   </a>-->
+  <span class="post-count">博客全站共20.8k字</span>
 </div>
+
 
 
         

@@ -1,6 +1,30 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[博文置顶测试]]></title>
+    <url>%2F2018%2F02%2F25%2F%E5%8D%9A%E6%96%87%E7%BD%AE%E9%A1%B6%E6%B5%8B%E8%AF%95%2F</url>
+    <content type="text"><![CDATA[使用方法在文章中添加top值，数值越大文章越靠前，如：12345title: 博文置顶测试date: 2018-02-25 17:09:16tags: [测试,博客]categories: 博客说明top: 3]]></content>
+      <categories>
+        <category>博客说明</category>
+      </categories>
+      <tags>
+        <tag>测试</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[文章密码测试]]></title>
+    <url>%2F2018%2F02%2F25%2F%E6%96%87%E7%AB%A0%E5%AF%86%E7%A0%81%E6%B5%8B%E8%AF%95%2F</url>
+    <content type="text"><![CDATA[文章密码测试测试 点击全文应该需要输入密码密码：123456]]></content>
+      <categories>
+        <category>博客说明</category>
+      </categories>
+      <tags>
+        <tag>测试</tag>
+        <tag>博客</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[科学上网]]></title>
     <url>%2F2018%2F02%2F25%2F%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91%2F</url>
     <content type="text"><![CDATA[heroku上部署ss先来占个坑 之前在github上发现了一个在heroku上搭建shadowsocks的项目，自己试着搭建，发现极好用。此时原项目已被作者删除，重新找了一个。特点： 1、快速，youtube上4k视频无压力2、无限流量3、免费！免费！ github项目地址]]></content>
@@ -9,7 +33,8 @@
       </categories>
       <tags>
         <tag>heroku</tag>
-        <tag>ss，科学上网</tag>
+        <tag>ss</tag>
+        <tag>科学上网</tag>
       </tags>
   </entry>
   <entry>
