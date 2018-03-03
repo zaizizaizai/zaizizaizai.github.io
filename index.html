@@ -693,14 +693,12 @@
 <h3 id="1-3、测试"><a href="#1-3、测试" class="headerlink" title="1.3、测试"></a>1.3、测试</h3><blockquote>
 <p>postman测试<br><img src="/images/网站解析/postMan发送教务处请求失败.png" alt="postMan发送教务处请求失败"></p>
 </blockquote>
-<pre><code>一开始想到把请求数据拿到，再伪造不就行了吗？至于怎么发送、接受数据，后面再说嘛...
-</code></pre><p>结果转眼一想，这还有验证码，难道要把验证码都转发给客户端？我看到的教务处app中用户名和密码都是学号，不科学啊，难道他找到漏洞，把学校教务处数据爬下来了？<br>我转向解析app</p>
+<p>一开始想到把请求数据拿到，再伪造不就行了吗？至于怎么发送、接受数据，后面再说嘛…<br>结果转眼一想，这还有验证码，难道要把验证码都转发给客户端？我看到的教务处app中用户名和密码都是学号，不科学啊，难道他找到漏洞，把学校教务处数据爬下来了？<br>我转向解析app</p>
 <h1 id="2、解析app"><a href="#2、解析app" class="headerlink" title="2、解析app"></a>2、解析app</h1><blockquote>
 <p>app发送到服务器的数据<br><img src="/images/网站解析/app请求.png" alt="app请求"></p>
 </blockquote>
-<pre><code>从截图中`Request PostData`这一栏中可以看到发送的数据，这个username(学号)没加密，password(密码)加密了，由于学号就是用户名和密码，我试着把密码用md5方法编码、URL编/解码...等一系列还有我没见过的编/解码方法，结果都不与password/原密码匹配，我猜应该加入了干扰字符吧，寻找编码方法失败。
-但可以看到是发送到`http://221.233.24.23/eams/login.action`,就去这个网址看看。
-</code></pre><h1 id="3、-教学管理系统溜一圈"><a href="#3、-教学管理系统溜一圈" class="headerlink" title="3、 教学管理系统溜一圈"></a>3、 教学管理系统溜一圈</h1><h3 id="3-1、登录前"><a href="#3-1、登录前" class="headerlink" title="3.1、登录前"></a>3.1、登录前</h3><p>访问这个地址，有登录界面，这张图片是<code>以错误的用户名密码登录时浏览器发送的数据</code></p>
+<p>从截图中<code>Request PostData</code>这一栏中可以看到发送的数据，这个username(学号)没加密，password(密码)加密了，由于学号就是用户名和密码，我试着把密码用md5方法编码、URL编/解码…等一系列还有我没见过的编/解码方法，结果都不与password/原密码匹配，我猜应该加入了干扰字符吧，寻找编码方法失败。<br>    但可以看到是发送到<code>http://221.233.24.23/eams/login.action</code>,就去这个网址看看。</p>
+<h1 id="3、-教学管理系统溜一圈"><a href="#3、-教学管理系统溜一圈" class="headerlink" title="3、 教学管理系统溜一圈"></a>3、 教学管理系统溜一圈</h1><h3 id="3-1、登录前"><a href="#3-1、登录前" class="headerlink" title="3.1、登录前"></a>3.1、登录前</h3><p>访问这个地址，有登录界面，这张图片是<code>以错误的用户名密码登录时浏览器发送的数据</code></p>
 <blockquote>
 <p>以错误的用户名密码登录时浏览器发送的数据<br><img src="/images/网站解析/失败登录教学管理系统.png" alt="失败登录教学管理系统"></p>
 </blockquote>
