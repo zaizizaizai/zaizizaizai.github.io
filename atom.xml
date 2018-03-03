@@ -137,7 +137,7 @@
     <link href="https://zaizizaizai.github.io/2018/02/25/%E5%8D%9A%E6%96%87%E7%BD%AE%E9%A1%B6%E6%B5%8B%E8%AF%95/"/>
     <id>https://zaizizaizai.github.io/2018/02/25/博文置顶测试/</id>
     <published>2018-02-25T09:09:16.000Z</published>
-    <updated>2018-02-25T09:13:06.500Z</updated>
+    <updated>2018-03-03T07:23:07.894Z</updated>
     
     <content type="html"><![CDATA[<h3 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h3><p>在文章中添加<strong>top</strong>值，数值越大文章越靠前，如：<br><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">title: 博文置顶测试</span><br><span class="line">date: 2018<span class="string">-02</span><span class="string">-25</span> 17:09:16</span><br><span class="line"><span class="keyword">tags:</span> [测试,博客]</span><br><span class="line">categories: 博客说明</span><br><span class="line">top: 3</span><br></pre></td></tr></table></figure></p>]]></content>
     
