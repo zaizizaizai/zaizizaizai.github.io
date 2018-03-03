@@ -1,9 +1,55 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[学习ES6]]></title>
+    <url>%2F2018%2F03%2F03%2F%E5%AD%A6%E4%B9%A0ES6%2F</url>
+    <content type="text"><![CDATA[前言兼容性ES6(ES2015)——IE10+、Chrome、FireFox、移动端、Node.js 如何兼容老版本？编译、转译 1、在线转换(用户每次打开页面需重新转换，费时) 在线转换有很多工具，在这里以babel为例，在线转换只需要在加上browser.js就行，如下： 12345&lt;head&gt;...省略&lt;script src="browser.js" charset="utf-8"&gt;&lt;/script&gt;&lt;script type="type/babel"&gt;&lt;/head&gt; 2、提前编译(babel/browser.js) ES6变化内容 1、变量 2、函数 3、数组 4、字符串 5、面向对象 6、Promise(串行化的数据请求、异步交互) 7、generator(将同步操作拆为异步操作) 8、模块化 面向对象应用——React React特点 1、组件化2、强依赖于JSX=babel=browser.js 12345678910111213141516171819202122232425262728293031323334353637383940414243444546474849505152535455&lt;!DOCTYPE html&gt;&lt;html lang="en"&gt;&lt;head&gt; &lt;meta charset="UTF-8"&gt; &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt; &lt;meta http-equiv="X-UA-Compatible" content="ie=edge"&gt; &lt;title&gt;学习react-组件&lt;/title&gt; &lt;script src="react.js" charset="utf-8"&gt;&lt;/script&gt; &lt;script src="react-dom.js" charset="utf-8"&gt;&lt;/script&gt; &lt;script src="browser.js" charset="utf-8"&gt;&lt;/script&gt; &lt;script type="text/babel"&gt; class Item extends React.Component( constructor(...args)&#123; super(...args); &#125; render()&#123; return &lt;li&gt;&#123;this.props.str&#125;&lt;/li&gt;; &#125; ) class List extends React.Component( constructor(params) &#123; super(params); &#125; render()&#123; // let aItems=[]; // for(let i = 0; i &lt; this.props.arr.length; i++)&#123; // aItems.push(&lt;Item str = &#123;this.props.arr[i]&lt;/Item&gt;&#125;&gt;); // &#125; return &lt;ul&gt; &#123;this.props.arr.map(a =&gt; &lt;Item str = &#123;a&#125;&gt;&lt;/Item&gt;)&#125; &lt;/ul&gt;; &#125; ) window.onload = function()&#123; let oDiv = docum ent.getElementById('div1'); ReactDom.render( &lt;List arr=&#123;['123','abc','bxsa']&#125;&gt;&lt;/List&gt;, oDiv ); &#125;; &lt;/script&gt;&lt;/head&gt;&lt;body&gt; &lt;div id="div1"&gt; &lt;/div&gt;&lt;/body&gt;&lt;/html&gt; Json 1、JSON对象 JSON.stringify Json.parse 2、简写 名字一样 123let a = 2;let b = 5;let json = &#123;a, b, c: 6&#125;; 方法 1234567show function()&#123; //&#125;show ()&#123; //&#125; 3、json的标准写法 1.只能用双引号 2.所有名字都必须用引号包起来 {a: 12, b: 15} × {‘a’: 12, ‘b’: 15} × {“a”: 12, “b”: 15} √ generator(生成器)概念 普通函数——一路到底 123456function show()&#123; alert('a'); alert('b');&#125;show() generator——中间能暂停(踹一脚走一步) 123456789101112function *show()&#123; alert('a'); yield; //放弃 alert('b');&#125;let genObj = show();genObj.next(); // agenObj.next(); // b generator原理 1234567891011//以上一段代码为例function show_1()&#123; alert('a');&#125;function show_2()&#123; alert('b');&#125;genObj.next(); // show_1genObj.next(); // show_2 yield 应用场景请求数据]]></content>
+      <categories>
+        <category>web</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>web</tag>
+        <tag>es6</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[记一次网站解析]]></title>
+    <url>%2F2018%2F03%2F01%2F%E8%AE%B0%E4%B8%80%E6%AC%A1%E7%BD%91%E7%AB%99%E8%A7%A3%E6%9E%90%2F</url>
+    <content type="text"><![CDATA[前言今天记起要选公选课，同学安利一个教务处app，打开一看发现界面和功能都挺不错的，突然有做教务处微信小程序版本的想法，第一想法就是去找官网api，可转眼一想，哪来的api？原作者说网站解析来的，于是开始第一次抓包过程。 1、去长大官网溜了一圈首先来到官网看了下 1.1、登录前 1.2、登陆后 1.3、测试 2、解析app 3、 教学管理系统溜一圈3.1、登录前 3.2、登陆后 3.3、测试 结语]]></content>
+      <categories>
+        <category>动手</category>
+      </categories>
+      <tags>
+        <tag>web</tag>
+        <tag>抓包</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[模板引擎jade与ejs的区别与重点]]></title>
+    <url>%2F2018%2F02%2F27%2F%E6%A8%A1%E6%9D%BF%E5%BC%95%E6%93%8Ejade%E4%B8%8Eejs%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%8E%E9%87%8D%E7%82%B9%2F</url>
+    <content type="text"><![CDATA[一、模板引擎 //TODO 二、jade1、认识jade //TODO 2、基础语法2.1、根据缩进划分层级2.2、属性用()表示，用逗号分割 *style = [] *class = [] 2.3、内容123div xxx span xxx a(href="xxx")链接 2.4、渲染 jade.render(‘字符串’); jdde.renderFile(‘模板文件名’, 参数); 3、高级用法3.1原样输出123456789101112//1.jadehtml head body zaizi //转为对应html&lt;html&gt; &lt;head&gt;&lt;/head&gt; &lt;body&gt; &lt;zaizi&gt;&lt;/zaizi&gt; &lt;/body&gt; 从上面代码可以看出，原意是body的内容为zaizi，但实际转译把zaizi作为自定义标签。如何在标签里原样显示内容呢？如下: 加竖线|,原样输出 12345678910//1.jadehtml head body |zaizi //转为对应html&lt;html&gt; &lt;head&gt;&lt;/head&gt; &lt;body&gt;zaizi&lt;/body&gt; 此语法可用于在html代码中写js，例子： 12345678html head script | //js代码 | //js代码 body |zaizi |dog 以上情况满足写在html中js的需求，但每一行都需要加|，还是比较麻烦，更简单的方法是：在script后面加一个点.，例子： 在标签后加一个点.表示标签后的内容都原样输出 12345html head script. // js代码 body 若要文件结构更清楚，可以尝试引用外部js文件，但会增加http请求数，这里可以采用include，例子： include引用文件 12345html head script. include a.js body 3.2 使用变量12345678910111213141516171819//jade代码html head body div 我的名字: #&#123;name&#125; //js代码const jade = require('jade');const.log(jade.renderFile('`jade文件地址`', &#123;pretty: true, name: 'zaizi'&#125;));//编译效果&lt;html&gt; &lt;head&gt;&lt;/head&gt; &lt;body&gt; &lt;div&gt;我的名字: zaizi&lt;/div&gt; &lt;/body&gt;&lt;/html&gt;]]></content>
+      <categories>
+        <category>模板引擎</category>
+      </categories>
+      <tags>
+        <tag>jade</tag>
+        <tag>ejs</tag>
+        <tag>模板引擎</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[剖析Promise内部结构]]></title>
     <url>%2F2018%2F02%2F25%2F%E5%89%96%E6%9E%90Promise%E5%86%85%E9%83%A8%E7%BB%93%E6%9E%84%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[前言 阅读本文需要对promise有一定了解，可阅读详解promise Promise标准解读 1.只有一个then方法，没有catch，race，all等方法，甚至没有构造函数 Promise标准中仅指定了Promise对象的`then`方法的行为，其他常见的方法/函数都没有指定，包括`catch`，`race`，`all`等常用方法，甚至也没有指定该乳环构造一个Promise对象，而且`then`也没有一般实现中(Q,$q等)所支持的第三个参数，一般成为onProgress 2.then方法返回一个新的Promise Promise的`then`方法返回一个新的Promise，而不是返回this，此处下文会有更多解释 12promise2 = promise1.then(alert);promise2 != promise1 //true 3.不同Promise的实现需要可以相互调用(interoperable) 4.Promise的初始状态为pending，它可以由此状态转换为fulfilled(也叫resolved)或者rejected，一旦状态确定，就不可以再转换为其他状态，状态确定的过程成为settle 5.更具体的标准 一步一步实现一个Promise 一步一步实现一个Promise 构造函数标准中并没由指定如何构造一个Promise对象，在此以实现Promise的通用方法来构造一个Promise对象，即ES6原生Promise里所使用的方法: 1234567//Promise构造函数接收一个executor函数，execuyor函数执行完同步或者异步操作后，调用它的两个参数resolve和rejectvar promise = new Promise(function(resolve, reject) &#123; /* 如果操作成功，调用resolve并传入value 如果操作失败，调用reject并传入reason */&#125;); 先实现构造函数的框架： 123456789function Promise(executor) &#123; var self = this; self.status = 'pending'; //Promise当前的状态 self.data = undefined; //Promise的值 self.onResolvedCallback = []; //Promise resolve时的回调函数 self.onRejectedCallback = []; //Promise reject时的回调函数 executor(resolve, reject); //执行executor并传入相应的参数&#125; 上面代码基本实现了Promise构造函数的主体，但还是有两个问题： 1.我们给executor函数传了两个参数：resolve和reject，这两个参数尚未定义 2.executor也有可能出错(throw)，此时，Promise应该被其throw出的值reject： 123new Promise(function(resolve, reject) &#123; throw 2;&#125;) 所以我们需要在构造函数里定义resolve和reject这两个函数： 12345678910111213141516171819202122function Promise(executor) &#123; var self = this; var self = this self.status = 'pending' // Promise当前的状态 self.data = undefined // Promise的值 self.onResolvedCallback = [] // Promise resolve时的回调函数集，因为在Promise结束之前有可能有多个回调添加到它上面 self.onRejectedCallback = [] // Promise reject时的回调函数集，因为在Promise结束之前有可能有多个回调添加到它上面 function resolve(value) &#123; // TODO &#125; function reject(reson) &#123; // TODO &#125; try &#123; //try/catch捕捉错误 executor(resolve, reject); //执行executor &#125; catch(e) &#123; reject(e); &#125;&#125; 原文]]></content>
+      <categories>
+        <category>node笔记</category>
+      </categories>
+      <tags>
+        <tag>笔记</tag>
+        <tag>node</tag>
+        <tag>promise</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[博文置顶测试]]></title>
@@ -139,9 +185,9 @@
       </tags>
   </entry>
   <entry>
-    <title><![CDATA[详解promise]]></title>
-    <url>%2F2018%2F02%2F20%2F%E8%AF%A6%E8%A7%A3promise%2F</url>
-    <content type="text"><![CDATA[1、什么是Promise1.1、常见异步处理Promise是抽象异步处理对象以及对其进行操作的组件。Promise最初被提出是在E语言，E语言是基于并列/并行处理设计的一种编程语言。常见基于javaScript的异步处理大都利用回调函数 12345678----//使用回调函数的异步处理getAsync("fileA.txt", function(error, result)&#123; if(error)&#123; throw error; &#125; &#125;);---- 1.2、使用Promise进行异步处理Promise则是把类似的异步处理对象和处理规则规范化，并按照统一的接口来编写，而采取规定方法之外的写法都会出错。 12345678//使用Promise进行异步处理var promise = getAsyncPromise("fileA.txt");promise.then(function(result)&#123; //获取文件内容成功时的处理&#125;).catch(function(error)&#123; //获取文件内容失败时的处理&#125;);&lt;1&gt;返回promise对象 我们可以向预设了抽象化异步处理的promise对象，注册这个promise对象执行成功和失败时相应的回调函数。这里与常见异步处理操作不同，需严格遵守规则，无法自由的定义回调函数的参数。所以，promise的功能是可以将复杂的异步处理轻松地进行模式化 1.3、Promise简介三种API类型 ConstructorPromise类似XMLHttpRequest，从构造函数promise新建一个promise对象作为接口。 12345//创建promise对象var promise = new Promise(function(res,rej)&#123; //异步处理 //处理完后，调用resolve或reject&#125;); Instance Method通过new生成promise对象，promise.then()方法可以设置在resolve(成功)/reject(失败)时调用的回调函数。 promise.then(onFulfilled, onRejected) resolve(成功)时onFulfilled 会被调用 reject(失败)时onRejected 会被调用只想对异常进行处理时可以采用 promise.then(undefined, onRejected)这种方式，只指定reject时的回调函数即可。不过这种情况下 promise.catch(onRejected) 应该是个更好的选择。 Static Method辅助方法：promise.all()promise.resolve() 1.3.1、Promise workflow123456789101112function asyncFunction() &#123;return new Promise(function (resolve, reject) &#123; setTimeout(function () &#123; resolve('Async Hello world'); &#125;, 16); &#125;);&#125;asyncFunction().then(function (value) &#123; console.log(value); // =&gt; 'Async Hello world'&#125;).catch(function (error) &#123; console.log(error);&#125;); 1.2.2、Promise的状态用new Promise实例化的promise对象有以下三个状态： “has-resolution” - Fulfilled resolve(成功)时。此时会调用 onFulfilled “has-rejection” - Rejected reject(失败)时。此时会调用 onRejected “unresolved” - Pending 既不是resolve也不是reject的状态。也就是promise对象刚被创建后的初始化状态等状态变化promise对象的状态，从Pending转换为Fulfilled或Rejected之后， 这个promise对象的状态就不会再发生任何变化。也就是说，Promise与Event等不同，在.then 后执行的函数可以肯定地说只会被调用一次。]]></content>
+    <title><![CDATA[理解promise]]></title>
+    <url>%2F2018%2F02%2F20%2F%E7%90%86%E8%A7%A3promise%2F</url>
+    <content type="text"><![CDATA[前言在学习node的路上，理解异步操作是重点，而处理的方法一直在完善，先有setTimeout,后又promise，貌似目前目前大招是async/await(目前三个都不理解，(捂脸…))，下面就开始吧。这是在看JavaScript Promise迷你书时记录的笔记,若有错误，敬请指出，感激不尽。原文Promise迷你书 1、什么是Promise1.1、常见异步处理Promise是抽象异步处理对象以及对其进行操作的组件。Promise最初被提出是在E语言，E语言是基于并列/并行处理设计的一种编程语言。常见基于javaScript的异步处理大都利用回调函数 12345678----//使用回调函数的异步处理getAsync("fileA.txt", function(error, result)&#123; if(error)&#123; throw error; &#125; &#125;);---- 1.2、使用Promise进行异步处理Promise是把类似的异步处理对象和处理规则规范化，并按照统一的接口来编写，而采取规定方法之外的写法都会出错。 12345678//使用Promise进行异步处理var promise = getAsyncPromise("fileA.txt");promise.then(function(result)&#123; //获取文件内容成功时的处理&#125;).catch(function(error)&#123; //获取文件内容失败时的处理&#125;);&lt;1&gt;返回promise对象 我们可以向预设了抽象化异步处理的promise对象，注册这个promise对象执行成功和失败时相应的回调函数。这里与常见异步处理操作不同，需严格遵守规则，无法自由的定义回调函数的参数。所以，promise的功能是可以将复杂的异步处理轻松地进行模式化 1.3、Promise简介三种API类型 ConstructorPromise类似XMLHttpRequest，从构造函数promise新建一个promise对象作为接口。 12345//创建promise对象var promise = new Promise(function(res,rej)&#123; //异步处理 //处理完后，调用resolve或reject&#125;); Instance Method通过new生成promise对象，promise.then()方法可以设置在resolve(成功)/reject(失败)时调用的回调函数。 promise.then(onFulfilled, onRejected) resolve(成功)时onFulfilled 会被调用 reject(失败)时onRejected 会被调用只想对异常进行处理时可以采用 promise.then(undefined, onRejected)这种方式，只指定reject时的回调函数即可。不过这种情况下 promise.catch(onRejected) 应该是个更好的选择。 Static Method辅助方法：promise.all()promise.resolve() 1.3.1、Promise workflow123456789101112function asyncFunction() &#123;return new Promise(function (resolve, reject) &#123; setTimeout(function () &#123; resolve('Async Hello world'); &#125;, 16); &#125;);&#125;asyncFunction().then(function (value) &#123; console.log(value); // =&gt; 'Async Hello world'&#125;).catch(function (error) &#123; console.log(error);&#125;); 1.3.2、Promise的状态用new Promise实例化的promise对象有以下三个状态： “has-resolution” - Fulfilled resolve(成功)时。此时会调用 onFulfilled “has-rejection” - Rejected reject(失败)时。此时会调用 onRejected “unresolved” - Pending 既不是resolve也不是reject的状态。也就是promise对象刚被创建后的初始化状态等状态变化 promise对象的状态，从Pending转换为Fulfilled或Rejected之后， 这个promise对象的状态就不会再发生任何变化。也就是说，Promise与Event等不同，在.then后执行的函数可以肯定地说只会被调用一次。另外，Fulfilled和Rejected这两个只中任一状态都可以表示为Settled(不变的)。 Settled resolve(成功)或rejected(失败)。 1.4、编写Promise代码如何写Promise代码。 1.4.1、创建promise对象流程如下 1.new Promise(fn)返回一个promise对象 2.在fn中指定异步等处理 * 处理结果正常，调用resolve(处理结果值) * 处理结果错误，调用reject(Error对象) 在此用Promise来通过异步处理方式来获取XMLHttpRequest(XHR)的数据。 创建XHR的promise对象首先，创建一个用Promise把XHR处理包装起来的名为getURL的函数。 xhr-promise.js1234567891011121314151617181920212223242526function getURL(URL) &#123; return new Promise(function (resolve, reject) &#123; var req = new XMLHttpRequest(); req.open('GET', URL, true); req.onload = function () &#123; if (req.status == 200) &#123; resolve(req.responseText); &#125; else &#123; reject(new Error(req.statusText)); &#125; &#125;; req.onerror = function () &#123; reject(new Error(req.statusText)); &#125; &#125;);&#125;//实例var URL = "http://httpbin.org/get";getURL(URL).then(function onFulfilled(value)&#123; console.log(value);&#125;).catch(function onRejected(error)&#123; console.error(error);&#125;);//输出结果为请求数据 getURL只有在通过XHR取得结果状态码为200(数据取得成功)时，调用resovle，其他情况(取得失败)时调用reject方法。 成功时 resolve(req.responseText)在response的内容中加入了这个参数，resolve方法把参数传给回调函数(then方法会接收这个参数)。 常见回调函数callback(err, response)的值为err(出错)和response(接收的数据)，来处理正常和异常的情况，而在Promise中resolve/reject则担当了这个职责 失败时 当发生错误时，onerror事件被触发，调用reject。 此时，如reject(new Error(req.statusText))，创建一个Error对象并将具体的值传入，传给reject的参数只要是Error对象(或者继承自Error对象)就行。 我的疑问]]></content>
       <categories>
         <category>node笔记</category>
       </categories>
@@ -172,9 +218,9 @@
         <category>React笔记</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>Immutable</tag>
         <tag>React</tag>
+        <tag>笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -185,8 +231,8 @@
         <category>笔记</category>
       </categories>
       <tags>
-        <tag>笔记</tag>
         <tag>React</tag>
+        <tag>笔记</tag>
       </tags>
   </entry>
   <entry>
@@ -221,8 +267,8 @@
         <category>Git笔记</category>
       </categories>
       <tags>
-        <tag>Git</tag>
         <tag>笔记</tag>
+        <tag>Git</tag>
       </tags>
   </entry>
   <entry>
@@ -266,7 +312,7 @@
     <url>%2F2017%2F11%2F26%2Fnpm%E9%87%8D%E6%96%B0%E5%AE%89%E8%A3%85%E6%A8%A1%E5%9D%97%2F</url>
     <content type="text"><![CDATA[npm删除模块，重新安装错误经过 使用hexo模块的时候，不小心将已经配置好的blog文件删除。在网上查找资料，运行npm cache clean –force，出现错误（不能使用hexo命令）。然后我就准备重装hexo，把usr/bin和local里hexo相关文件删除，用npm重新下载hexo，但还是和之前一样出错 解决 需要删除hexo相关文件和packagejson里的依赖，再重新下载hexo，就可以使用了 具体位置（linux环境）：/home/zaizizaizai/.npm-global/bin和/home/zaizizaizai/.npm-global/lib 补充：此路径为隐藏目录，在home区需要按快捷键ctrl+h显示隐藏文件，或者通过命令行进行操作]]></content>
       <categories>
-        <category>node.js</category>
+        <category>node笔记</category>
       </categories>
       <tags>
         <tag>node.js</tag>

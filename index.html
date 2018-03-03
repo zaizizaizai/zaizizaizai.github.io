@@ -506,6 +506,591 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/03/03/学习ES6/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/03/学习ES6/" itemprop="url">学习ES6</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-03T09:44:37+08:00">
+                2018-03-03
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/web/" itemprop="url" rel="index">
+                    <span itemprop="name">web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/03/学习ES6/" class="leancloud_visitors" data-flag-title="学习ES6">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h1 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h1><p>ES6(ES2015)——IE10+、Chrome、FireFox、移动端、Node.js</p>
+<h2 id="如何兼容老版本？"><a href="#如何兼容老版本？" class="headerlink" title="如何兼容老版本？"></a>如何兼容老版本？</h2><p><strong>编译、转译</strong></p>
+<ul>
+<li><p>1、在线转换(用户每次打开页面需重新转换，费时)<br>   在线转换有很多工具，在这里以babel为例，在线转换只需要在<head>加上browser.js就行，如下：</head></p>
+   <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">...省略</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"browser.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"type/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2、提前编译(babel/browser.js)</p>
+</li>
+</ul>
+<h1 id="ES6变化内容"><a href="#ES6变化内容" class="headerlink" title="ES6变化内容"></a>ES6变化内容</h1><ul>
+<li>1、变量</li>
+<li>2、函数</li>
+<li>3、数组</li>
+<li>4、字符串</li>
+<li>5、面向对象</li>
+<li>6、Promise(串行化的数据请求、异步交互)</li>
+<li>7、generator(将同步操作拆为异步操作)</li>
+<li>8、模块化</li>
+</ul>
+<h1 id="面向对象应用——React"><a href="#面向对象应用——React" class="headerlink" title="面向对象应用——React"></a>面向对象应用——React</h1><blockquote>
+<p>React特点</p>
+<blockquote>
+<p>1、组件化<br>2、强依赖于JSX=babel=browser.js</p>
+</blockquote>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>学习react-组件<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"react.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"react-dom.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"browser.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        class Item extends React.Component(</span></span><br><span class="line"><span class="undefined">            constructor(...args)&#123;</span></span><br><span class="line"><span class="undefined">                super(...args);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            render()&#123;</span></span><br><span class="line"><span class="xml">                return <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;this.props.str&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        )</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        class List extends React.Component(</span></span><br><span class="line"><span class="undefined">            constructor(params) &#123;</span></span><br><span class="line"><span class="undefined">                super(params);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            render()&#123;</span></span><br><span class="line"><span class="undefined">                // let aItems=[];</span></span><br><span class="line"><span class="undefined">                // for(let i = 0; i &lt; this.props.arr.length; i++)&#123;</span></span><br><span class="line"><span class="undefined">                //     aItems.push(&lt;Item str = &#123;this.props.arr[i]&lt;/Item&gt;&#125;&gt;);</span></span><br><span class="line"><span class="undefined">                // &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="xml">                return <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        &#123;this.props.arr.map(a =&gt; <span class="tag">&lt;<span class="name">Item</span> <span class="attr">str</span> = <span class="string">&#123;a&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">Item</span>&gt;</span>)&#125;</span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        )</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        window.onload = function()&#123;</span></span><br><span class="line"><span class="undefined">            let oDiv = docum</span></span><br><span class="line"><span class="undefined">            ent.getElementById('div1');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            ReactDom.render(</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">List</span> <span class="attr">arr</span>=<span class="string">&#123;[</span>'<span class="attr">123</span>','<span class="attr">abc</span>','<span class="attr">bxsa</span>']&#125;&gt;</span><span class="tag">&lt;/<span class="name">List</span>&gt;</span>,</span></span><br><span class="line"><span class="undefined">                oDiv</span></span><br><span class="line"><span class="undefined">            );</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<h1 id="Json"><a href="#Json" class="headerlink" title="Json"></a>Json</h1><ul>
+<li><p>1、JSON对象</p>
+<ul>
+<li>JSON.stringify</li>
+<li>Json.parse</li>
+</ul>
+</li>
+<li><p>2、简写</p>
+<ul>
+<li><p>名字一样</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> json = &#123;a, b, <span class="attr">c</span>: <span class="number">6</span>&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方法</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">show <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">show ()&#123;</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>3、json的标准写法<ul>
+<li>1.只能用双引号</li>
+<li>2.所有名字都必须用引号包起来<ul>
+<li>{a: 12, b: 15}  ×</li>
+<li>{‘a’: 12, ‘b’: 15}  ×</li>
+<li>{“a”: 12, “b”: 15}  √</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h1 id="generator-生成器"><a href="#generator-生成器" class="headerlink" title="generator(生成器)"></a>generator(生成器)</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
+<li>普通函数——一路到底</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">function</span> <span class="selector-tag">show</span>()&#123;</span><br><span class="line">    <span class="selector-tag">alert</span>(<span class="string">'a'</span>);</span><br><span class="line">    <span class="selector-tag">alert</span>(<span class="string">'b'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">show</span>()</span><br></pre></td></tr></table></figure>
+<ul>
+<li>generator——中间能暂停(踹一脚走一步)</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> *<span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">'a'</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">yield</span>;    <span class="comment">//放弃</span></span><br><span class="line">    </span><br><span class="line">    alert(<span class="string">'b'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> genObj = show();</span><br><span class="line"></span><br><span class="line">genObj.next();    <span class="comment">// a</span></span><br><span class="line">genObj.next();    <span class="comment">// b</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>generator原理</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以上一段代码为例</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show_1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">'a'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show_2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">'b'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">genObj.next();    <span class="comment">// show_1</span></span><br><span class="line">genObj.next();    <span class="comment">// show_2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>yield</li>
+</ul>
+<ul>
+<li>应用场景<br>请求数据</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/03/01/记一次网站解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/记一次网站解析/" itemprop="url">记一次网站解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T23:07:24+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/动手/" itemprop="url" rel="index">
+                    <span itemprop="name">动手</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/01/记一次网站解析/" class="leancloud_visitors" data-flag-title="记一次网站解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天记起要选公选课，同学安利一个教务处app，打开一看发现界面和功能都挺不错的，突然有做教务处微信小程序版本的想法，第一想法就是去找官网api，可转眼一想，哪来的api？原作者说网站解析来的，于是开始第一次抓包过程。</p>
+<h1 id="1、去长大官网溜了一圈"><a href="#1、去长大官网溜了一圈" class="headerlink" title="1、去长大官网溜了一圈"></a>1、去长大官网溜了一圈</h1><p>首先来到官网看了下</p>
+<h3 id="1-1、登录前"><a href="#1-1、登录前" class="headerlink" title="1.1、登录前"></a>1.1、登录前</h3><p><img src="/images/网站解析/长大教务处登录前.png" alt="长大教务处登录前"></p>
+<p><img src="/images/网站解析/长大教务处登录前header.png" alt="长大教务处登录前header"></p>
+<h3 id="1-2、登陆后"><a href="#1-2、登陆后" class="headerlink" title="1.2、登陆后"></a>1.2、登陆后</h3><p><img src="/images/网站解析/长大教务处登录后data.png" alt="长大教务处登录后data"></p>
+<h3 id="1-3、测试"><a href="#1-3、测试" class="headerlink" title="1.3、测试"></a>1.3、测试</h3><p><img src="/images/网站解析/postMan发送教务处请求失败.png" alt="postMan发送教务处请求失败"></p>
+<h1 id="2、解析app"><a href="#2、解析app" class="headerlink" title="2、解析app"></a>2、解析app</h1><p><img src="/images/网站解析/app请求.png" alt="app请求"></p>
+<h1 id="3、-教学管理系统溜一圈"><a href="#3、-教学管理系统溜一圈" class="headerlink" title="3、 教学管理系统溜一圈"></a>3、 教学管理系统溜一圈</h1><h3 id="3-1、登录前"><a href="#3-1、登录前" class="headerlink" title="3.1、登录前"></a>3.1、登录前</h3><p><img src="/images/网站解析/失败登录教学管理系统.png" alt="失败登录教学管理系统"></p>
+<h3 id="3-2、登陆后"><a href="#3-2、登陆后" class="headerlink" title="3.2、登陆后"></a>3.2、登陆后</h3><p><img src="/images/网站解析/成功登录教学管理系统.png" alt="成功登录教学管理系统"></p>
+<h3 id="3-3、测试"><a href="#3-3、测试" class="headerlink" title="3.3、测试"></a>3.3、测试</h3><p><img src="/images/网站解析/成功登录教学管理系统.png" alt="postman发送教学管理系统失败"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/27/模板引擎jade与ejs的区别与重点/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/27/模板引擎jade与ejs的区别与重点/" itemprop="url">模板引擎jade与ejs的区别与重点</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-27T21:03:29+08:00">
+                2018-02-27
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/模板引擎/" itemprop="url" rel="index">
+                    <span itemprop="name">模板引擎</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/27/模板引擎jade与ejs的区别与重点/" class="leancloud_visitors" data-flag-title="模板引擎jade与ejs的区别与重点">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一、模板引擎"><a href="#一、模板引擎" class="headerlink" title="一、模板引擎"></a>一、模板引擎</h1><blockquote>
+<p> <strong>//TODO</strong></p>
+</blockquote>
+<h1 id="二、jade"><a href="#二、jade" class="headerlink" title="二、jade"></a>二、jade</h1><h2 id="1、认识jade"><a href="#1、认识jade" class="headerlink" title="1、认识jade"></a>1、认识jade</h2><blockquote>
+<p> <strong>//TODO</strong></p>
+</blockquote>
+<h2 id="2、基础语法"><a href="#2、基础语法" class="headerlink" title="2、基础语法"></a>2、基础语法</h2><h3 id="2-1、根据缩进划分层级"><a href="#2-1、根据缩进划分层级" class="headerlink" title="2.1、根据缩进划分层级"></a>2.1、根据缩进划分层级</h3><h3 id="2-2、属性用-表示，用逗号分割"><a href="#2-2、属性用-表示，用逗号分割" class="headerlink" title="2.2、属性用()表示，用逗号分割"></a>2.2、属性用()表示，用逗号分割</h3><blockquote>
+<pre><code>*style = []
+*class = []
+</code></pre></blockquote>
+<h3 id="2-3、内容"><a href="#2-3、内容" class="headerlink" title="2.3、内容"></a>2.3、内容</h3><figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">div</span> xxx</span><br><span class="line">  <span class="selector-tag">span</span> xxx</span><br><span class="line">    a(href=<span class="string">"xxx"</span>)链接</span><br></pre></td></tr></table></figure>
+<h3 id="2-4、渲染"><a href="#2-4、渲染" class="headerlink" title="2.4、渲染"></a>2.4、渲染</h3><blockquote>
+<p> jade.render(‘字符串’);<br> jdde.renderFile(‘模板文件名’, 参数);</p>
+</blockquote>
+<h2 id="3、高级用法"><a href="#3、高级用法" class="headerlink" title="3、高级用法"></a>3、高级用法</h2><h3 id="3-1原样输出"><a href="#3-1原样输出" class="headerlink" title="3.1原样输出"></a>3.1原样输出</h3><figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.jade</span></span><br><span class="line">html</span><br><span class="line">  head</span><br><span class="line">  body</span><br><span class="line">    zaizi</span><br><span class="line">    </span><br><span class="line"><span class="comment">//转为对应html</span></span><br><span class="line"><span class="params">&lt;html&gt;</span></span><br><span class="line">  <span class="params">&lt;head&gt;</span><span class="params">&lt;/head&gt;</span></span><br><span class="line">  <span class="params">&lt;body&gt;</span></span><br><span class="line">    <span class="params">&lt;zaizi&gt;</span><span class="params">&lt;/zaizi&gt;</span></span><br><span class="line">  <span class="params">&lt;/body&gt;</span></span><br></pre></td></tr></table></figure>
+<p>从上面代码可以看出，原意是body的内容为zaizi，但实际转译把zaizi作为自定义标签。如何在标签里原样显示内容呢？如下:</p>
+<blockquote>
+<p><strong>加竖线|,原样输出</strong></p>
+</blockquote>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//1.jade</span></span><br><span class="line">html</span><br><span class="line">  head</span><br><span class="line">  body</span><br><span class="line">    |zaizi</span><br><span class="line">    </span><br><span class="line"><span class="comment">//转为对应html</span></span><br><span class="line"><span class="params">&lt;html&gt;</span></span><br><span class="line">  <span class="params">&lt;head&gt;</span><span class="params">&lt;/head&gt;</span></span><br><span class="line">  <span class="params">&lt;body&gt;</span>zaizi<span class="params">&lt;/body&gt;</span></span><br></pre></td></tr></table></figure>
+<p>此语法可用于在html代码中写js，例子：</p>
+<figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    script</span><br><span class="line">      <span class="string">| //js代码</span></span><br><span class="line">      <span class="string">| //js代码</span></span><br><span class="line">    body</span><br><span class="line">      <span class="string">|zaizi</span></span><br><span class="line">      <span class="string">|dog</span></span><br></pre></td></tr></table></figure>
+<p>以上情况满足写在html中js的需求，但每一行都需要加|，还是比较麻烦，更简单的方法是：<code>在script后面加一个点.</code>，例子：</p>
+<blockquote>
+<p><strong>在标签后加一个点.表示标签后的内容都原样输出</strong></p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    script.</span><br><span class="line">      <span class="comment">// js代码</span></span><br><span class="line">  body</span><br></pre></td></tr></table></figure>
+<p>若要文件结构更清楚，可以尝试引用外部js文件，但会增加http请求数，这里可以采用<code>include</code>，例子：</p>
+<blockquote>
+<p><strong>include引用文件</strong></p>
+</blockquote>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">html</span><br><span class="line">  head</span><br><span class="line">    script.</span><br><span class="line">      include <span class="selector-tag">a</span>.js</span><br><span class="line">  body</span><br></pre></td></tr></table></figure>
+<h3 id="3-2-使用变量"><a href="#3-2-使用变量" class="headerlink" title="3.2 使用变量"></a>3.2 使用变量</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//jade代码</span></span><br><span class="line">html</span><br><span class="line">  head</span><br><span class="line">  body</span><br><span class="line">    <span class="keyword">div</span> 我的名字: <span class="meta">#&#123;name&#125;</span></span><br><span class="line">    </span><br><span class="line"><span class="comment">//js代码</span></span><br><span class="line">const jade = require(<span class="string">'jade'</span>);</span><br><span class="line"></span><br><span class="line">const.log(jade.renderFile(<span class="string">'`jade文件地址`'</span>, &#123;pretty: <span class="keyword">true</span>, name: <span class="string">'zaizi'</span>&#125;));</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">//编译效果</span></span><br><span class="line">&lt;html&gt;</span><br><span class="line">  &lt;head&gt;&lt;/head&gt;</span><br><span class="line">  &lt;body&gt;</span><br><span class="line">    &lt;<span class="keyword">div</span>&gt;我的名字: zaizi&lt;/<span class="keyword">div</span>&gt;</span><br><span class="line">  &lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/剖析Promise内部结构/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -548,6 +1133,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">node笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -588,7 +1195,28 @@
       
         
           
-            
+            <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>  阅读本文需要对promise有一定了解，可阅读<a href="https://zaizizaizai.github.io/2018/02/20/%E8%AF%A6%E8%A7%A3promise/">详解promise</a></p>
+<h1 id="Promise标准解读"><a href="#Promise标准解读" class="headerlink" title="Promise标准解读"></a>Promise标准解读</h1><p>  1.只有一个<code>then</code>方法，没有<code>catch</code>，<code>race</code>，<code>all</code>等方法，甚至没有构造函数</p>
+<pre><code>Promise标准中仅指定了Promise对象的`then`方法的行为，其他常见的方法/函数都没有指定，包括`catch`，`race`，`all`等常用方法，甚至也没有指定该乳环构造一个Promise对象，而且`then`也没有一般实现中(Q,$q等)所支持的第三个参数，一般成为onProgress
+</code></pre><p>  2.<code>then</code>方法返回一个新的Promise</p>
+<pre><code>Promise的`then`方法返回一个新的Promise，而不是返回this，此处下文会有更多解释
+
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">promise2</span> = promise1.<span class="keyword">then</span>(alert);</span><br><span class="line">promise2 != promise1 //<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>  3.不同Promise的实现需要可以相互调用(interoperable)</p>
+<p>  4.Promise的初始状态为pending，它可以由此状态转换为fulfilled(也叫resolved)或者rejected，一旦状态确定，就不可以再转换为其他状态，状态确定的过程成为settle</p>
+<p>  5.<a href="https://promisesaplus.com/" target="_blank" rel="noopener">更具体的标准</a></p>
+<h1 id="一步一步实现一个Promise"><a href="#一步一步实现一个Promise" class="headerlink" title="一步一步实现一个Promise"></a>一步一步实现一个Promise</h1><p>  一步一步实现一个Promise</p>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>标准中并没由指定如何构造一个Promise对象，在此以实现Promise的通用方法来构造一个Promise对象，即ES6原生Promise里所使用的方法:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Promise构造函数接收一个executor函数，execuyor函数执行完同步或者异步操作后，调用它的两个参数resolve和reject</span></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	如果操作成功，调用resolve并传入value</span></span><br><span class="line"><span class="comment">	如果操作失败，调用reject并传入reason</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>先实现构造函数的框架：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Promise</span><span class="params">(executor)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> <span class="keyword">self</span> = this;</span><br><span class="line">	<span class="keyword">self</span>.status = <span class="string">'pending'</span>;  <span class="comment">//Promise当前的状态</span></span><br><span class="line">	<span class="keyword">self</span>.data = undefined;  <span class="comment">//Promise的值</span></span><br><span class="line">	<span class="keyword">self</span>.onResolvedCallback = [];  <span class="comment">//Promise resolve时的回调函数</span></span><br><span class="line">	<span class="keyword">self</span>.onRejectedCallback = [];  <span class="comment">//Promise reject时的回调函数</span></span><br><span class="line"></span><br><span class="line">	executor(resolve, reject);  <span class="comment">//执行executor并传入相应的参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码基本实现了Promise构造函数的主体，但还是有两个问题：</p>
+<p>1.我们给executor函数传了两个参数：resolve和reject，这两个参数尚未定义</p>
+<p>2.executor也有可能出错(throw)，此时，Promise应该被其throw出的值reject：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="number">2</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>所以我们需要在构造函数里定义resolve和reject这两个函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Promise</span><span class="params">(executor)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> <span class="keyword">self</span> = this;</span><br><span class="line">	<span class="keyword">var</span> <span class="keyword">self</span> = this</span><br><span class="line">	<span class="keyword">self</span>.status = <span class="string">'pending'</span> <span class="comment">// Promise当前的状态</span></span><br><span class="line">	<span class="keyword">self</span>.data = undefined  <span class="comment">// Promise的值</span></span><br><span class="line">	<span class="keyword">self</span>.onResolvedCallback = [] <span class="comment">// Promise resolve时的回调函数集，因为在Promise结束之前有可能有多个回调添加到它上面</span></span><br><span class="line">	<span class="keyword">self</span>.onRejectedCallback = [] <span class="comment">// Promise reject时的回调函数集，因为在Promise结束之前有可能有多个回调添加到它上面</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">resolve</span><span class="params">(value)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO</span></span><br><span class="line">	&#125;  </span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">reject</span><span class="params">(reson)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">try</span> &#123;	<span class="comment">//try/catch捕捉错误</span></span><br><span class="line">		executor(resolve, reject);	<span class="comment">//执行executor</span></span><br><span class="line">	&#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">		reject(e);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="原文"><a href="#原文" class="headerlink" title="原文"></a><a href="https://github.com/xieranmaya/blog/issues/3" target="_blank" rel="noopener">原文</a></h3>
           
         
       
@@ -1513,579 +2141,11 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--属性/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/25/理解JavaScript--属性/" itemprop="url">理解JavaScript--属性</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T13:50:52+08:00">
-                2018-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/25/理解JavaScript--属性/" class="leancloud_visitors" data-flag-title="理解JavaScript--属性">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="六、属性"><a href="#六、属性" class="headerlink" title="六、属性"></a>六、属性</h1><hr>
-<h4 id="1-JavaScript中的对象"><a href="#1-JavaScript中的对象" class="headerlink" title="1.JavaScript中的对象"></a>1.JavaScript中的对象</h4><p>JavaScript中的对象一般分为三类:<strong>内置对象</strong>(Array, Error, Date等), <strong>宿主对象</strong>(对于前端来说指的是浏览器对象,例如window), <strong>自定义对象</strong>(指我们自己创建的对象).</p>
-<p>因此,我们主要讨论的内容是围绕自定义对象展开的,今天我们就对象的属性进行深入地探究.</p>
-<hr>
-<h4 id="2-属性的创建"><a href="#2-属性的创建" class="headerlink" title="2.属性的创建"></a>2.属性的创建</h4><p>我们先定义一个对象,然后对其赋值:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;&#125;;</span><br><span class="line">person.name = <span class="string">"Messi"</span>;</span><br></pre></td></tr></table></figure></p>
-<p>以上操作相当于给<code>person</code>对象建立了一个<code>name</code>属性,且值为<code>&#39;Messi&#39;</code>.</p>
-<p>那么这个赋值的过程具体的原理是什么呢?</p>
-<p>首先,我们创建了一个’空’对象,之所以我们打上引号,是因为这并不是一个严格意义上的空对象,因为在建立这个对象的过程中,JavaScript已经为这个对象内置了方法和属性,当然是不可见的,在属性的建立过程中就调用了一个隐式的方法<code>[[put]]</code>.</p>
-<p>大概的创建过程是,当属性第一次被创建时,对象调用内部方法<code>[[put]]</code>为对象创建一个节点保存属性.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: person</span><br><span class="line">e=&gt;end: persen.name = &quot;Messi&quot;</span><br><span class="line">io1=&gt;inputoutput: [[put]]</span><br><span class="line"></span><br><span class="line">st-&gt;io1-&gt;e</span><br></pre></td></tr></table></figure></p>
-<hr>
-<h4 id="3-属性的修改"><a href="#3-属性的修改" class="headerlink" title="3.属性的修改"></a>3.属性的修改</h4><p>我们对上例中的代码做一下修改:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;&#125;;</span><br><span class="line">person.name = <span class="string">"Messi"</span>;</span><br><span class="line">person.name = <span class="string">"Bale"</span>;</span><br></pre></td></tr></table></figure></p>
-<p>很显然,<code>name</code>被创建后,该属就被进行了修改,原属性值<code>Messi</code>被修改为<code>Bale</code>,那么这个过程又是如何发生的呢?</p>
-<p>其实对象内部除了隐式的<code>[[put]]</code>方法,还有一个<code>[[set]]</code>方法,这个方法不同于<code>[[put]]</code>在创建属性时调用,而是在同一个属性被再次赋值的时候用于更新属性进行的调用.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: person.name = &quot;Messi&quot;</span><br><span class="line">e=&gt;end: persen.name = &quot;Bale&quot;</span><br><span class="line">io1=&gt;inputoutput: [[put]]</span><br><span class="line"></span><br><span class="line">st-&gt;io1-&gt;e</span><br></pre></td></tr></table></figure>
-<hr>
-<h4 id="4-属性的查询"><a href="#4-属性的查询" class="headerlink" title="4.属性的查询"></a>4.属性的查询</h4><p>判断一个属性或者方法是否在一个对象中,通常有两种方式.<br><code>in</code>操作符方式:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"name"</span> <span class="keyword">in</span> person); <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
-<p><code>hasOwnProperty</code>方法:</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">"name"</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h4 id="5-属性的删除"><a href="#5-属性的删除" class="headerlink" title="5.属性的删除"></a>5.属性的删除</h4><p>删除一个属性,最正确的方式是用<code>delete</code>方法,一个错误的方式是将该属性赋值为<code>null</code>,该方式的错误之处在于赋值<code>null</code>相当于调用了[[set]]方法把原属性值更改为了<code>null</code>,这个保存属性的节点依然存在,而用<code>delete</code>方法便能彻底删除这个节点.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">delete</span> person.name;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"name"</span> <span class="keyword">in</span> person); <span class="comment">//false</span></span><br></pre></td></tr></table></figure></p>
-<h4 id="6-属性的枚举"><a href="#6-属性的枚举" class="headerlink" title="6.属性的枚举"></a>6.属性的枚举</h4><p>我们通常用<code>for...in</code>枚举对象中的属性,它会将属性一一返回.<br>在ES5中引入了一个新的方法<code>Object.key()</code>,不同之处在于,它可以将结果以数组的形式返回<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span>,</span><br><span class="line">    age: <span class="number">29</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> pros <span class="keyword">in</span> person ) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(pros); <span class="comment">// name age </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pros = <span class="built_in">Object</span>.keys(person);</span><br><span class="line"><span class="built_in">console</span>.log(pros); <span class="comment">//[ 'name', 'age' ]</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p>值得注意的是,并非所有的属性都是可枚举的,例如对象自带的属性<code>length</code>等等,因此我们可以用<code>propertyIsEnumerable()</code>方法来判断一个属性是否可枚举.</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--原型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/25/理解JavaScript--原型/" itemprop="url">理解JavaScript--原型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T13:26:32+08:00">
-                2018-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/25/理解JavaScript--原型/" class="leancloud_visitors" data-flag-title="理解JavaScript--原型">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="四、原型"><a href="#四、原型" class="headerlink" title="四、原型"></a>四、原型</h1><hr>
-<h4 id="1-原型对象"><a href="#1-原型对象" class="headerlink" title="1.原型对象"></a>1.原型对象</h4><p>绝大部分的函数(少数内建函数除外)都有一个<code>prototype</code>属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象,因此这些对象便可以访问原型对象的属性,例如<code>hasOwnProperty()</code>方法存在于Obejct原型对象中,它便可以被任何对象当做自己的方法使用.</p>
-<blockquote>
-<p><code>object.hasOwnProperty( propertyName )</code><br><code>hasOwnProperty()</code>函数的返回值为<code>Boolean</code>类型。如果对象<code>object</code>具有名称为<code>propertyName</code>的属性，则返回<code>true</code>，否则返回<code>false</code>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span>,</span><br><span class="line">    age: <span class="number">29</span>,</span><br><span class="line">    profession: <span class="string">"football player"</span></span><br><span class="line">  &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">"name"</span>)); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>由以上代码可知,<code>hasOwnProperty()</code>并不存在于<code>person</code>对象中,但是<code>person</code>依然可以拥有此方法.</p>
-<p>很多人此时会好奇,<code>person</code>对象是如何找到<code>Object</code>对象中的方法的呢?这其中的内部机制是什么?<br>这便是我们接下来要说的原型链.</p>
-<hr>
-<h4 id="2-proto-与-Prototype"><a href="#2-proto-与-Prototype" class="headerlink" title="2.__proto__与[[Prototype]]"></a>2.<code>__proto__</code>与<code>[[Prototype]]</code></h4><p>上一篇我们的示意图中曾经出现过<code>__proto__</code>,在ES6之前这个<code>__proto__</code>是大部分主流浏览器(IE除外)引擎提供的,还尚属非ECMA标准,在解析一个对象实例的时候为对象实例添加一个<code>__proto__</code>属性,此属性指向原型对象,我们便可以通过此属性找到原型对象.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>); <span class="comment">//person1 = &#123;name:"Messi", age: 29, profession: "football player"&#125;;</span></span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Bale"</span>, <span class="number">28</span>); <span class="comment">//person2 = &#123;name:"Bale", age: 28, profession: "football player"&#125;;</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.__proto__ === person.prototype); <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p><code>__proto__</code>除了被主流浏览器支持外,还被Node.js支持,在ES2015进入到规范附录部分,算是被正式纳入了标准.</p>
-</blockquote>
-<p>而在标准的语法里,实例对象是通过内置的内部属性<code>[[Prototype]]</code>来追踪原型对象的,这个<code>[[Prototype]]</code>的指针始终指向原型对象,此属性通常情况下是不可见的,我们需要用<code>getPrototypeOf()</code>来读取<code>[[Prototype]]</code>属性值(这个值就是原型对象).</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(obj) === <span class="built_in">Object</span>.prototype); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<p>同时我们也可以用<code>isPrototypeOf</code>来检验某个对象是否是另一个对象的原型对象.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.isPrototypeOf(obj)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="３．原型链"><a href="#３．原型链" class="headerlink" title="３．原型链"></a>３．原型链</h3><p>在我们了解了<code>__proto__</code>与<code>[[Prototype]]</code>之后,就可以相对容易理解原型链了,由于<code>__proto__</code>与<code>[[Prototype]]</code>功能相似,但是<code>__proto__</code>更容易测试方便学习,我们选择<code>__proto__</code>来进行原型链的讲解.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>); <span class="comment">//person1 = &#123;name:"Messi", age: 29, profession: "football player"&#125;;</span></span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Bale"</span>, <span class="number">28</span>); <span class="comment">//person2 = &#123;name:"Bale", age: 28, profession: "football player"&#125;;</span></span><br><span class="line">person1.hasOwnProperty(<span class="string">"name"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(person1.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//fasle</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.__proto__ === person.prototype); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.prototype.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.__proto__.__proto__ === person.prototype.__proto__); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.prototype.__proto__.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<p>我们可以分析这个例子,看看<code>person1</code>对象实例是如何调用<code>hasOwnProperty()</code>这个方法的.</p>
-<ol>
-<li>首先<code>person1</code>对象实例中寻找<code>hasOwnProperty()</code>方法,<code>person1.hasOwnProperty(&quot;hasOwnProperty&quot;)</code>返回<code>false</code>,发现不存在此方法,这时通过<code>__proto__</code>找到<code>person1</code>的原型对象.</li>
-<li>在<code>person1</code>的原型对象<code>person1.__proto__</code>即<code>person.prototype</code>中寻找<code>hasOwnProperty()</code>方法,<code>person.prototype.hasOwnProperty(&quot;hasOwnProperty&quot;)</code>返回<code>false</code>,依然没有找到,此时顺着<code>person.prototype</code>的<code>__proto__</code>找到其原型对象.</li>
-<li>在<code>person.prototype</code>原型对象<code>person.prototype.__proto__</code>即<code>Object.prototype</code>中寻找<code>hasOwnProperty()</code>方法,<code>Object.prototype.hasOwnProperty(&quot;hasOwnProperty&quot;)</code>返回<code>true</code>,由于<code>hasOwnProperty()</code>为<code>Object.prototype</code>内置方法,因此<code>person1</code>顺利找到此方法并调用.</li>
-</ol>
-<p>总而言之,实例对象方法调用,是现在实力对象内部找,如果找到则立即返回调用,如果没有找到就顺着<code>__proto__</code>向上寻找,如果找到该方法则调用,没有找到会直接报错,这便是<strong>原型链</strong>.</p>
-<p>如图所示,会更加直观.</p>
-<hr>
-<h4 id="4-ES6中的-proto"><a href="#4-ES6中的-proto" class="headerlink" title="4.ES6中的__proto__"></a>4.ES6中的<code>__proto__</code></h4><p>虽然<code>__proto__</code>在最新的ECMA标准中被纳入了规范,但是由于<code>__proto__</code>前后的双下划线，说明它本质上是一个内部属性，而不是一个正式的对外的 API.<br>标准明确规定，只有浏览器必须部署这个属性，其他运行环境不一定需要部署，而且新的代码最好认为这个属性是不存在的。因此，无论从语义的角度，还是从兼容性的角度，都不要使用这个属性，而是使用下面的<code>Object.setPrototypeOf()</code>（写操作）、<code>Object.getPrototypeOf()</code>（读操作）代替。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(person1) === person.prototype); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(person1, &#123;<span class="attr">League</span>: <span class="string">"La Liga"</span>&#125;); </span><br><span class="line"><span class="built_in">console</span>.log(person1.League); <span class="comment">//La Liga</span></span><br></pre></td></tr></table></figure>
-<p>以上为具体用法,但是值得注意的是<code>Object.setPrototypeOf()</code>在使用中有一个坑,如代码所示:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>); </span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Bale"</span>, <span class="number">28</span>);</span><br><span class="line"></span><br><span class="line"> <span class="built_in">Object</span>.setPrototypeOf(person1, &#123; <span class="attr">League</span>: <span class="string">"La Liga"</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person1.League); <span class="comment">//La Liga</span></span><br><span class="line"><span class="built_in">console</span>.log(person2.League); <span class="comment">//undefind</span></span><br></pre></td></tr></table></figure></p>
-<p>也就是说不同于直接用<code>person1.__proto__.League = &quot;La Liga&quot;;</code>会使得两个实例同时生效,<code>Object.setPrototypeOf()</code>只能生效一个实例对象.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript-作用域/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/25/理解JavaScript-作用域/" itemprop="url">理解JavaScript--作用域</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T13:02:22+08:00">
-                2018-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript笔记/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript笔记</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/25/理解JavaScript-作用域/" class="leancloud_visitors" data-flag-title="理解JavaScript--作用域">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="三、作用域"><a href="#三、作用域" class="headerlink" title="三、作用域"></a>三、作用域</h1><hr>
-<h4 id="1-为什么要理解作用域"><a href="#1-为什么要理解作用域" class="headerlink" title="1. 为什么要理解作用域"></a>1. 为什么要理解作用域</h4><p>原因很简单,JavaScript中最重要的一个概念<strong>闭包</strong>的理解就建立在对<strong>作用域</strong>的理解之上,而一个对象的的构成往往离不开<strong>闭包</strong>以及<strong>作用域</strong>.</p>
-<hr>
-<h4 id="2-动态作用域or静态作用域"><a href="#2-动态作用域or静态作用域" class="headerlink" title="2. 动态作用域or静态作用域?"></a>2. 动态作用域or静态作用域?</h4><p>首先我们要搞清楚JavaScript的作用域类型,这有助于我们在分析作用域时的判断.</p>
-<blockquote>
-<p>静态作用域:静态作用域是指声明的作用域是根据程序正文在编译时就确定的，有时也称为词法作用域。</p>
-<p>动态作用域:程序中某个变量所引用的对象是在程序运行时刻根据程序的控制流信息来确定的。</p>
-</blockquote>
-<p>大多数现代编程语言都采用的静态作用域,即代码在写出来的时候就已经确定的,并非在执行时再确定,我们可以根据以下代码一探究竟.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">7</span>;</span><br><span class="line">  f();</span><br><span class="line">&#125;</span><br><span class="line">g(); <span class="comment">// a is not defined</span></span><br></pre></td></tr></table></figure></p>
-<p>这段代码在执行时候会报错,很明显,如果JavaScript采用了动态作用域,<code>a</code>在执行时确定的话,那么以上代码相当于这样:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">7</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">g(); <span class="comment">//undefind</span></span><br></pre></td></tr></table></figure></p>
-<p>因此,我们可以判断出JavaScript属于静态作用域.</p>
-<hr>
-<h4 id="3-函数作用域"><a href="#3-函数作用域" class="headerlink" title="3.函数作用域"></a>3.函数作用域</h4><p>函数是存在自身作用域的,在创建函数之初,函数体内就产生了作用域,为了方便理解,我们引用了《你不知道的JavaScript》书中的代码及图例,他会很清晰地帮助我们理解函数作用域.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = a * <span class="number">2</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a, b, c);</span><br><span class="line">    &#125;</span><br><span class="line">    bar(b * <span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="number">2</span>); <span class="comment">// 2, 4, 12</span></span><br></pre></td></tr></table></figure></p>
-<p>由于JavaScript是采用静态作用域,作用域是在函数创建的时候就确定下来的.</p>
-<hr>
-<h4 id="4-作用域链"><a href="#4-作用域链" class="headerlink" title="4.作用域链"></a>4.作用域链</h4><p>那么,我们可以仔细分析一下这个作用域链.<br><img src="http://omrbgpqyl.bkt.clouddn.com/17-8-25/32385127.jpg" alt=""><br>我们可以看到<code>scope chain</code>通过指向本函数的变量对象,并通过本函数的变量对象与整个父级函数变量对象联系在一起,这就是作用域链.</p>
-<p>所以说，作用域链与一个执行上下文相关，是<strong>内部上下文所有变量对象（包括父变量对象）</strong>的<strong>列表</strong>，用于变量查询。</p>
-<hr>
-<h4 id="5-块级作用域"><a href="#5-块级作用域" class="headerlink" title="5. 块级作用域"></a>5. 块级作用域</h4><p>在ES2015之前,JavaScript中实际上是没有语法层面的块级作用域,这就造成了很多意外的产生.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i); <span class="comment">//3</span></span><br></pre></td></tr></table></figure></p>
-<p>如果是在有块级作用域的语言中,<code>i</code>是不会被打印出来的,但是在JavaScript中却被打印出来,这就是变量泄露的情况,也就是说看似在块级作用域的变量泄漏到全局作用域中,这也就造成了全局污染.</p>
-<p>在ES5中,人们为了解决这个问题,一般采用立即执行函数IIFE来模拟块级作用域,但是这种写法不易读也不优雅,因此,在ES2015中引入了<code>let</code>,通过<code>let</code>可以创建块级作用域.</p>
-<blockquote>
-<p><code>let</code>与<code>var</code>在使用上基本是类似的,但是<code>let</code>有三个主要的特点</p>
-<ul>
-<li>可创建块级作用域</li>
-<li>不存在变量提升</li>
-<li>存在暂时性死区</li>
-</ul>
-</blockquote>
-<p>例如上面的代码如果改用<code>let</code>声明,就不存在变量污染全局的情况<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">let</span> i = <span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">console.<span class="built_in">log</span>(i); //i <span class="built_in">is</span> <span class="keyword">not</span> defind</span><br></pre></td></tr></table></figure></p>
-<p>至于其它let的具体用法,可以直接参考<a href="http://es6.ruanyifeng.com/#docs/let" target="_blank" rel="noopener">《ES6入门教程》</a>.</p>
-<hr>
-<h4 id="6-什么是闭包"><a href="#6-什么是闭包" class="headerlink" title="6.什么是闭包"></a>6.什么是闭包</h4><p>我们先简单地描述一下闭包:闭包是一个函数读取其它函数变量的桥梁.</p>
-<p>我们先从上面这个简单的例子开始<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = a * <span class="number">2</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a, b, c);</span><br><span class="line">    &#125;</span><br><span class="line">    bar(b * <span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="number">2</span>); <span class="comment">// 2, 4, 12</span></span><br></pre></td></tr></table></figure></p>
-<p>根据前面所学作用域的概念,函数<code>f2</code>将引用函数<code>f1</code>的变量<code>a</code>并打印,这个嵌套函数中,子函数对父函数中的变量进行了引用,而使得这个引用得以成行的桥梁就是<strong>‘闭包’</strong>.</p>
-<blockquote>
-<ul>
-<li>很多讲解闭包的文章都用<code>return</code>做实例,值得注意的是,闭包的形成并不一定要有<code>return</code>,只要对其它函数变量产生了引用,就会产生闭包，而<code>return</code>的作用是方便外部访问.  </li>
-</ul>
-</blockquote>
-<p>可以看到bar通过作用域链向上寻找到变量,我理解的闭包是一个对象,包含了<strong>函数本身</strong>以及它<strong>引用的上下文环境</strong>,本实例函数的闭包可以用这段代码来示意下:<br><code>{Funtion:bar, bar.variableObject:{c=12, ...},  foo.variableObject:{b=4, ...},window/global.variableObject:{a=2, ...}}</code><br>具体地说，函数A包含函数B，函数B可以获取函数A中的数据，而函数A不能获取函数B中的数据，则函数A作用域以外可以通过调用函数B改变函数A的数据。</p>
-<blockquote>
-<p>闭包只是javascript函数作用域产生的附属品</p>
-</blockquote>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -2130,7 +2190,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2141,7 +2201,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2152,7 +2212,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2246,7 +2306,7 @@
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Pisces
   </a>-->
-  <span class="post-count">博客全站共20.8k字</span>
+  <span class="post-count">博客全站共23.2k字</span>
 </div>
 
 

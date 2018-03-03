@@ -98,7 +98,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="笔记,node,promise," />
 
 
 
@@ -116,17 +116,18 @@
 
 
 
-<meta name="description" content="喜欢web，热爱编程">
+<meta name="description" content="前言  阅读本文需要对promise有一定了解，可阅读详解promise Promise标准解读  1.只有一个then方法，没有catch，race，all等方法，甚至没有构造函数 Promise标准中仅指定了Promise对象的`then`方法的行为，其他常见的方法/函数都没有指定，包括`catch`，`race`">
+<meta name="keywords" content="笔记,node,promise">
 <meta property="og:type" content="article">
 <meta property="og:title" content="剖析Promise内部结构">
 <meta property="og:url" content="https://zaizizaizai.github.io/2018/02/25/剖析Promise内部结构/index.html">
 <meta property="og:site_name" content="zaizizaizai">
-<meta property="og:description" content="喜欢web，热爱编程">
+<meta property="og:description" content="前言  阅读本文需要对promise有一定了解，可阅读详解promise Promise标准解读  1.只有一个then方法，没有catch，race，all等方法，甚至没有构造函数 Promise标准中仅指定了Promise对象的`then`方法的行为，其他常见的方法/函数都没有指定，包括`catch`，`race`，`all`等常用方法，甚至也没有指定该乳环构造一个Promise对象，而且`t">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-02-25T12:01:27.831Z">
+<meta property="og:updated_time" content="2018-02-25T13:25:53.881Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="剖析Promise内部结构">
-<meta name="twitter:description" content="喜欢web，热爱编程">
+<meta name="twitter:description" content="前言  阅读本文需要对promise有一定了解，可阅读详解promise Promise标准解读  1.只有一个then方法，没有catch，race，all等方法，甚至没有构造函数 Promise标准中仅指定了Promise对象的`then`方法的行为，其他常见的方法/函数都没有指定，包括`catch`，`race`，`all`等常用方法，甚至也没有指定该乳环构造一个Promise对象，而且`t">
 
 
 
@@ -388,6 +389,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/node笔记/" itemprop="url" rel="index">
+                    <span itemprop="name">node笔记</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -426,7 +449,28 @@
       
 
       
-        
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>  阅读本文需要对promise有一定了解，可阅读<a href="https://zaizizaizai.github.io/2018/02/20/%E8%AF%A6%E8%A7%A3promise/">详解promise</a></p>
+<h1 id="Promise标准解读"><a href="#Promise标准解读" class="headerlink" title="Promise标准解读"></a>Promise标准解读</h1><p>  1.只有一个<code>then</code>方法，没有<code>catch</code>，<code>race</code>，<code>all</code>等方法，甚至没有构造函数</p>
+<pre><code>Promise标准中仅指定了Promise对象的`then`方法的行为，其他常见的方法/函数都没有指定，包括`catch`，`race`，`all`等常用方法，甚至也没有指定该乳环构造一个Promise对象，而且`then`也没有一般实现中(Q,$q等)所支持的第三个参数，一般成为onProgress
+</code></pre><p>  2.<code>then</code>方法返回一个新的Promise</p>
+<pre><code>Promise的`then`方法返回一个新的Promise，而不是返回this，此处下文会有更多解释
+
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">promise2</span> = promise1.<span class="keyword">then</span>(alert);</span><br><span class="line">promise2 != promise1 //<span class="literal">true</span></span><br></pre></td></tr></table></figure>
+</code></pre><p>  3.不同Promise的实现需要可以相互调用(interoperable)</p>
+<p>  4.Promise的初始状态为pending，它可以由此状态转换为fulfilled(也叫resolved)或者rejected，一旦状态确定，就不可以再转换为其他状态，状态确定的过程成为settle</p>
+<p>  5.<a href="https://promisesaplus.com/" target="_blank" rel="noopener">更具体的标准</a></p>
+<h1 id="一步一步实现一个Promise"><a href="#一步一步实现一个Promise" class="headerlink" title="一步一步实现一个Promise"></a>一步一步实现一个Promise</h1><p>  一步一步实现一个Promise</p>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>标准中并没由指定如何构造一个Promise对象，在此以实现Promise的通用方法来构造一个Promise对象，即ES6原生Promise里所使用的方法:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Promise构造函数接收一个executor函数，execuyor函数执行完同步或者异步操作后，调用它的两个参数resolve和reject</span></span><br><span class="line"><span class="keyword">var</span> promise = <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">	<span class="comment">/*</span></span><br><span class="line"><span class="comment">	如果操作成功，调用resolve并传入value</span></span><br><span class="line"><span class="comment">	如果操作失败，调用reject并传入reason</span></span><br><span class="line"><span class="comment">	*/</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<p>先实现构造函数的框架：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Promise</span><span class="params">(executor)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> <span class="keyword">self</span> = this;</span><br><span class="line">	<span class="keyword">self</span>.status = <span class="string">'pending'</span>;  <span class="comment">//Promise当前的状态</span></span><br><span class="line">	<span class="keyword">self</span>.data = undefined;  <span class="comment">//Promise的值</span></span><br><span class="line">	<span class="keyword">self</span>.onResolvedCallback = [];  <span class="comment">//Promise resolve时的回调函数</span></span><br><span class="line">	<span class="keyword">self</span>.onRejectedCallback = [];  <span class="comment">//Promise reject时的回调函数</span></span><br><span class="line"></span><br><span class="line">	executor(resolve, reject);  <span class="comment">//执行executor并传入相应的参数</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>上面代码基本实现了Promise构造函数的主体，但还是有两个问题：</p>
+<p>1.我们给executor函数传了两个参数：resolve和reject，这两个参数尚未定义</p>
+<p>2.executor也有可能出错(throw)，此时，Promise应该被其throw出的值reject：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function"><span class="keyword">function</span>(<span class="params">resolve, reject</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">throw</span> <span class="number">2</span>;</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>所以我们需要在构造函数里定义resolve和reject这两个函数：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Promise</span><span class="params">(executor)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">var</span> <span class="keyword">self</span> = this;</span><br><span class="line">	<span class="keyword">var</span> <span class="keyword">self</span> = this</span><br><span class="line">	<span class="keyword">self</span>.status = <span class="string">'pending'</span> <span class="comment">// Promise当前的状态</span></span><br><span class="line">	<span class="keyword">self</span>.data = undefined  <span class="comment">// Promise的值</span></span><br><span class="line">	<span class="keyword">self</span>.onResolvedCallback = [] <span class="comment">// Promise resolve时的回调函数集，因为在Promise结束之前有可能有多个回调添加到它上面</span></span><br><span class="line">	<span class="keyword">self</span>.onRejectedCallback = [] <span class="comment">// Promise reject时的回调函数集，因为在Promise结束之前有可能有多个回调添加到它上面</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">resolve</span><span class="params">(value)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO</span></span><br><span class="line">	&#125;  </span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">function</span> <span class="title">reject</span><span class="params">(reson)</span> </span>&#123;</span><br><span class="line">		<span class="comment">// TODO</span></span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">try</span> &#123;	<span class="comment">//try/catch捕捉错误</span></span><br><span class="line">		executor(resolve, reject);	<span class="comment">//执行executor</span></span><br><span class="line">	&#125; <span class="keyword">catch</span>(e) &#123;</span><br><span class="line">		reject(e);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="原文"><a href="#原文" class="headerlink" title="原文"></a><a href="https://github.com/xieranmaya/blog/issues/3" target="_blank" rel="noopener">原文</a></h3>
       
     </div>
     
@@ -452,6 +496,16 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/笔记/" rel="tag"><i class="fa fa-tag"></i> 笔记</a>
+          
+            <a href="/tags/node/" rel="tag"><i class="fa fa-tag"></i> node</a>
+          
+            <a href="/tags/promise/" rel="tag"><i class="fa fa-tag"></i> promise</a>
+          
+        </div>
+      
 
       
       
@@ -470,6 +524,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/27/模板引擎jade与ejs的区别与重点/" rel="prev" title="模板引擎jade与ejs的区别与重点">
+                模板引擎jade与ejs的区别与重点 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -531,8 +589,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/dog.jpg"
@@ -547,7 +614,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">28</span>
+                <span class="site-state-item-count">31</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -558,7 +625,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">15</span>
+                <span class="site-state-item-count">16</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -569,7 +636,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">27</span>
+                <span class="site-state-item-count">33</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -626,6 +693,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Promise标准解读"><span class="nav-number">2.</span> <span class="nav-text">Promise标准解读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#一步一步实现一个Promise"><span class="nav-number">3.</span> <span class="nav-text">一步一步实现一个Promise</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#构造函数"><span class="nav-number">3.0.1.</span> <span class="nav-text">构造函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#原文"><span class="nav-number">3.0.2.</span> <span class="nav-text">原文</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -663,7 +746,7 @@
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Pisces
   </a>-->
-  <span class="post-count">博客全站共20.8k字</span>
+  <span class="post-count">博客全站共23.2k字</span>
 </div>
 
 
