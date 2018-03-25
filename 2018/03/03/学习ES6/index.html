@@ -116,18 +116,18 @@
 
 
 
-<meta name="description" content="前言兼容性ES6(ES2015)——IE10+、Chrome、FireFox、移动端、Node.js 如何兼容老版本？编译、转译  1、在线转换(用户每次打开页面需重新转换，费时)   在线转换有很多工具，在这里以babel为例，在线转换只需要在加上browser.js就行，如下：    12345&amp;lt;he">
+<meta name="description" content="兼容性 ES6(ES2015)——IE10+ Chrome FireFox 移动端 Node.js 如何兼容老版本？(编译、转译)    1、在线转换(用户每次打开页面需重新转换，费时)   在线转换有很多工具，在这里以babel为例，在线转换只需要在加上browser.js就行，如下：    12345&amp;lt">
 <meta name="keywords" content="笔记,web,es6">
 <meta property="og:type" content="article">
 <meta property="og:title" content="学习ES6">
 <meta property="og:url" content="https://zaizizaizai.github.io/2018/03/03/学习ES6/index.html">
 <meta property="og:site_name" content="zaizizaizai">
-<meta property="og:description" content="前言兼容性ES6(ES2015)——IE10+、Chrome、FireFox、移动端、Node.js 如何兼容老版本？编译、转译  1、在线转换(用户每次打开页面需重新转换，费时)   在线转换有很多工具，在这里以babel为例，在线转换只需要在加上browser.js就行，如下：    12345&amp;lt;head&amp;gt;...省略&amp;lt;script src=&quot;browser.js&quot; chars">
+<meta property="og:description" content="兼容性 ES6(ES2015)——IE10+ Chrome FireFox 移动端 Node.js 如何兼容老版本？(编译、转译)    1、在线转换(用户每次打开页面需重新转换，费时)   在线转换有很多工具，在这里以babel为例，在线转换只需要在加上browser.js就行，如下：    12345&amp;lt;head&amp;gt;...省略&amp;lt;script src=&quot;browser.js&quot; ch">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-03T07:17:32.967Z">
+<meta property="og:updated_time" content="2018-03-12T14:48:25.577Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="学习ES6">
-<meta name="twitter:description" content="前言兼容性ES6(ES2015)——IE10+、Chrome、FireFox、移动端、Node.js 如何兼容老版本？编译、转译  1、在线转换(用户每次打开页面需重新转换，费时)   在线转换有很多工具，在这里以babel为例，在线转换只需要在加上browser.js就行，如下：    12345&amp;lt;head&amp;gt;...省略&amp;lt;script src=&quot;browser.js&quot; chars">
+<meta name="twitter:description" content="兼容性 ES6(ES2015)——IE10+ Chrome FireFox 移动端 Node.js 如何兼容老版本？(编译、转译)    1、在线转换(用户每次打开页面需重新转换，费时)   在线转换有很多工具，在这里以babel为例，在线转换只需要在加上browser.js就行，如下：    12345&amp;lt;head&amp;gt;...省略&amp;lt;script src=&quot;browser.js&quot; ch">
 
 
 
@@ -401,8 +401,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/web/" itemprop="url" rel="index">
-                    <span itemprop="name">web</span>
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
                   </a>
                 </span>
 
@@ -449,48 +449,98 @@
       
 
       
-        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><h1 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h1><p>ES6(ES2015)——IE10+、Chrome、FireFox、移动端、Node.js</p>
-<h2 id="如何兼容老版本？"><a href="#如何兼容老版本？" class="headerlink" title="如何兼容老版本？"></a>如何兼容老版本？</h2><p><strong>编译、转译</strong></p>
+        <h1 id="兼容性"><a href="#兼容性" class="headerlink" title="兼容性"></a>兼容性</h1><ul>
+<li>ES6(ES2015)——IE10+</li>
+<li>Chrome</li>
+<li>FireFox</li>
+<li>移动端</li>
+<li><p>Node.js</p>
+<p><strong>如何兼容老版本？(编译、转译)</strong></p>
+</li>
+</ul>
 <ul>
 <li><p>1、在线转换(用户每次打开页面需重新转换，费时)<br>   在线转换有很多工具，在这里以babel为例，在线转换只需要在<head>加上browser.js就行，如下：</head></p>
-   <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">...省略</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"browser.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"type/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+   <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">...省略</span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"browser.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"type/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="handlebars"><span class="xml"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span></span></span><br></pre></td></tr></table></figure>
 </li>
 <li><p>2、提前编译(babel/browser.js)</p>
 </li>
 </ul>
 <h1 id="ES6变化内容"><a href="#ES6变化内容" class="headerlink" title="ES6变化内容"></a>ES6变化内容</h1><ul>
 <li>1、变量</li>
-<li>2、函数</li>
-<li>3、数组</li>
-<li>4、字符串</li>
-<li>5、面向对象</li>
+<li>2、箭头函数</li>
+<li>3、函数的参数</li>
+<li>4、数组方法</li>
+<li>5、字符串</li>
 <li>6、Promise(串行化的数据请求、异步交互)</li>
 <li>7、generator(将同步操作拆为异步操作)</li>
-<li>8、模块化</li>
+<li>8、JSON</li>
+<li>9、面向对象</li>
+<li>10、解构赋值</li>
 </ul>
-<h1 id="面向对象应用——React"><a href="#面向对象应用——React" class="headerlink" title="面向对象应用——React"></a>面向对象应用——React</h1><blockquote>
-<p>React特点</p>
-<blockquote>
-<p>1、组件化<br>2、强依赖于JSX=babel=browser.js</p>
-</blockquote>
-</blockquote>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>学习react-组件<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"react.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"react-dom.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"browser.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="undefined">        class Item extends React.Component(</span></span><br><span class="line"><span class="undefined">            constructor(...args)&#123;</span></span><br><span class="line"><span class="undefined">                super(...args);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            render()&#123;</span></span><br><span class="line"><span class="xml">                return <span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;this.props.str&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        )</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        class List extends React.Component(</span></span><br><span class="line"><span class="undefined">            constructor(params) &#123;</span></span><br><span class="line"><span class="undefined">                super(params);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            render()&#123;</span></span><br><span class="line"><span class="undefined">                // let aItems=[];</span></span><br><span class="line"><span class="undefined">                // for(let i = 0; i &lt; this.props.arr.length; i++)&#123;</span></span><br><span class="line"><span class="undefined">                //     aItems.push(&lt;Item str = &#123;this.props.arr[i]&lt;/Item&gt;&#125;&gt;);</span></span><br><span class="line"><span class="undefined">                // &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="xml">                return <span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span><br><span class="line"><span class="xml">                        &#123;this.props.arr.map(a =&gt; <span class="tag">&lt;<span class="name">Item</span> <span class="attr">str</span> = <span class="string">&#123;a&#125;</span>&gt;</span><span class="tag">&lt;/<span class="name">Item</span>&gt;</span>)&#125;</span></span><br><span class="line"><span class="xml">                    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        )</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">        window.onload = function()&#123;</span></span><br><span class="line"><span class="undefined">            let oDiv = docum</span></span><br><span class="line"><span class="undefined">            ent.getElementById('div1');</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            ReactDom.render(</span></span><br><span class="line"><span class="xml">                <span class="tag">&lt;<span class="name">List</span> <span class="attr">arr</span>=<span class="string">&#123;[</span>'<span class="attr">123</span>','<span class="attr">abc</span>','<span class="attr">bxsa</span>']&#125;&gt;</span><span class="tag">&lt;/<span class="name">List</span>&gt;</span>,</span></span><br><span class="line"><span class="undefined">                oDiv</span></span><br><span class="line"><span class="undefined">            );</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<h1 id="Json"><a href="#Json" class="headerlink" title="Json"></a>Json</h1><ul>
-<li><p>1、JSON对象</p>
+<h1 id="1、变量"><a href="#1、变量" class="headerlink" title="1、变量"></a>1、变量</h1><h3 id="var存在的问题"><a href="#var存在的问题" class="headerlink" title="var存在的问题"></a>var存在的问题</h3><ul>
+<li><p>可重复声明</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">int a = <span class="number">12</span>;</span><br><span class="line">int a = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);	 <span class="comment">//5</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>无法限制修改<br>也可以说无常量，会导致数据变动，出现问题但程序无报错。</p>
+</li>
+<li><p>无块级作用域<br>var是函数作用域，导致块外面也可访问块内的数据。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(a);  <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="let、const性质"><a href="#let、const性质" class="headerlink" title="let、const性质"></a>let、const性质</h3><ul>
+<li><p>不可重复声明</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> <span class="attr">a</span> = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> <span class="attr">a</span> = <span class="number">3</span>;</span><br><span class="line">//报错，不可重复声明</span><br></pre></td></tr></table></figure>
+<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="comment">//报错，不可重复声明</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight cs"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">const</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="comment">//报错，不可重复声明</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>let-变量，const-常量</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">5</span>;</span><br><span class="line">a =<span class="number">3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);  <span class="comment">//3</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="块级作用域有什么用？"><a href="#块级作用域有什么用？" class="headerlink" title="块级作用域有什么用？"></a>块级作用域有什么用？</h3><ul>
+<li>经典问题： <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(i);  <span class="comment">//5,5,5,5,5</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <ul>
-<li>JSON.stringify</li>
-<li>Json.parse</li>
+<li><p>原始解决方法<br> 用函数包起来——闭包</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i&lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">  (<span class="function"><span class="keyword">function</span> (<span class="params">i</span>)</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(i);</span><br><span class="line">  &#125;)(i);  <span class="comment">//0,1,2,3,4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>let解决</p>
+ <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++)&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(i);  <span class="comment">//0,1,2,3,4</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h1 id="2、箭头函数-方便"><a href="#2、箭头函数-方便" class="headerlink" title="2、箭头函数(方便)"></a>2、箭头函数(方便)</h1><ul>
+<li><p>区别</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ES5</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ES6</span></span><br><span class="line">() =&gt; &#123;&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<pre><code><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//ES5</span></span><br><span class="line"><span class="keyword">let</span> show = <span class="function"><span class="keyword">function</span> <span class="title">show</span>(<span class="params">a,b</span>)</span>&#123;</span><br><span class="line">  <span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//ES6</span></span><br><span class="line"><span class="keyword">let</span> show = <span class="function">(<span class="params">a,b</span>) =&gt;</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+</code></pre><ul>
+<li><p>要点</p>
+<ul>
+<li>如果只有一个参数，可省略()</li>
+<li><p>如果只有一个return，可省略{}</p>
+<p>以下例子，可说明两要点</p>
+  <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">       <span class="comment">//ES5</span></span><br><span class="line">       <span class="keyword">let</span> show = <span class="function"><span class="keyword">function</span>(<span class="params">a</span>)</span>&#123;</span><br><span class="line">         <span class="keyword">return</span> a*<span class="number">2</span>; </span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       <span class="comment">//简写</span></span><br><span class="line">       <span class="keyword">let</span> show = <span class="function"><span class="params">a</span> =&gt;</span> &#123;</span><br><span class="line">         retuen a*<span class="number">2</span>;</span><br><span class="line">       &#125;</span><br><span class="line">       </span><br><span class="line">       <span class="comment">//进一步简写</span></span><br><span class="line">       <span class="keyword">let</span> show = <span class="function"><span class="params">a</span> =&gt;</span> a*<span class="number">2</span>; </span><br><span class="line">       <span class="string">``</span><span class="string">` </span></span><br><span class="line"><span class="string">       </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># </span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string"># 7、generator(生成器)</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">### 概念</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">* 普通函数——一路到底</span></span><br></pre></td></tr></table></figure>
+</li>
 </ul>
 </li>
-<li><p>2、简写</p>
+</ul>
+<p>function show(){<br>    alert(‘a’);<br>    alert(‘b’);<br>}</p>
+<p>show()<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">* </span>generator——中间能暂停(踹一脚走一步)</span><br></pre></td></tr></table></figure></p>
+<p>function *show(){<br>    alert(‘a’);</p>
+<pre><code>yield;    //放弃
+
+alert(&apos;b&apos;);
+</code></pre><p>}</p>
+<p>let genObj = show();</p>
+<p>genObj.next();    // a<br>genObj.next();    // b<br><figure class="highlight asciidoc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="bullet">* </span>generator原理</span><br></pre></td></tr></table></figure></p>
+<p>//以上一段代码为例<br>function show_1(){<br>    alert(‘a’);<br>}</p>
+<p>function show_2(){<br>    alert(‘b’);<br>}</p>
+<p>genObj.next();    // show_1<br>genObj.next();    // show_2<br><figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">* yield</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">* 应用场景</span><br><span class="line">  请求数据</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># 8、Json</span></span><br><span class="line"></span><br><span class="line">* <span class="number">1</span>、<span class="keyword">JSON对象</span></span><br><span class="line"><span class="keyword"> </span>  + <span class="keyword">JSON.stringify</span></span><br><span class="line"><span class="keyword"> </span>  + <span class="keyword">Json.parse</span></span><br><span class="line"><span class="keyword"> </span>  </span><br><span class="line">* <span class="number">2</span>、简写</span><br><span class="line">   + 名字一样</span><br><span class="line">   </span><br><span class="line">   ```<span class="keyword">javascript</span></span><br><span class="line"><span class="keyword"> </span>  let a = <span class="number">2</span><span class="comment">;</span></span><br><span class="line">   let <span class="keyword">b </span>= <span class="number">5</span><span class="comment">;</span></span><br><span class="line">   let <span class="keyword">json </span>= &#123;a, <span class="keyword">b, </span>c: <span class="number">6</span>&#125;<span class="comment">;	//&#123;2,5,6&#125;</span></span><br></pre></td></tr></table></figure></p>
 <ul>
-<li><p>名字一样</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> a = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">let</span> b = <span class="number">5</span>;</span><br><span class="line"><span class="keyword">let</span> json = &#123;a, b, <span class="attr">c</span>: <span class="number">6</span>&#125;;</span><br></pre></td></tr></table></figure>
-</li>
 <li><p>方法</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">show <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">show ()&#123;</span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
 </li>
 </ul>
 <ul>
@@ -505,24 +555,13 @@
 </ul>
 </li>
 </ul>
-<h1 id="generator-生成器"><a href="#generator-生成器" class="headerlink" title="generator(生成器)"></a>generator(生成器)</h1><h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><ul>
-<li>普通函数——一路到底</li>
-</ul>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">function</span> <span class="selector-tag">show</span>()&#123;</span><br><span class="line">    <span class="selector-tag">alert</span>(<span class="string">'a'</span>);</span><br><span class="line">    <span class="selector-tag">alert</span>(<span class="string">'b'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="selector-tag">show</span>()</span><br></pre></td></tr></table></figure>
-<ul>
-<li>generator——中间能暂停(踹一脚走一步)</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> *<span class="title">show</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">'a'</span>);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">yield</span>;    <span class="comment">//放弃</span></span><br><span class="line">    </span><br><span class="line">    alert(<span class="string">'b'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> genObj = show();</span><br><span class="line"></span><br><span class="line">genObj.next();    <span class="comment">// a</span></span><br><span class="line">genObj.next();    <span class="comment">// b</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>generator原理</li>
-</ul>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//以上一段代码为例</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show_1</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">'a'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">show_2</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    alert(<span class="string">'b'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">genObj.next();    <span class="comment">// show_1</span></span><br><span class="line">genObj.next();    <span class="comment">// show_2</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li>yield</li>
-</ul>
-<ul>
-<li>应用场景<br>请求数据</li>
-</ul>
+<h1 id="9、面向对象应用——React"><a href="#9、面向对象应用——React" class="headerlink" title="9、面向对象应用——React"></a>9、面向对象应用——React</h1><blockquote>
+<p>React特点</p>
+<blockquote>
+<p>1、组件化<br>2、强依赖于JSX=babel=browser.js</p>
+</blockquote>
+</blockquote>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE html&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span> <span class="attr">lang</span>=<span class="string">"en"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">charset</span>=<span class="string">"UTF-8"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">name</span>=<span class="string">"viewport"</span> <span class="attr">content</span>=<span class="string">"width=device-width, initial-scale=1.0"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">meta</span> <span class="attr">http-equiv</span>=<span class="string">"X-UA-Compatible"</span> <span class="attr">content</span>=<span class="string">"ie=edge"</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">title</span>&gt;</span>学习react-组件<span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"react.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"react-dom.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">src</span>=<span class="string">"browser.js"</span> <span class="attr">charset</span>=<span class="string">"utf-8"</span>&gt;</span><span class="undefined"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">"text/babel"</span>&gt;</span><span class="undefined"></span></span><br><span class="line"><span class="actionscript">        <span class="class"><span class="keyword">class</span> <span class="title">Item</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span>(</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">constructor</span>(...args)&#123;</span></span><br><span class="line"><span class="actionscript">                <span class="keyword">super</span>(...args);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            render()&#123;</span></span><br><span class="line"><span class="javascript">                <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">li</span>&gt;</span>&#123;this.props.str&#125;<span class="tag">&lt;/<span class="name">li</span>&gt;</span></span>;</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        )</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="actionscript">        <span class="class"><span class="keyword">class</span> <span class="title">List</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span>(</span></span></span><br><span class="line"><span class="javascript">            <span class="keyword">constructor</span>(params) &#123;</span></span><br><span class="line"><span class="actionscript">                <span class="keyword">super</span>(params);</span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            render()&#123;</span></span><br><span class="line"><span class="actionscript">                <span class="comment">// let aItems=[];</span></span></span><br><span class="line"><span class="actionscript">                <span class="comment">// for(let i = 0; i &lt; this.props.arr.length; i++)&#123;</span></span></span><br><span class="line"><span class="handlebars"><span class="xml">                //     aItems.push(<span class="tag">&lt;<span class="name">Item</span> <span class="attr">str</span> = <span class="string">&#123;this.props.arr[i]</span>&lt;/<span class="attr">Item</span>&gt;</span>&#125;&gt;);</span></span></span><br><span class="line"><span class="actionscript">                <span class="comment">// &#125;</span></span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">                <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">ul</span>&gt;</span></span></span></span><br><span class="line"><span class="javascript">                        &#123;<span class="keyword">this</span>.props.arr.map(<span class="function"><span class="params">a</span> =&gt;</span> &lt;Item str = &#123;a&#125;&gt;<span class="xml"><span class="tag">&lt;/<span class="name">Item</span>&gt;</span></span>)&#125;</span></span><br><span class="line"><span class="handlebars"><span class="xml">                    <span class="tag">&lt;/<span class="name">ul</span>&gt;</span>;</span></span></span><br><span class="line"><span class="undefined">            &#125;</span></span><br><span class="line"><span class="undefined">        )</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="javascript">        <span class="built_in">window</span>.onload = <span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span></span><br><span class="line"><span class="javascript">            <span class="keyword">let</span> oDiv = docum</span></span><br><span class="line"><span class="actionscript">            ent.getElementById(<span class="string">'div1'</span>);</span></span><br><span class="line"><span class="undefined"></span></span><br><span class="line"><span class="undefined">            ReactDom.render(</span></span><br><span class="line"><span class="javascript">                &lt;List arr=&#123;[<span class="string">'123'</span>,<span class="string">'abc'</span>,<span class="string">'bxsa'</span>]&#125;&gt;<span class="xml"><span class="tag">&lt;/<span class="name">List</span>&gt;</span></span>,</span></span><br><span class="line"><span class="undefined">                oDiv</span></span><br><span class="line"><span class="undefined">            );</span></span><br><span class="line"><span class="undefined">        &#125;;</span></span><br><span class="line"><span class="undefined">    </span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">"div1"</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -577,6 +616,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/03/12/深入浅出node读书笔记/" rel="prev" title="深入浅出node读书笔记">
+                深入浅出node读书笔记 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -663,7 +706,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">31</span>
+                <span class="site-state-item-count">38</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -674,7 +717,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">13</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -685,7 +728,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">33</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -751,7 +794,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#兼容性"><span class="nav-number">2.</span> <span class="nav-text">兼容性</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何兼容老版本？"><span class="nav-number">2.1.</span> <span class="nav-text">如何兼容老版本？</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ES6变化内容"><span class="nav-number">3.</span> <span class="nav-text">ES6变化内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#面向对象应用——React"><span class="nav-number">4.</span> <span class="nav-text">面向对象应用——React</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Json"><span class="nav-number">5.</span> <span class="nav-text">Json</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#generator-生成器"><span class="nav-number">6.</span> <span class="nav-text">generator(生成器)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念"><span class="nav-number">6.1.</span> <span class="nav-text">概念</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#兼容性"><span class="nav-number">1.</span> <span class="nav-text">兼容性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ES6变化内容"><span class="nav-number">2.</span> <span class="nav-text">ES6变化内容</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#1、变量"><span class="nav-number">3.</span> <span class="nav-text">1、变量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#var存在的问题"><span class="nav-number">3.0.1.</span> <span class="nav-text">var存在的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#let、const性质"><span class="nav-number">3.0.2.</span> <span class="nav-text">let、const性质</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#块级作用域有什么用？"><span class="nav-number">3.0.3.</span> <span class="nav-text">块级作用域有什么用？</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2、箭头函数-方便"><span class="nav-number">4.</span> <span class="nav-text">2、箭头函数(方便)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9、面向对象应用——React"><span class="nav-number">5.</span> <span class="nav-text">9、面向对象应用——React</span></a></li></ol></div>
             
 
           </div>
@@ -795,7 +838,7 @@
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Pisces
   </a>-->
-  <span class="post-count">博客全站共23.7k字</span>
+  <span class="post-count">博客全站共27.4k字</span>
 </div>
 
 
