@@ -349,6 +349,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/03/01/记一次网站解析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/03/01/记一次网站解析/" itemprop="url">记一次网站解析</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-01T23:07:24+08:00">
+                2018-03-01
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/实践/" itemprop="url" rel="index">
+                    <span itemprop="name">实践</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/03/01/记一次网站解析/" class="leancloud_visitors" data-flag-title="记一次网站解析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>今天记起要选公选课，同学安利一个教务处app，打开一看发现界面和功能都挺不错的，突然有做教务处微信小程序版本的想法，第一想法就是去找官网api，可转眼一想，哪来的api？原作者说网站解析来的，于是开始第一次抓包过程。</p>
+<h1 id="1、去长大官网溜了一圈"><a href="#1、去长大官网溜了一圈" class="headerlink" title="1、去长大官网溜了一圈"></a>1、去长大官网溜了一圈</h1><p>首先来到官网看了下</p>
+<h3 id="1-1、登录前"><a href="#1-1、登录前" class="headerlink" title="1.1、登录前"></a>1.1、登录前</h3><blockquote>
+<p>教务处登录页面<br><img src="/images/网站解析/长大教务处登录前.png" alt="长大教务处登录前"></p>
+<p>发送请求中的header<br><img src="/images/网站解析/长大教务处登录前header.png" alt="长大教务处登录前header"></p>
+</blockquote>
+<h3 id="1-2、登陆后"><a href="#1-2、登陆后" class="headerlink" title="1.2、登陆后"></a>1.2、登陆后</h3><p><img src="/images/网站解析/长大教务处登录后data.png" alt="长大教务处登录后data"></p>
+<h3 id="1-3、测试"><a href="#1-3、测试" class="headerlink" title="1.3、测试"></a>1.3、测试</h3><blockquote>
+<p>postman测试<br><img src="/images/网站解析/postMan发送教务处请求失败.png" alt="postMan发送教务处请求失败"></p>
+</blockquote>
+<p>一开始想到把请求数据拿到，再伪造不就行了吗？至于怎么发送、接受数据，后面再说嘛…<br>结果转眼一想，这还有验证码，难道要把验证码都转发给客户端？我看到的教务处app中用户名和密码都是学号，不科学啊，难道他找到漏洞，把学校教务处数据爬下来了？<br>我转向解析app</p>
+<h1 id="2、解析app"><a href="#2、解析app" class="headerlink" title="2、解析app"></a>2、解析app</h1><blockquote>
+<p>app发送到服务器的数据<br><img src="/images/网站解析/app请求.png" alt="app请求"></p>
+</blockquote>
+<p>从截图中<code>Request PostData</code>这一栏中可以看到发送的数据，这个username(学号)没加密，password(密码)加密了，由于学号就是用户名和密码，我试着把密码用md5方法编码、URL编/解码…等一系列还有我没见过的编/解码方法，结果都不与password/原密码匹配，我猜应该加入了干扰字符吧，寻找编码方法失败。<br>    但可以看到是发送到<code>http://221.233.24.23/eams/login.action</code>,就去这个网址看看。</p>
+<h1 id="3、-教学管理系统溜一圈"><a href="#3、-教学管理系统溜一圈" class="headerlink" title="3、 教学管理系统溜一圈"></a>3、 教学管理系统溜一圈</h1><h3 id="3-1、登录前"><a href="#3-1、登录前" class="headerlink" title="3.1、登录前"></a>3.1、登录前</h3><p>访问这个地址，有登录界面，这张图片是<code>以错误的用户名密码登录时浏览器发送的数据</code></p>
+<blockquote>
+<p>以错误的用户名密码登录时浏览器发送的数据<br><img src="/images/网站解析/失败登录教学管理系统.png" alt="失败登录教学管理系统"></p>
+</blockquote>
+<p><code>username</code>是明文发送，<code>password</code>则加密了，可以看到也是发送了4个参数，这和app发送的请求参数相同，说明那个教务处app就是发送请求到这个教学管理系统的</p>
+<h3 id="3-2、登陆后"><a href="#3-2、登陆后" class="headerlink" title="3.2、登陆后"></a>3.2、登陆后</h3><blockquote>
+<p>以正确的用户名密码登录时浏览器发送的数据<br><img src="/images/网站解析/成功登录教学管理系统.png" alt="成功登录教学管理系统"></p>
+</blockquote>
+<p>这里图片无法显示，图片内容就是与上一个图片内容类似，但就是没有<code>post data</code>，这是什么？没见过啊，为什么登陆成功不发送数据，登录错误还可以显示数据</p>
+<h4 id="留一个坑，不理解"><a href="#留一个坑，不理解" class="headerlink" title="留一个坑，不理解"></a>留一个坑，不理解</h4><h3 id="3-3、测试"><a href="#3-3、测试" class="headerlink" title="3.3、测试"></a>3.3、测试</h3><p><img src="/images/网站解析/成功登录教学管理系统.png" alt="postman发送教学管理系统失败"></p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2>
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/27/模板引擎jade与ejs的区别与重点/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1925,194 +2106,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--原型/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/02/25/理解JavaScript--原型/" itemprop="url">理解JavaScript--原型</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T13:26:32+08:00">
-                2018-02-25
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaScript</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/02/25/理解JavaScript--原型/" class="leancloud_visitors" data-flag-title="理解JavaScript--原型">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="四、原型"><a href="#四、原型" class="headerlink" title="四、原型"></a>四、原型</h1><hr>
-<h4 id="1-原型对象"><a href="#1-原型对象" class="headerlink" title="1.原型对象"></a>1.原型对象</h4><p>绝大部分的函数(少数内建函数除外)都有一个<code>prototype</code>属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象,因此这些对象便可以访问原型对象的属性,例如<code>hasOwnProperty()</code>方法存在于Obejct原型对象中,它便可以被任何对象当做自己的方法使用.</p>
-<blockquote>
-<p><code>object.hasOwnProperty( propertyName )</code><br><code>hasOwnProperty()</code>函数的返回值为<code>Boolean</code>类型。如果对象<code>object</code>具有名称为<code>propertyName</code>的属性，则返回<code>true</code>，否则返回<code>false</code>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span>,</span><br><span class="line">    age: <span class="number">29</span>,</span><br><span class="line">    profession: <span class="string">"football player"</span></span><br><span class="line">  &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">"name"</span>)); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
-</blockquote>
-<p>由以上代码可知,<code>hasOwnProperty()</code>并不存在于<code>person</code>对象中,但是<code>person</code>依然可以拥有此方法.</p>
-<p>很多人此时会好奇,<code>person</code>对象是如何找到<code>Object</code>对象中的方法的呢?这其中的内部机制是什么?<br>这便是我们接下来要说的原型链.</p>
-<hr>
-<h4 id="2-proto-与-Prototype"><a href="#2-proto-与-Prototype" class="headerlink" title="2.__proto__与[[Prototype]]"></a>2.<code>__proto__</code>与<code>[[Prototype]]</code></h4><p>上一篇我们的示意图中曾经出现过<code>__proto__</code>,在ES6之前这个<code>__proto__</code>是大部分主流浏览器(IE除外)引擎提供的,还尚属非ECMA标准,在解析一个对象实例的时候为对象实例添加一个<code>__proto__</code>属性,此属性指向原型对象,我们便可以通过此属性找到原型对象.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>); <span class="comment">//person1 = &#123;name:"Messi", age: 29, profession: "football player"&#125;;</span></span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Bale"</span>, <span class="number">28</span>); <span class="comment">//person2 = &#123;name:"Bale", age: 28, profession: "football player"&#125;;</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.__proto__ === person.prototype); <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
-<blockquote>
-<p><code>__proto__</code>除了被主流浏览器支持外,还被Node.js支持,在ES2015进入到规范附录部分,算是被正式纳入了标准.</p>
-</blockquote>
-<p>而在标准的语法里,实例对象是通过内置的内部属性<code>[[Prototype]]</code>来追踪原型对象的,这个<code>[[Prototype]]</code>的指针始终指向原型对象,此属性通常情况下是不可见的,我们需要用<code>getPrototypeOf()</code>来读取<code>[[Prototype]]</code>属性值(这个值就是原型对象).</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(obj) === <span class="built_in">Object</span>.prototype); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<p>同时我们也可以用<code>isPrototypeOf</code>来检验某个对象是否是另一个对象的原型对象.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.isPrototypeOf(obj)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<hr>
-<h3 id="３．原型链"><a href="#３．原型链" class="headerlink" title="３．原型链"></a>３．原型链</h3><p>在我们了解了<code>__proto__</code>与<code>[[Prototype]]</code>之后,就可以相对容易理解原型链了,由于<code>__proto__</code>与<code>[[Prototype]]</code>功能相似,但是<code>__proto__</code>更容易测试方便学习,我们选择<code>__proto__</code>来进行原型链的讲解.</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>); <span class="comment">//person1 = &#123;name:"Messi", age: 29, profession: "football player"&#125;;</span></span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Bale"</span>, <span class="number">28</span>); <span class="comment">//person2 = &#123;name:"Bale", age: 28, profession: "football player"&#125;;</span></span><br><span class="line">person1.hasOwnProperty(<span class="string">"name"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(person1.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//fasle</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.__proto__ === person.prototype); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.prototype.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.__proto__.__proto__ === person.prototype.__proto__); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.prototype.__proto__.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
-<p>我们可以分析这个例子,看看<code>person1</code>对象实例是如何调用<code>hasOwnProperty()</code>这个方法的.</p>
-<ol>
-<li>首先<code>person1</code>对象实例中寻找<code>hasOwnProperty()</code>方法,<code>person1.hasOwnProperty(&quot;hasOwnProperty&quot;)</code>返回<code>false</code>,发现不存在此方法,这时通过<code>__proto__</code>找到<code>person1</code>的原型对象.</li>
-<li>在<code>person1</code>的原型对象<code>person1.__proto__</code>即<code>person.prototype</code>中寻找<code>hasOwnProperty()</code>方法,<code>person.prototype.hasOwnProperty(&quot;hasOwnProperty&quot;)</code>返回<code>false</code>,依然没有找到,此时顺着<code>person.prototype</code>的<code>__proto__</code>找到其原型对象.</li>
-<li>在<code>person.prototype</code>原型对象<code>person.prototype.__proto__</code>即<code>Object.prototype</code>中寻找<code>hasOwnProperty()</code>方法,<code>Object.prototype.hasOwnProperty(&quot;hasOwnProperty&quot;)</code>返回<code>true</code>,由于<code>hasOwnProperty()</code>为<code>Object.prototype</code>内置方法,因此<code>person1</code>顺利找到此方法并调用.</li>
-</ol>
-<p>总而言之,实例对象方法调用,是现在实力对象内部找,如果找到则立即返回调用,如果没有找到就顺着<code>__proto__</code>向上寻找,如果找到该方法则调用,没有找到会直接报错,这便是<strong>原型链</strong>.</p>
-<p>如图所示,会更加直观.</p>
-<hr>
-<h4 id="4-ES6中的-proto"><a href="#4-ES6中的-proto" class="headerlink" title="4.ES6中的__proto__"></a>4.ES6中的<code>__proto__</code></h4><p>虽然<code>__proto__</code>在最新的ECMA标准中被纳入了规范,但是由于<code>__proto__</code>前后的双下划线，说明它本质上是一个内部属性，而不是一个正式的对外的 API.<br>标准明确规定，只有浏览器必须部署这个属性，其他运行环境不一定需要部署，而且新的代码最好认为这个属性是不存在的。因此，无论从语义的角度，还是从兼容性的角度，都不要使用这个属性，而是使用下面的<code>Object.setPrototypeOf()</code>（写操作）、<code>Object.getPrototypeOf()</code>（读操作）代替。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(person1) === person.prototype); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(person1, &#123;<span class="attr">League</span>: <span class="string">"La Liga"</span>&#125;); </span><br><span class="line"><span class="built_in">console</span>.log(person1.League); <span class="comment">//La Liga</span></span><br></pre></td></tr></table></figure>
-<p>以上为具体用法,但是值得注意的是<code>Object.setPrototypeOf()</code>在使用中有一个坑,如代码所示:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>); </span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Bale"</span>, <span class="number">28</span>);</span><br><span class="line"></span><br><span class="line"> <span class="built_in">Object</span>.setPrototypeOf(person1, &#123; <span class="attr">League</span>: <span class="string">"La Liga"</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person1.League); <span class="comment">//La Liga</span></span><br><span class="line"><span class="built_in">console</span>.log(person2.League); <span class="comment">//undefind</span></span><br></pre></td></tr></table></figure></p>
-<p>也就是说不同于直接用<code>person1.__proto__.League = &quot;La Liga&quot;;</code>会使得两个实例同时生效,<code>Object.setPrototypeOf()</code>只能生效一个实例对象.</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2162,7 +2155,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">38</span>
+                <span class="site-state-item-count">39</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2184,7 +2177,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">34</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2278,7 +2271,7 @@
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Pisces
   </a>-->
-  <span class="post-count">博客全站共27.4k字</span>
+  <span class="post-count">博客全站共27.5k字</span>
 </div>
 
 
