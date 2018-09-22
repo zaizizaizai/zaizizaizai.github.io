@@ -349,6 +349,186 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--属性/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/25/理解JavaScript--属性/" itemprop="url">理解JavaScript--属性</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T13:50:52+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/25/理解JavaScript--属性/" class="leancloud_visitors" data-flag-title="理解JavaScript--属性">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="六、属性"><a href="#六、属性" class="headerlink" title="六、属性"></a>六、属性</h1><hr>
+<h4 id="1-JavaScript中的对象"><a href="#1-JavaScript中的对象" class="headerlink" title="1.JavaScript中的对象"></a>1.JavaScript中的对象</h4><p>JavaScript中的对象一般分为三类:<strong>内置对象</strong>(Array, Error, Date等), <strong>宿主对象</strong>(对于前端来说指的是浏览器对象,例如window), <strong>自定义对象</strong>(指我们自己创建的对象).</p>
+<p>因此,我们主要讨论的内容是围绕自定义对象展开的,今天我们就对象的属性进行深入地探究.</p>
+<hr>
+<h4 id="2-属性的创建"><a href="#2-属性的创建" class="headerlink" title="2.属性的创建"></a>2.属性的创建</h4><p>我们先定义一个对象,然后对其赋值:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;&#125;;</span><br><span class="line">person.name = <span class="string">"Messi"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>以上操作相当于给<code>person</code>对象建立了一个<code>name</code>属性,且值为<code>&#39;Messi&#39;</code>.</p>
+<p>那么这个赋值的过程具体的原理是什么呢?</p>
+<p>首先,我们创建了一个’空’对象,之所以我们打上引号,是因为这并不是一个严格意义上的空对象,因为在建立这个对象的过程中,JavaScript已经为这个对象内置了方法和属性,当然是不可见的,在属性的建立过程中就调用了一个隐式的方法<code>[[put]]</code>.</p>
+<p>大概的创建过程是,当属性第一次被创建时,对象调用内部方法<code>[[put]]</code>为对象创建一个节点保存属性.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: person</span><br><span class="line">e=&gt;end: persen.name = &quot;Messi&quot;</span><br><span class="line">io1=&gt;inputoutput: [[put]]</span><br><span class="line"></span><br><span class="line">st-&gt;io1-&gt;e</span><br></pre></td></tr></table></figure></p>
+<hr>
+<h4 id="3-属性的修改"><a href="#3-属性的修改" class="headerlink" title="3.属性的修改"></a>3.属性的修改</h4><p>我们对上例中的代码做一下修改:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;&#125;;</span><br><span class="line">person.name = <span class="string">"Messi"</span>;</span><br><span class="line">person.name = <span class="string">"Bale"</span>;</span><br></pre></td></tr></table></figure></p>
+<p>很显然,<code>name</code>被创建后,该属就被进行了修改,原属性值<code>Messi</code>被修改为<code>Bale</code>,那么这个过程又是如何发生的呢?</p>
+<p>其实对象内部除了隐式的<code>[[put]]</code>方法,还有一个<code>[[set]]</code>方法,这个方法不同于<code>[[put]]</code>在创建属性时调用,而是在同一个属性被再次赋值的时候用于更新属性进行的调用.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">st=&gt;start: person.name = &quot;Messi&quot;</span><br><span class="line">e=&gt;end: persen.name = &quot;Bale&quot;</span><br><span class="line">io1=&gt;inputoutput: [[put]]</span><br><span class="line"></span><br><span class="line">st-&gt;io1-&gt;e</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="4-属性的查询"><a href="#4-属性的查询" class="headerlink" title="4.属性的查询"></a>4.属性的查询</h4><p>判断一个属性或者方法是否在一个对象中,通常有两种方式.<br><code>in</code>操作符方式:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"name"</span> <span class="keyword">in</span> person); <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
+<p><code>hasOwnProperty</code>方法:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">"name"</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="5-属性的删除"><a href="#5-属性的删除" class="headerlink" title="5.属性的删除"></a>5.属性的删除</h4><p>删除一个属性,最正确的方式是用<code>delete</code>方法,一个错误的方式是将该属性赋值为<code>null</code>,该方式的错误之处在于赋值<code>null</code>相当于调用了[[set]]方法把原属性值更改为了<code>null</code>,这个保存属性的节点依然存在,而用<code>delete</code>方法便能彻底删除这个节点.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="keyword">delete</span> person.name;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"name"</span> <span class="keyword">in</span> person); <span class="comment">//false</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="6-属性的枚举"><a href="#6-属性的枚举" class="headerlink" title="6.属性的枚举"></a>6.属性的枚举</h4><p>我们通常用<code>for...in</code>枚举对象中的属性,它会将属性一一返回.<br>在ES5中引入了一个新的方法<code>Object.key()</code>,不同之处在于,它可以将结果以数组的形式返回<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span>,</span><br><span class="line">    age: <span class="number">29</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">var</span> pros <span class="keyword">in</span> person ) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log(pros); <span class="comment">// name age </span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> pros = <span class="built_in">Object</span>.keys(person);</span><br><span class="line"><span class="built_in">console</span>.log(pros); <span class="comment">//[ 'name', 'age' ]</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>值得注意的是,并非所有的属性都是可枚举的,例如对象自带的属性<code>length</code>等等,因此我们可以用<code>propertyIsEnumerable()</code>方法来判断一个属性是否可枚举.</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--原型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2131,162 +2311,6 @@ process.stdin.pipe(new MyWritable());
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/13/node笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/13/node笔记/" itemprop="url">node笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T12:34:23+08:00">
-                2017-12-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/node/" itemprop="url" rel="index">
-                    <span itemprop="name">node</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/13/node笔记/" class="leancloud_visitors" data-flag-title="node笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="安装以及升级node，npm："><a href="#安装以及升级node，npm：" class="headerlink" title="安装以及升级node，npm："></a>安装以及升级node，npm：</h1><h2 id="1-安装nodejs"><a href="#1-安装nodejs" class="headerlink" title="1.安装nodejs"></a>1.安装nodejs</h2><h3 id="sudo-apt-install-nodejs-legacy"><a href="#sudo-apt-install-nodejs-legacy" class="headerlink" title="sudo apt install nodejs-legacy"></a><code>sudo apt install nodejs-legacy</code></h3><h2 id="2-安装npm"><a href="#2-安装npm" class="headerlink" title="2.安装npm"></a>2.安装npm</h2><h3 id="sudo-apt-install-npm"><a href="#sudo-apt-install-npm" class="headerlink" title="sudo apt install npm"></a><code>sudo apt install npm</code></h3><h2 id="3-清楚cache"><a href="#3-清楚cache" class="headerlink" title="3.清楚cache"></a>3.清楚cache</h2><h3 id="sudo-npm-cache-clean-f"><a href="#sudo-npm-cache-clean-f" class="headerlink" title="sudo npm cache clean -f"></a><code>sudo npm cache clean -f</code></h3><h2 id="4-安装n包"><a href="#4-安装n包" class="headerlink" title="4.安装n包"></a>4.安装n包</h2><h3 id="sudo-npm-install-g-n"><a href="#sudo-npm-install-g-n" class="headerlink" title="sudo npm install -g n"></a><code>sudo npm install -g n</code></h3><h2 id="5-获取nodejs稳定版"><a href="#5-获取nodejs稳定版" class="headerlink" title="5.获取nodejs稳定版"></a>5.获取nodejs稳定版</h2><h3 id="sudo-n-stable"><a href="#sudo-n-stable" class="headerlink" title="sudo n stable"></a><code>sudo n stable</code></h3><h2 id="6-升级npm"><a href="#6-升级npm" class="headerlink" title="6.升级npm"></a>6.升级npm</h2><h3 id="sudo-npm-install-g-npm"><a href="#sudo-npm-install-g-npm" class="headerlink" title="sudo npm install -g npm"></a><code>sudo npm install -g npm</code></h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2336,7 +2360,7 @@ process.stdin.pipe(new MyWritable());
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">39</span>
+                <span class="site-state-item-count">40</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2347,7 +2371,7 @@ process.stdin.pipe(new MyWritable());
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">14</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2358,7 +2382,7 @@ process.stdin.pipe(new MyWritable());
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">34</span>
+                <span class="site-state-item-count">35</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
