@@ -87,7 +87,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="c," />
 
 
 
@@ -105,17 +105,24 @@
 
 
 
-<meta name="description" content="喜欢探索，热爱编程">
+<meta name="description" content="clox(持续更新中，目前到scanner)clox是由Bob Nystrom基于ｃ编写的编译器，最终解释结果编译成字节码，通过编写学习，可以了解编译器的基本原理主流程主要分为三步：  扫描 编译 执行(虚拟机)  github代码库:zaizizaizai 推荐：原文教程请戳这里 极度推荐项目库：project-ba">
+<meta name="keywords" content="c">
 <meta property="og:type" content="article">
-<meta property="og:title" content="python核心(一)">
-<meta property="og:url" content="https://zaizizaizai.github.io/2019/01/19/python核心-一/index.html">
+<meta property="og:title" content="clox编译器">
+<meta property="og:url" content="https://zaizizaizai.github.io/2019/07/19/clox-compiler/index.html">
 <meta property="og:site_name" content="zaizizaizai">
-<meta property="og:description" content="喜欢探索，热爱编程">
+<meta property="og:description" content="clox(持续更新中，目前到scanner)clox是由Bob Nystrom基于ｃ编写的编译器，最终解释结果编译成字节码，通过编写学习，可以了解编译器的基本原理主流程主要分为三步：  扫描 编译 执行(虚拟机)  github代码库:zaizizaizai 推荐：原文教程请戳这里 极度推荐项目库：project-based-learning 目录结构 文件说明 流程 clox编译器整个代码逻辑流">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-01-19T05:54:01.377Z">
+<meta property="og:image" content="https://zaizizaizai.github.io/images/clox/pipeline.png">
+<meta property="og:image" content="https://zaizizaizai.github.io/images/clox/reverse.png">
+<meta property="og:image" content="https://zaizizaizai.github.io/images/clox/insert.png">
+<meta property="og:image" content="https://zaizizaizai.github.io/images/clox/grow.png">
+<meta property="og:image" content="https://zaizizaizai.github.io/2019/07/19/clox-compiler/pic/format.png">
+<meta property="og:updated_time" content="2019-07-19T11:55:17.009Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="python核心(一)">
-<meta name="twitter:description" content="喜欢探索，热爱编程">
+<meta name="twitter:title" content="clox编译器">
+<meta name="twitter:description" content="clox(持续更新中，目前到scanner)clox是由Bob Nystrom基于ｃ编写的编译器，最终解释结果编译成字节码，通过编写学习，可以了解编译器的基本原理主流程主要分为三步：  扫描 编译 执行(虚拟机)  github代码库:zaizizaizai 推荐：原文教程请戳这里 极度推荐项目库：project-based-learning 目录结构 文件说明 流程 clox编译器整个代码逻辑流">
+<meta name="twitter:image" content="https://zaizizaizai.github.io/images/clox/pipeline.png">
 
 
 
@@ -144,13 +151,13 @@
 
 
 
-  <link rel="canonical" href="https://zaizizaizai.github.io/2019/01/19/python核心-一/"/>
+  <link rel="canonical" href="https://zaizizaizai.github.io/2019/07/19/clox-compiler/"/>
 
 
 
 
 
-  <title>python核心(一) | zaizizaizai</title>
+  <title>clox编译器 | zaizizaizai</title>
   
 
 
@@ -337,7 +344,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2019/01/19/python核心-一/">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2019/07/19/clox-compiler/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="pinocchio">
@@ -354,7 +361,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">python核心(一)</h1>
+          <h1 class="post-title" itemprop="name headline">clox编译器</h1>
         
 
         <div class="post-meta">
@@ -366,8 +373,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-19T13:54:01+08:00">
-                2019-01-19
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-19T19:20:16+08:00">
+                2019-07-19
               </time>
             
 
@@ -377,6 +384,28 @@
           </span>
 
           
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/c/" itemprop="url" rel="index">
+                    <span itemprop="name">c</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -384,7 +413,7 @@
 
           
           
-             <span id="/2019/01/19/python核心-一/" class="leancloud_visitors" data-flag-title="python核心(一)">
+             <span id="/2019/07/19/clox-compiler/" class="leancloud_visitors" data-flag-title="clox编译器">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -415,7 +444,132 @@
       
 
       
-        
+        <h1 id="clox"><a href="#clox" class="headerlink" title="clox"></a><strong>clox</strong></h1><h3 id="持续更新中，目前到scanner"><a href="#持续更新中，目前到scanner" class="headerlink" title="(持续更新中，目前到scanner)"></a>(持续更新中，目前到scanner)</h3><p>clox是由Bob Nystrom基于ｃ编写的编译器，最终解释结果编译成字节码，通过编写学习，可以了解编译器的基本原理<br>主流程主要分为三步：</p>
+<ol>
+<li>扫描</li>
+<li>编译</li>
+<li>执行(虚拟机)</li>
+</ol>
+<p><a href="https://github.com/zaizizaizai/work/tree/master/c/clox" target="_blank" rel="noopener">github代码库:zaizizaizai</a></p>
+<p><a href="http://www.craftinginterpreters.com/chunks-of-bytecode.html#chunks-of-instructions" target="_blank" rel="noopener">推荐：原文教程请戳这里</a></p>
+<p><a href="https://github.com/tuvtran/project-based-learning" target="_blank" rel="noopener">极度推荐项目库：project-based-learning</a></p>
+<h2 id="目录结构"><a href="#目录结构" class="headerlink" title="目录结构"></a>目录结构</h2><ul>
+<li><a href="#文件说明">文件说明</a></li>
+<li><a href="#流程">流程</a><ul>
+<li><a href="#clox编译器整个代码逻辑流程">clox编译器整个代码逻辑流程</a></li>
+<li><a href="#执行减法的流程">执行减法(3-1)的流程</a></li>
+</ul>
+</li>
+<li><a href="#结构">结构</a><ul>
+<li><a href="#chunk结构">chunk结构</a></li>
+<li><a href="#ValueArray结构">ValueArray结构</a></li>
+<li><a href="#VM结构">VM结构</a></li>
+</ul>
+</li>
+<li><a href="#函数以及参数说明">函数以及参数说明</a><ul>
+<li><a href="#reallocate函数">reallocate()</a></li>
+<li><a href="#OP_CONSTANT">OP_CONSTANT</a></li>
+</ul>
+</li>
+</ul>
+<h2 id="文件说明"><a href="#文件说明" class="headerlink" title="文件说明"></a><strong>文件说明</strong></h2><table>
+<thead>
+<tr>
+<th>文件名</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>common</td>
+<td>通用引用库文件</td>
+</tr>
+<tr>
+<td>memory</td>
+<td>数组增删的逻辑，基础的内存管理</td>
+</tr>
+<tr>
+<td>chunk</td>
+<td>chunk节点：结构定义,属性的更改;储存源代码</td>
+</tr>
+<tr>
+<td>value</td>
+<td>常量池，常量类型结构的定义及实现</td>
+</tr>
+<tr>
+<td>debug</td>
+<td>反汇编提示信息</td>
+</tr>
+<tr>
+<td>main</td>
+<td>主函数</td>
+</tr>
+<tr>
+<td>vm</td>
+<td>虚拟机－指令执行器;解释执行源代码</td>
+</tr>
+<tr>
+<td>compiler</td>
+<td>编译</td>
+</tr>
+<tr>
+<td>scanner</td>
+<td>扫描代码段</td>
+</tr>
+</tbody>
+</table>
+<h2 id="流程"><a href="#流程" class="headerlink" title="流程"></a><strong>流程</strong></h2><h3 id="clox编译器整个代码逻辑流程"><a href="#clox编译器整个代码逻辑流程" class="headerlink" title="clox编译器整个代码逻辑流程"></a>clox编译器整个代码逻辑流程</h3><p><img src="/images/clox/pipeline.png" alt="clox整个流程"></p>
+<h3 id="执行减法的流程"><a href="#执行减法的流程" class="headerlink" title="执行减法的流程"></a>执行减法的流程</h3><p><img src="/images/clox/reverse.png" alt="计算器(执行操作码)"></p>
+<h2 id="结构"><a href="#结构" class="headerlink" title="结构"></a><strong>结构</strong></h2><h3 id="chunk结构"><a href="#chunk结构" class="headerlink" title="chunk结构"></a><strong>chunk结构</strong></h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    <span class="keyword">int</span> count;  <span class="comment">//实际使用大小</span></span><br><span class="line">    <span class="keyword">int</span> capacity;   <span class="comment">//分配数组的容量</span></span><br><span class="line">    <span class="keyword">uint8_t</span>* code;  <span class="comment">//指令</span></span><br><span class="line">    <span class="keyword">int</span>* lines;     <span class="comment">//线信息</span></span><br><span class="line">    ValueArray constants;   <span class="comment">//常量列表</span></span><br><span class="line">&#125; Chunk;</span><br></pre></td></tr></table></figure>
+<p><img src="/images/clox/insert.png" alt="chunk"><br><img src="/images/clox/grow.png" alt="chunk扩展容量过程"></p>
+<ol>
+<li>分配具有更多容量的新数组</li>
+<li>将现有元素从旧数组复制到新数组</li>
+<li>更新capacity</li>
+<li>删除旧数组</li>
+<li>更新code指向新数组</li>
+<li>既有空间，也可将元素储存在新数组中</li>
+<li>更新cout</li>
+</ol>
+<h3 id="ValueArray结构"><a href="#ValueArray结构" class="headerlink" title="ValueArray结构"></a>ValueArray结构</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span>&#123;</span></span><br><span class="line">    <span class="keyword">int</span> capacity;   <span class="comment">//容量</span></span><br><span class="line">    <span class="keyword">int</span> count;      <span class="comment">//实际使用大小</span></span><br><span class="line">    Value* values;   <span class="comment">//数值</span></span><br><span class="line">&#125; ValueArray;</span><br></pre></td></tr></table></figure>
+<h3 id="VM结构"><a href="#VM结构" class="headerlink" title="VM结构"></a>VM结构</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> &#123;</span></span><br><span class="line">    Chunk* chunk;</span><br><span class="line">    <span class="keyword">uint8_t</span>* ip;    <span class="comment">//指令指针(PC机中的程序计数器)</span></span><br><span class="line">&#125; VM;</span><br></pre></td></tr></table></figure>
+<h2 id="函数以及参数说明"><a href="#函数以及参数说明" class="headerlink" title="函数以及参数说明"></a><strong>函数以及参数说明</strong></h2><h3 id="reallocate函数"><a href="#reallocate函数" class="headerlink" title="reallocate函数"></a>reallocate函数</h3><p>传递两个参数给reallocate()控制要实现的操作</p>
+<table>
+<thead>
+<tr>
+<th>oldsize</th>
+<th>newSize</th>
+<th>操作</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0</td>
+<td>非0</td>
+<td>　分配新块</td>
+</tr>
+<tr>
+<td>非0</td>
+<td>0</td>
+<td>重置为空</td>
+</tr>
+<tr>
+<td>非0</td>
+<td>&lt; oldSize</td>
+<td>缩小现有分配</td>
+</tr>
+<tr>
+<td>非0</td>
+<td>&gt; oldSize</td>
+<td>增加现有分配</td>
+</tr>
+</tbody>
+</table>
+<h3 id="OP-CONSTANT"><a href="#OP-CONSTANT" class="headerlink" title="OP_CONSTANT"></a>OP_CONSTANT</h3><p>OP_CONSTANT采用单字节操作数制定从块的常量数组加载哪个常量<br><img src="./pic/format.png" alt="format"></p>
+<ul>
+<li><a href="#clox">文章顶部</a></li>
+</ul>
+
       
     </div>
     
@@ -441,6 +595,12 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/c/" rel="tag"><i class="fa fa-tag"></i> c</a>
+          
+        </div>
+      
 
       
       
@@ -450,8 +610,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/09/22/大海与生活/" rel="next" title="大海与生活">
-                <i class="fa fa-chevron-left"></i> 大海与生活
+              <a href="/2019/01/19/python核心-一/" rel="next" title="python核心(一)">
+                <i class="fa fa-chevron-left"></i> python核心(一)
               </a>
             
           </div>
@@ -459,10 +619,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/07/19/clox-compiler/" rel="prev" title="clox编译器">
-                clox编译器 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -524,8 +680,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/dog.jpg"
@@ -618,6 +783,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#clox"><span class="nav-number">1.</span> <span class="nav-text">clox</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#持续更新中，目前到scanner"><span class="nav-number">1.0.1.</span> <span class="nav-text">(持续更新中，目前到scanner)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#目录结构"><span class="nav-number">1.1.</span> <span class="nav-text">目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文件说明"><span class="nav-number">1.2.</span> <span class="nav-text">文件说明</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#流程"><span class="nav-number">1.3.</span> <span class="nav-text">流程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#clox编译器整个代码逻辑流程"><span class="nav-number">1.3.1.</span> <span class="nav-text">clox编译器整个代码逻辑流程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#执行减法的流程"><span class="nav-number">1.3.2.</span> <span class="nav-text">执行减法的流程</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#结构"><span class="nav-number">1.4.</span> <span class="nav-text">结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#chunk结构"><span class="nav-number">1.4.1.</span> <span class="nav-text">chunk结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ValueArray结构"><span class="nav-number">1.4.2.</span> <span class="nav-text">ValueArray结构</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#VM结构"><span class="nav-number">1.4.3.</span> <span class="nav-text">VM结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#函数以及参数说明"><span class="nav-number">1.5.</span> <span class="nav-text">函数以及参数说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#reallocate函数"><span class="nav-number">1.5.1.</span> <span class="nav-text">reallocate函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#OP-CONSTANT"><span class="nav-number">1.5.2.</span> <span class="nav-text">OP_CONSTANT</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
