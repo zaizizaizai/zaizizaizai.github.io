@@ -338,6 +338,201 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--深克隆/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/25/理解JavaScript--深克隆/" itemprop="url">理解JavaScript--深克隆</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T15:34:44+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/25/理解JavaScript--深克隆/" class="leancloud_visitors" data-flag-title="理解JavaScript--深克隆">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="八、在JavaScript中如何实现一个深克隆"><a href="#八、在JavaScript中如何实现一个深克隆" class="headerlink" title="八、在JavaScript中如何实现一个深克隆"></a>八、在JavaScript中如何实现一个深克隆</h1><hr>
+<h4 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h4><p>在要实现一个深克隆之前我们需要了解一下javascript中的基础类型.</p>
+<p><a href="https://github.com/xiaomuzhu/ElemeFE-node-interview/blob/master/JavaScript%E5%9F%BA%E7%A1%80/JavaScript%E5%9F%BA%E6%9C%AC%E7%B1%BB%E5%9E%8B.md" target="_blank" rel="noopener">javascript基础类型</a>
+　　</p>
+<blockquote>
+<p>JavaScript原始类型:Undefined、Null、Boolean、Number、String、Symbol<br>JavaScript引用类型:Object</p>
+</blockquote>
+<hr>
+<h4 id="1-浅克隆"><a href="#1-浅克隆" class="headerlink" title="1.浅克隆"></a>1.浅克隆</h4><p>　　<strong>浅克隆</strong>之所以被称为<strong>浅克隆</strong>，是因为对象只会被克隆最外部的一层,至于更深层的对象,则依然是通过引用指向同一块堆内存.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 浅克隆函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">shallowClone</span>(<span class="params">o</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> obj = &#123;&#125;;</span><br><span class="line">  <span class="keyword">for</span> ( <span class="keyword">let</span> i <span class="keyword">in</span> o) &#123;</span><br><span class="line">    obj[i] = o[i];</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> obj;</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 被克隆对象</span></span><br><span class="line"><span class="keyword">const</span> oldObj = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  b: [ <span class="string">'e'</span>, <span class="string">'f'</span>, <span class="string">'g'</span> ],</span><br><span class="line">  c: &#123; <span class="attr">h</span>: &#123; <span class="attr">i</span>: <span class="number">2</span> &#125; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newObj = shallowClone(oldObj);</span><br><span class="line"><span class="built_in">console</span>.log(newObj.c.h, oldObj.c.h); <span class="comment">// &#123; i: 2 &#125; &#123; i: 2 &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(oldObj.c.h === newObj.c.h); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>我们可以看到,很明显虽然<code>oldObj.c.h</code>被克隆了,但是它还与<code>oldObj.c.h</code>相等,这表明他们依然指向同一段堆内存,这就造成了如果对<code>newObj.c.h</code>进行修改,也会影响<code>oldObj.c.h</code>,这就不是一版好的克隆.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">newObj.c.h.i = <span class="string">'change'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(newObj.c.h, oldObj.c.h); <span class="comment">// &#123; i: 'change' &#125; &#123; i: 'change' &#125;</span></span><br></pre></td></tr></table></figure>
+<p>我们改变了<code>newObj.c.h.i</code>的值,<code>oldObj.c.h.i</code>也被改变了,这就是浅克隆的问题所在.</p>
+<p>当然有一个新的api<code>Object.assign()</code>也可以实现浅复制,但是效果跟上面没有差别,所以我们不再细说了.</p>
+<h4 id="2-深克隆"><a href="#2-深克隆" class="headerlink" title="2.深克隆"></a>2.深克隆</h4><h5 id="2-1-JSON-parse方法"><a href="#2-1-JSON-parse方法" class="headerlink" title="2.1 JSON.parse方法"></a>2.1 JSON.parse方法</h5><p>前几年微博上流传着一个传说中最便捷实现深克隆的方法,<br>JSON对象parse方法可以将JSON字符串反序列化成JS对象，stringify方法可以将JS对象序列化成JSON字符串,这两个方法结合起来就能产生一个便捷的深克隆.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> newObj = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(oldObj));</span><br></pre></td></tr></table></figure></p>
+<p>我们依然用上一节的例子进行测试<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> oldObj = &#123;</span><br><span class="line">  a: <span class="number">1</span>,</span><br><span class="line">  b: [ <span class="string">'e'</span>, <span class="string">'f'</span>, <span class="string">'g'</span> ],</span><br><span class="line">  c: &#123; <span class="attr">h</span>: &#123; <span class="attr">i</span>: <span class="number">2</span> &#125; &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newObj = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(oldObj));</span><br><span class="line"><span class="built_in">console</span>.log(newObj.c.h, oldObj.c.h); <span class="comment">// &#123; i: 2 &#125; &#123; i: 2 &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(oldObj.c.h === newObj.c.h); <span class="comment">// false</span></span><br><span class="line">newObj.c.h.i = <span class="string">'change'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(newObj.c.h, oldObj.c.h); <span class="comment">// &#123; i: 'change' &#125; &#123; i: 2 &#125;</span></span><br></pre></td></tr></table></figure></p>
+<p>果然,这是一个实现深克隆的好方法,但是这个解决办法是不是太过简单了.</p>
+<p>确实,这个方法虽然可以解决绝大部分是使用场景,但是却有很多坑.</p>
+<blockquote>
+<p>1.他无法实现对函数 、RegExp等特殊对象的克隆</p>
+<p>2.会抛弃对象的constructor,所有的构造函数会指向Object</p>
+<p>3.对象有循环引用,会报错</p>
+</blockquote>
+<p>主要的坑就是以上几点,我们一一测试下.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 构造函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Messi = <span class="keyword">new</span> person(<span class="string">'Messi'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>);</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> oldObj = &#123;</span><br><span class="line">  a: say,</span><br><span class="line">  b: <span class="keyword">new</span> <span class="built_in">Array</span>(<span class="number">1</span>),</span><br><span class="line">  c: <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'ab+c'</span>, <span class="string">'i'</span>),</span><br><span class="line">  d: Messi</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newObj = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(oldObj));</span><br><span class="line"></span><br><span class="line"><span class="comment">// 无法复制函数</span></span><br><span class="line"><span class="built_in">console</span>.log(newObj.a, oldObj.a); <span class="comment">// undefined [Function: say]</span></span><br><span class="line"><span class="comment">// 稀疏数组复制错误</span></span><br><span class="line"><span class="built_in">console</span>.log(newObj.b[<span class="number">0</span>], oldObj.b[<span class="number">0</span>]); <span class="comment">// null undefined</span></span><br><span class="line"><span class="comment">// 无法复制正则对象</span></span><br><span class="line"><span class="built_in">console</span>.log(newObj.c, oldObj.c); <span class="comment">// &#123;&#125; /ab+c/i</span></span><br><span class="line"><span class="comment">// 构造函数指向错误</span></span><br><span class="line"><span class="built_in">console</span>.log(newObj.d.constructor, oldObj.d.constructor); <span class="comment">// [Function: Object] [Function: person]</span></span><br></pre></td></tr></table></figure>
+<p>我们可以看到在对函数、正则对象、稀疏数组等对象克隆时会发生意外，构造函数指向也会发生错误。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> oldObj = &#123;&#125;;</span><br><span class="line"></span><br><span class="line">oldObj.a = oldObj;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newObj = <span class="built_in">JSON</span>.parse(<span class="built_in">JSON</span>.stringify(oldObj));</span><br><span class="line"><span class="built_in">console</span>.log(newObj.a, oldObj.a); <span class="comment">// TypeError: Converting circular structure to JSON</span></span><br></pre></td></tr></table></figure>
+<p>对象的循环引用会抛出错误.</p>
+<h5 id="2-2-构造一个深克隆函数"><a href="#2-2-构造一个深克隆函数" class="headerlink" title="2.2 构造一个深克隆函数"></a>2.2 构造一个深克隆函数</h5><p>我们知道要想实现一个靠谱的深克隆方法,上一节提到的<strong>序列/反序列</strong>是不可能了,而通常教程里提到的方法也是不靠谱的,他们存在的问题跟上一届序列反序列操作中凸显的问题是一致的.<br><img src="http://omrbgpqyl.bkt.clouddn.com/18-1-20/43905997.jpg" alt=""><br><em>(这个方法也会出现上一节提到的问题)</em></p>
+<p>由于要面对不同的对象(正则、数组、Date等)要采用不同的处理方式，我们需要实现一个对象类型判断函数。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> isType = <span class="function">(<span class="params">obj, type</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (<span class="keyword">typeof</span> obj !== <span class="string">'object'</span>) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">  <span class="keyword">const</span> typeString = <span class="built_in">Object</span>.prototype.toString.call(obj);</span><br><span class="line">  <span class="keyword">let</span> flag;</span><br><span class="line">  <span class="keyword">switch</span> (type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'Array'</span>:</span><br><span class="line">      flag = typeString === <span class="string">'[object Array]'</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'Date'</span>:</span><br><span class="line">      flag = typeString === <span class="string">'[object Date]'</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">'RegExp'</span>:</span><br><span class="line">      flag = typeString === <span class="string">'[object RegExp]'</span>;</span><br><span class="line">      <span class="keyword">break</span>;</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      flag = <span class="literal">false</span>;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> flag;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>这样我们就可以对特殊对象进行类型判断了,从而采用针对性的克隆策略.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> arr = <span class="built_in">Array</span>.of(<span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">2</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(isType(arr, <span class="string">'Array'</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+<p>对于正则对象,我们在处理之前要先补充一点新知识.</p>
+<p>我们需要通过<a href="http://es6.ruanyifeng.com/#docs/regex#flags-%E5%B1%9E%E6%80%A7" target="_blank" rel="noopener">正则的扩展</a>了解到<strong>flags 属性 </strong>等等,因此我们需要实现一个提取flags的函数.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> getRegExp = <span class="function"><span class="params">re</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> flags = <span class="string">''</span>;</span><br><span class="line">  <span class="keyword">if</span> (re.global) flags += <span class="string">'g'</span>;</span><br><span class="line">  <span class="keyword">if</span> (re.ignoreCase) flags += <span class="string">'i'</span>;</span><br><span class="line">  <span class="keyword">if</span> (re.multiline) flags += <span class="string">'m'</span>;</span><br><span class="line">  <span class="keyword">return</span> flags;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p>做好了这些准备工作,我们就可以进行深克隆的实现了.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* deep clone</span></span><br><span class="line"><span class="comment">* @param  &#123;[type]&#125; parent object 需要进行克隆的对象</span></span><br><span class="line"><span class="comment">* @return &#123;[type]&#125;        深克隆后的对象</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> clone = <span class="function"><span class="params">parent</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// 维护两个储存循环引用的数组</span></span><br><span class="line">  <span class="keyword">const</span> parents = [];</span><br><span class="line">  <span class="keyword">const</span> children = [];</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> _clone = <span class="function"><span class="params">parent</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (parent === <span class="literal">null</span>) <span class="keyword">return</span> <span class="literal">null</span>;</span><br><span class="line">    <span class="keyword">if</span> (<span class="keyword">typeof</span> parent !== <span class="string">'object'</span>) <span class="keyword">return</span> parent;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">let</span> child, proto;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (isType(parent, <span class="string">'Array'</span>)) &#123;</span><br><span class="line">      <span class="comment">// 对数组做特殊处理</span></span><br><span class="line">      child = [];</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isType(parent, <span class="string">'RegExp'</span>)) &#123;</span><br><span class="line">      <span class="comment">// 对正则对象做特殊处理</span></span><br><span class="line">      child = <span class="keyword">new</span> <span class="built_in">RegExp</span>(parent.source, getRegExp(parent));</span><br><span class="line">      <span class="keyword">if</span> (parent.lastIndex) child.lastIndex = parent.lastIndex;</span><br><span class="line">    &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isType(parent, <span class="string">'Date'</span>)) &#123;</span><br><span class="line">      <span class="comment">// 对Date对象做特殊处理</span></span><br><span class="line">      child = <span class="keyword">new</span> <span class="built_in">Date</span>(parent.getTime());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">      <span class="comment">// 处理对象原型</span></span><br><span class="line">      proto = <span class="built_in">Object</span>.getPrototypeOf(parent);</span><br><span class="line">      <span class="comment">// 利用Object.create切断原型链</span></span><br><span class="line">      child = <span class="built_in">Object</span>.create(proto);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 处理循环引用</span></span><br><span class="line">    <span class="keyword">const</span> index = parents.indexOf(parent);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (index != <span class="number">-1</span>) &#123;</span><br><span class="line">      <span class="comment">// 如果父数组存在本对象,说明之前已经被引用过,直接返回此对象</span></span><br><span class="line">      <span class="keyword">return</span> children[index];</span><br><span class="line">    &#125;</span><br><span class="line">    parents.push(parent);</span><br><span class="line">    children.push(child);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i <span class="keyword">in</span> parent) &#123;</span><br><span class="line">      <span class="comment">// 递归</span></span><br><span class="line">      child[i] = _clone(parent[i]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> child;</span><br><span class="line">  &#125;;</span><br><span class="line">  <span class="keyword">return</span> _clone(parent);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们做一下测试<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> Messi = <span class="keyword">new</span> person(<span class="string">'Messi'</span>);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">say</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(<span class="string">'hi'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> oldObj = &#123;</span><br><span class="line">  a: say,</span><br><span class="line">  c: <span class="keyword">new</span> <span class="built_in">RegExp</span>(<span class="string">'ab+c'</span>, <span class="string">'i'</span>),</span><br><span class="line">  d: Messi,</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">oldObj.b = oldObj;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> newObj = clone(oldObj);</span><br><span class="line"><span class="built_in">console</span>.log(newObj.a, oldObj.a); <span class="comment">// [Function: say] [Function: say]</span></span><br><span class="line"><span class="built_in">console</span>.log(newObj.b, oldObj.b); <span class="comment">// &#123; a: [Function: say], c: /ab+c/i, d: person &#123; name: 'Messi' &#125;, b: [Circular] &#125; &#123; a: [Function: say], c: /ab+c/i, d: person &#123; name: 'Messi' &#125;, b: [Circular] &#125;</span></span><br><span class="line"><span class="built_in">console</span>.log(newObj.c, oldObj.c); <span class="comment">// /ab+c/i /ab+c/i</span></span><br><span class="line"><span class="built_in">console</span>.log(newObj.d.constructor, oldObj.d.constructor); <span class="comment">// [Function: person] [Function: person]</span></span><br></pre></td></tr></table></figure></p>
+<p>当然,我们这个深克隆还不算完美,例如Buffer对象、Promise、Set、Map可能都需要我们做特殊处理，另外对于确保没有循环引用的对象，我们可以省去对循环引用的特殊处理，因为这很消耗时间，不过一个基本的深克隆函数我们已经实现了。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--传递引用/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2185,170 +2380,6 @@ process.stdin.pipe(new MyWritable());
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/17/Immutable详解及React中实践/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/17/Immutable详解及React中实践/" itemprop="url">Immutable详解及React中实践</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-17T09:40:24+08:00">
-                2017-12-17
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/React/" itemprop="url" rel="index">
-                    <span itemprop="name">React</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/17/Immutable详解及React中实践/" class="leancloud_visitors" data-flag-title="Immutable详解及React中实践">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="1、js中数据可变状态"><a href="#1、js中数据可变状态" class="headerlink" title="1、js中数据可变状态"></a>1、js中数据可变状态</h1><h3 id="概念："><a href="#概念：" class="headerlink" title="概念："></a>概念：</h3><pre><code>js中的对象一般是可变的，由于使用了引用赋值，新的对象简单的引用了原始的对象，改变的新对象将影响到原始对
-象。
-例如：
-    <figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">foo = &#123;a:<span class="number">1</span>&#125;<span class="comment">;</span></span><br><span class="line"><span class="keyword">bar </span>= foo<span class="comment">;</span></span><br><span class="line"><span class="keyword">bar.a </span>= <span class="number">2</span><span class="comment">;</span></span><br><span class="line">console.log(foor.a)<span class="comment">;	//输出2</span></span><br></pre></td></tr></table></figure>
-</code></pre><h3 id="优缺点："><a href="#优缺点：" class="headerlink" title="优缺点："></a>优缺点：</h3><pre><code>优点：节约内存
-缺点：当应用复杂后，会造成非常大的隐患
-</code></pre><h3 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h3><pre><code>shallowCopy（浅拷贝），deepCopy（深拷贝）
-两种方法可将对象置为不可变对象，但同时也造成cpu和内存的浪费
-</code></pre><h1 id="2、Immutable-Data"><a href="#2、Immutable-Data" class="headerlink" title="2、Immutable.Data"></a>2、Immutable.Data</h1>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2398,7 +2429,7 @@ process.stdin.pipe(new MyWritable());
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">52</span>
+                <span class="site-state-item-count">53</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2409,7 +2440,7 @@ process.stdin.pipe(new MyWritable());
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">14</span>
+                <span class="site-state-item-count">15</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2420,7 +2451,7 @@ process.stdin.pipe(new MyWritable());
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2514,7 +2545,7 @@ process.stdin.pipe(new MyWritable());
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Pisces
   </a>-->
-  <span class="post-count">博客全站共28.0k字</span>
+  <span class="post-count">博客全站共28.4k字</span>
 </div>
 
 
