@@ -105,18 +105,18 @@
 
 
 
-<meta name="description" content="知识点总结autoauto- 知识点总结  - 数据存放位置  - c++内存模型  - class  - const  - static  - &amp;amp;  - 初始化  - volatile  - template  - virtual  - 构造/析构函数  - operator  - 指针、引用  - ">
+<meta name="description" content="知识点总结  知识点总结 数据存放位置 c++内存模型 class const static &amp;amp; 初始化 volatile template virtual 构造/析构函数 operator 指针、引用 双指针、指针引用 条件编译 资源管理 提供对原始资源的访问      数据存放位置 本地变量：栈 n">
 <meta name="keywords" content="笔记,总结,c++">
 <meta property="og:type" content="article">
 <meta property="og:title" content="c知识点">
 <meta property="og:url" content="https://zaizizaizai.github.io/2019/08/24/c-plus/index.html">
 <meta property="og:site_name" content="zaizizaizai">
-<meta property="og:description" content="知识点总结autoauto- 知识点总结  - 数据存放位置  - c++内存模型  - class  - const  - static  - &amp;amp;  - 初始化  - volatile  - template  - virtual  - 构造/析构函数  - operator  - 指针、引用  - 双指针、指针引用  - 条件编译  - 资源管理    - 提供对原始资源的访问## 数">
+<meta property="og:description" content="知识点总结  知识点总结 数据存放位置 c++内存模型 class const static &amp;amp; 初始化 volatile template virtual 构造/析构函数 operator 指针、引用 双指针、指针引用 条件编译 资源管理 提供对原始资源的访问      数据存放位置 本地变量：栈 new出的对象：堆 static/全局变量：全局数据区  c++内存模型 存放对象的地方">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-24T09:09:51.884Z">
+<meta property="og:updated_time" content="2019-08-24T09:12:16.434Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="c知识点">
-<meta name="twitter:description" content="知识点总结autoauto- 知识点总结  - 数据存放位置  - c++内存模型  - class  - const  - static  - &amp;amp;  - 初始化  - volatile  - template  - virtual  - 构造/析构函数  - operator  - 指针、引用  - 双指针、指针引用  - 条件编译  - 资源管理    - 提供对原始资源的访问## 数">
+<meta name="twitter:description" content="知识点总结  知识点总结 数据存放位置 c++内存模型 class const static &amp;amp; 初始化 volatile template virtual 构造/析构函数 operator 指针、引用 双指针、指针引用 条件编译 资源管理 提供对原始资源的访问      数据存放位置 本地变量：栈 new出的对象：堆 static/全局变量：全局数据区  c++内存模型 存放对象的地方">
 
 
 
@@ -438,43 +438,179 @@
       
 
       
-        <h1 id="知识点总结"><a href="#知识点总结" class="headerlink" title="知识点总结"></a>知识点总结</h1><!-- TOC -->autoauto<br>- <a href="#%e7%9f%a5%e8%af%86%e7%82%b9%e6%80%bb%e7%bb%93">知识点总结</a><br>  - <a href="#%e6%95%b0%e6%8d%ae%e5%ad%98%e6%94%be%e4%bd%8d%e7%bd%ae">数据存放位置</a><br>  - <a href="#c%e5%86%85%e5%ad%98%e6%a8%a1%e5%9e%8b">c++内存模型</a><br>  - <a href="#class">class</a><br>  - <a href="#const">const</a><br>  - <a href="#static">static</a><br>  - <a href="#">&amp;</a><br>  - <a href="#%e5%88%9d%e5%a7%8b%e5%8c%96">初始化</a><br>  - <a href="#volatile">volatile</a><br>  - <a href="#templatetypename-t">template<typename t=""></typename></a><br>  - <a href="#virtual">virtual</a><br>  - <a href="#%e6%9e%84%e9%80%a0%e6%9e%90%e6%9e%84%e5%87%bd%e6%95%b0">构造/析构函数</a><br>  - <a href="#operator">operator</a><br>  - <a href="#%e6%8c%87%e9%92%88%e5%bc%95%e7%94%a8">指针、引用</a><br>  - <a href="#%e5%8f%8c%e6%8c%87%e9%92%88%e6%8c%87%e9%92%88%e5%bc%95%e7%94%a8">双指针、指针引用</a><br>  - <a href="#%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91">条件编译</a><br>  - <a href="#%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86">资源管理</a><br>    - <a href="#%e6%8f%90%e4%be%9b%e5%af%b9%e5%8e%9f%e5%a7%8b%e8%b5%84%e6%ba%90%e7%9a%84%e8%ae%bf%e9%97%ae">提供对原始资源的访问</a><br><br><br>## 数据存放位置<br>1. 本地变量：栈<br>2. new出的对象：堆<br>3. static/全局变量：全局数据区<br><br>## c++内存模型<br><em> 存放对象的地方<br>  1. 栈<br>  2. 堆<br>  3. 全局数据区
-</em> 访问对象的方式<br>  1. 变量访问对象<br>  2. 指针访问对象<br>  3. 引用访问对象<br><br>## class<br><em> struct默认public
-</em> class默认private<br><em> 其他用法完全一样，都包含成员函数、继承、多态<br><br>## const
-</em> 只需看其右侧最近的类型<br>  <em> </em>前后<br>    <em> 前：指针指向变量
-    </em> 后：指针本身是变量<br>  <em> 函数前后
-    </em> 前：函数返回值为const<br>    <em> 后：函数成员为const
-    </em> 最后：此成员函数不改变类中的成员变量(mutable可变的)<br><br>## static<br><em> 静态局部变量：
-  </em> 全局数据区分配内存<br>  <em> 随函数第一次调用时初始化，程序结束时销毁
-  </em> 声明处初始化，若无显式初始化，会自动初始化为0<br>  <em> 作用域为局部作用域
-</em> 静态全局变量：<br><em> 静态函数：
-  </em> 本文件可见(文件隔离)<br><em> 静态数据成员：
-  </em> 只有class有一份，而普通数据成员是每一个实例有一份<br><em> 静态成员函数：
-  </em> 静态成员函数不能访问非静态(成员函数、数据成员)<br>  <em> 非静态成员函数可以访问静态(成员函数、数据成员)
-  </em> 解释：静态是属于类的，它不知道创建了多少对象；而对象中的数据对类中数据一清二楚<br><br>## &amp;<br><em> 引用
-  </em> 在赋值＝右侧<br>  <em> 和变量在一起
-</em> 取地址<br>  <em> 在赋值＝左侧
-  </em> 和类型在一起<br><br>## 初始化<br><em> A::A(int m, int n) : x(m), y(n) {}    //初始化
-</em> A::A(int m, int n){x = m; y = n;}    //赋值<br><em> singleton模式：local static对象替换non-local static对象
-  </em> 基础在于：c++保证，函数内的local static对象会在”该函数被调用期间“”首次遇上该对象之定义式“时被初始化。<br><br>## volatile<br><em> 声明的变量可能随时变化，遇到这个关键字声明的变量，编译器对访问该变量的代码就不再进行优化，从而可以提供对特殊地址的稳定访问
-</em> 从所在的内存读取数据，即使它前面的指令刚刚从该处读取过数据。而且读取的数据立刻被保存。<br><em> 应用在共享变量<br><br>## template<typename t=""><br>  // TODO:<br><br>## virtual
-</typename></em> virtual析构函数用于多态基类的声明<br><em> 被用作base class的类声明为virtual析构函数，其他类不要声明virtual析构函数(对象体积增大，不能将其传给其他语言写的函数－无移植性)
-</em> 类的设计目的如果不是base class或具有多态性，就不该声明virtual析构函数<br><em> 别让异常逃出析构函数
-  </em> 结束程序　try{…}catch{…;std::abort;}<br>  <em> 吞掉异常  　try{…}catch{…;}
-  </em> 前两者的优化：　<br><br>## 构造/析构函数<br><em> 构造函数调用顺序：base -&gt; derived
-</em> 析构函数调用顺序：derived -&gt; base<br><em> 在构造/析构函数中不要调用虚函数，因为这类的调用不会下降至derived class(相对的)<br><br>## operator
-</em> 令重载操作符返回一个reference to <em>this
-</em> 处理自我赋值(赋值时两个为同一个对象，删除一个就都删除了)<br>  <em> 证同测试，并跳过处理流程
-  </em> 用副本去操作<br>  <em> copy and swap
-</em> copy函数<br>  <em> 确保复制”对象内的所有成员变量” 和 “所有base class成分”
-  </em> 不要用一个copy函数实现另一个copy函数，应该将共同机能放入第三函数，并由两个函数共同调用<br><br>## 指针、引用<br><em> 指针
-  </em> 概述：指针传递参数本质上是值传递的方式，其传递一个<strong>地址值</strong><br>  <em> 流程：值传递的过程中，被调函数的形参作为被调函数的局部变量处理，即在栈中开辟了内存空间以存放由主调函数放进来的实参的值，从而成为实参的一个副本
-  </em> 特点：被调函数对形参的任何操作都是作为局部参数进行，不影响主调函数是参变量的值<br>  <em> 应用：
-    </em> 不改变指针指向，形参指向实参，可操作实参<br>    <em> 改变指针指向，则形参作为副本，与实参无关，不可操作实参
-</em> 引用<br>  <em> 概述：引用传递本质是地址传递，传递的是<strong>实参变量的地址</strong>
-  </em> 流程：被调函数对形参的任何操作都被处理成间接寻址，即通过栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量。<br><em> <strong>区别</strong>
-  </em> 指针传递参数时，指针中存放的也是实参的地址，但是在被调函数内部指针存放的内容可以被改变，即可能改变指向的实参，所以并不安全<br>  <em> 而引用则不同，它引用的对象的地址一旦赋予，则不能改变<br><br>## 双指针、指针引用<br>// TODO:<br><br>## 条件编译
-</em> 当标识符定义过了,编译程序段1,否则编译程序段2<br><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> 标识符</span></span><br><span class="line">程序段<span class="number">1</span></span><br><span class="line"><span class="built_in">else</span></span><br><span class="line">程序段<span class="number">2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+        <h1 id="知识点总结"><a href="#知识点总结" class="headerlink" title="知识点总结"></a>知识点总结</h1><!-- TOC -->
+<ul>
+<li><a href="#%e7%9f%a5%e8%af%86%e7%82%b9%e6%80%bb%e7%bb%93">知识点总结</a><ul>
+<li><a href="#%e6%95%b0%e6%8d%ae%e5%ad%98%e6%94%be%e4%bd%8d%e7%bd%ae">数据存放位置</a></li>
+<li><a href="#c%e5%86%85%e5%ad%98%e6%a8%a1%e5%9e%8b">c++内存模型</a></li>
+<li><a href="#class">class</a></li>
+<li><a href="#const">const</a></li>
+<li><a href="#static">static</a></li>
+<li><a href="#">&amp;</a></li>
+<li><a href="#%e5%88%9d%e5%a7%8b%e5%8c%96">初始化</a></li>
+<li><a href="#volatile">volatile</a></li>
+<li><a href="#templatetypename-t">template<typename t=""></typename></a></li>
+<li><a href="#virtual">virtual</a></li>
+<li><a href="#%e6%9e%84%e9%80%a0%e6%9e%90%e6%9e%84%e5%87%bd%e6%95%b0">构造/析构函数</a></li>
+<li><a href="#operator">operator</a></li>
+<li><a href="#%e6%8c%87%e9%92%88%e5%bc%95%e7%94%a8">指针、引用</a></li>
+<li><a href="#%e5%8f%8c%e6%8c%87%e9%92%88%e6%8c%87%e9%92%88%e5%bc%95%e7%94%a8">双指针、指针引用</a></li>
+<li><a href="#%e6%9d%a1%e4%bb%b6%e7%bc%96%e8%af%91">条件编译</a></li>
+<li><a href="#%e8%b5%84%e6%ba%90%e7%ae%a1%e7%90%86">资源管理</a><ul>
+<li><a href="#%e6%8f%90%e4%be%9b%e5%af%b9%e5%8e%9f%e5%a7%8b%e8%b5%84%e6%ba%90%e7%9a%84%e8%ae%bf%e9%97%ae">提供对原始资源的访问</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="数据存放位置"><a href="#数据存放位置" class="headerlink" title="数据存放位置"></a>数据存放位置</h2><ol>
+<li>本地变量：栈</li>
+<li>new出的对象：堆</li>
+<li>static/全局变量：全局数据区</li>
+</ol>
+<h2 id="c-内存模型"><a href="#c-内存模型" class="headerlink" title="c++内存模型"></a>c++内存模型</h2><ul>
+<li>存放对象的地方<ol>
+<li>栈</li>
+<li>堆</li>
+<li>全局数据区</li>
+</ol>
+</li>
+<li>访问对象的方式<ol>
+<li>变量访问对象</li>
+<li>指针访问对象</li>
+<li>引用访问对象</li>
+</ol>
+</li>
+</ul>
+<h2 id="class"><a href="#class" class="headerlink" title="class"></a>class</h2><ul>
+<li>struct默认public</li>
+<li>class默认private</li>
+<li>其他用法完全一样，都包含成员函数、继承、多态</li>
+</ul>
+<h2 id="const"><a href="#const" class="headerlink" title="const"></a>const</h2><ul>
+<li>只需看其右侧最近的类型<ul>
+<li>*前后<ul>
+<li>前：指针指向变量</li>
+<li>后：指针本身是变量</li>
+</ul>
+</li>
+<li>函数前后<ul>
+<li>前：函数返回值为const</li>
+<li>后：函数成员为const</li>
+<li>最后：此成员函数不改变类中的成员变量(mutable可变的)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="static"><a href="#static" class="headerlink" title="static"></a>static</h2><ul>
+<li>静态局部变量：<ul>
+<li>全局数据区分配内存</li>
+<li>随函数第一次调用时初始化，程序结束时销毁</li>
+<li>声明处初始化，若无显式初始化，会自动初始化为0</li>
+<li>作用域为局部作用域</li>
+</ul>
+</li>
+<li>静态全局变量：</li>
+<li>静态函数：<ul>
+<li>本文件可见(文件隔离)</li>
+</ul>
+</li>
+<li>静态数据成员：<ul>
+<li>只有class有一份，而普通数据成员是每一个实例有一份</li>
+</ul>
+</li>
+<li>静态成员函数：<ul>
+<li>静态成员函数不能访问非静态(成员函数、数据成员)</li>
+<li>非静态成员函数可以访问静态(成员函数、数据成员)</li>
+<li>解释：静态是属于类的，它不知道创建了多少对象；而对象中的数据对类中数据一清二楚</li>
+</ul>
+</li>
+</ul>
+<h2 id="amp"><a href="#amp" class="headerlink" title="&amp;"></a>&amp;</h2><ul>
+<li>引用<ul>
+<li>在赋值＝右侧</li>
+<li>和变量在一起</li>
+</ul>
+</li>
+<li>取地址<ul>
+<li>在赋值＝左侧</li>
+<li>和类型在一起</li>
+</ul>
+</li>
+</ul>
+<h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><ul>
+<li>A::A(int m, int n) : x(m), y(n) {}    //初始化</li>
+<li>A::A(int m, int n){x = m; y = n;}    //赋值</li>
+<li>singleton模式：local static对象替换non-local static对象<ul>
+<li>基础在于：c++保证，函数内的local static对象会在”该函数被调用期间“”首次遇上该对象之定义式“时被初始化。</li>
+</ul>
+</li>
+</ul>
+<h2 id="volatile"><a href="#volatile" class="headerlink" title="volatile"></a>volatile</h2><ul>
+<li>声明的变量可能随时变化，遇到这个关键字声明的变量，编译器对访问该变量的代码就不再进行优化，从而可以提供对特殊地址的稳定访问</li>
+<li>从所在的内存读取数据，即使它前面的指令刚刚从该处读取过数据。而且读取的数据立刻被保存。</li>
+<li>应用在共享变量</li>
+</ul>
+<h2 id="template"><a href="#template" class="headerlink" title="template"></a>template<typename t=""></typename></h2><p>  // TODO:</p>
+<h2 id="virtual"><a href="#virtual" class="headerlink" title="virtual"></a>virtual</h2><ul>
+<li>virtual析构函数用于多态基类的声明</li>
+<li>被用作base class的类声明为virtual析构函数，其他类不要声明virtual析构函数(对象体积增大，不能将其传给其他语言写的函数－无移植性)</li>
+<li>类的设计目的如果不是base class或具有多态性，就不该声明virtual析构函数</li>
+<li>别让异常逃出析构函数<ul>
+<li>结束程序　try{…}catch{…;std::abort;}</li>
+<li>吞掉异常  　try{…}catch{…;}</li>
+<li>前两者的优化：　</li>
+</ul>
+</li>
+</ul>
+<h2 id="构造-析构函数"><a href="#构造-析构函数" class="headerlink" title="构造/析构函数"></a>构造/析构函数</h2><ul>
+<li>构造函数调用顺序：base -&gt; derived</li>
+<li>析构函数调用顺序：derived -&gt; base</li>
+<li>在构造/析构函数中不要调用虚函数，因为这类的调用不会下降至derived class(相对的)</li>
+</ul>
+<h2 id="operator"><a href="#operator" class="headerlink" title="operator"></a>operator</h2><ul>
+<li>令重载操作符返回一个reference to *this</li>
+<li>处理自我赋值(赋值时两个为同一个对象，删除一个就都删除了)<ul>
+<li>证同测试，并跳过处理流程</li>
+<li>用副本去操作</li>
+<li>copy and swap</li>
+</ul>
+</li>
+<li>copy函数<ul>
+<li>确保复制”对象内的所有成员变量” 和 “所有base class成分”</li>
+<li>不要用一个copy函数实现另一个copy函数，应该将共同机能放入第三函数，并由两个函数共同调用</li>
+</ul>
+</li>
+</ul>
+<h2 id="指针、引用"><a href="#指针、引用" class="headerlink" title="指针、引用"></a>指针、引用</h2><ul>
+<li>指针<ul>
+<li>概述：指针传递参数本质上是值传递的方式，其传递一个<strong>地址值</strong></li>
+<li>流程：值传递的过程中，被调函数的形参作为被调函数的局部变量处理，即在栈中开辟了内存空间以存放由主调函数放进来的实参的值，从而成为实参的一个副本</li>
+<li>特点：被调函数对形参的任何操作都是作为局部参数进行，不影响主调函数是参变量的值</li>
+<li>应用：<ul>
+<li>不改变指针指向，形参指向实参，可操作实参</li>
+<li>改变指针指向，则形参作为副本，与实参无关，不可操作实参</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>引用<ul>
+<li>概述：引用传递本质是地址传递，传递的是<strong>实参变量的地址</strong></li>
+<li>流程：被调函数对形参的任何操作都被处理成间接寻址，即通过栈中存放的地址访问主调函数中的实参变量。正因为如此，被调函数对形参做的任何操作都影响了主调函数中的实参变量。</li>
+</ul>
+</li>
+<li><strong>区别</strong><ul>
+<li>指针传递参数时，指针中存放的也是实参的地址，但是在被调函数内部指针存放的内容可以被改变，即可能改变指向的实参，所以并不安全</li>
+<li>而引用则不同，它引用的对象的地址一旦赋予，则不能改变</li>
+</ul>
+</li>
+</ul>
+<h2 id="双指针、指针引用"><a href="#双指针、指针引用" class="headerlink" title="双指针、指针引用"></a>双指针、指针引用</h2><p>// TODO:</p>
+<h2 id="条件编译"><a href="#条件编译" class="headerlink" title="条件编译"></a>条件编译</h2><ul>
+<li>当标识符定义过了,编译程序段1,否则编译程序段2<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> 标识符</span></span><br><span class="line">程序段<span class="number">1</span></span><br><span class="line"><span class="built_in">else</span></span><br><span class="line">程序段<span class="number">2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
 <h2 id="资源管理"><a href="#资源管理" class="headerlink" title="资源管理"></a>资源管理</h2><ul>
 <li>以对象管理资源<ul>
 <li>为防止资源泄露，请使用RAII对象(tr1::shared_ptr、auto_ptr)，它们在构造函数中获得资源并在析构函数中释放资源</li>
@@ -740,7 +876,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#知识点总结"><span class="nav-number">1.</span> <span class="nav-text">知识点总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#资源管理"><span class="nav-number">1.1.</span> <span class="nav-text">资源管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提供对原始资源的访问"><span class="nav-number">1.1.1.</span> <span class="nav-text">提供对原始资源的访问</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#知识点总结"><span class="nav-number">1.</span> <span class="nav-text">知识点总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#数据存放位置"><span class="nav-number">1.1.</span> <span class="nav-text">数据存放位置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-内存模型"><span class="nav-number">1.2.</span> <span class="nav-text">c++内存模型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#class"><span class="nav-number">1.3.</span> <span class="nav-text">class</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#const"><span class="nav-number">1.4.</span> <span class="nav-text">const</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#static"><span class="nav-number">1.5.</span> <span class="nav-text">static</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#amp"><span class="nav-number">1.6.</span> <span class="nav-text">&</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#初始化"><span class="nav-number">1.7.</span> <span class="nav-text">初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#volatile"><span class="nav-number">1.8.</span> <span class="nav-text">volatile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#template"><span class="nav-number">1.9.</span> <span class="nav-text">template</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#virtual"><span class="nav-number">1.10.</span> <span class="nav-text">virtual</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构造-析构函数"><span class="nav-number">1.11.</span> <span class="nav-text">构造/析构函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#operator"><span class="nav-number">1.12.</span> <span class="nav-text">operator</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指针、引用"><span class="nav-number">1.13.</span> <span class="nav-text">指针、引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#双指针、指针引用"><span class="nav-number">1.14.</span> <span class="nav-text">双指针、指针引用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#条件编译"><span class="nav-number">1.15.</span> <span class="nav-text">条件编译</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#资源管理"><span class="nav-number">1.16.</span> <span class="nav-text">资源管理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#提供对原始资源的访问"><span class="nav-number">1.16.1.</span> <span class="nav-text">提供对原始资源的访问</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
