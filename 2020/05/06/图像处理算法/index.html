@@ -1,0 +1,1631 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "4c12b6eb"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="opencv,图像处理，人工智障," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="zaizizaizai" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="A.模糊(滤波)1.归一化盒子滤波(BoxFilter) 主要功能：在给定的滑动窗口下，对每个窗口内的像素值进行快速相加求和  缺点：无法克服边缘像素信息丢失缺陷，原因是均值滤波是基于平均权重  原理：   给定图像，宽高为(M,N)，确定待求矩形模板的宽高(m,n)，如图紫色矩形。图中黑色方块代表像素点，红色方块代表">
+<meta name="keywords" content="opencv,图像处理，人工智障">
+<meta property="og:type" content="article">
+<meta property="og:title" content="图像处理算法">
+<meta property="og:url" content="https://zaizizaizai.github.io/2020/05/06/图像处理算法/index.html">
+<meta property="og:site_name" content="zaizizaizai">
+<meta property="og:description" content="A.模糊(滤波)1.归一化盒子滤波(BoxFilter) 主要功能：在给定的滑动窗口下，对每个窗口内的像素值进行快速相加求和  缺点：无法克服边缘像素信息丢失缺陷，原因是均值滤波是基于平均权重  原理：   给定图像，宽高为(M,N)，确定待求矩形模板的宽高(m,n)，如图紫色矩形。图中黑色方块代表像素点，红色方块代表假象像素。 开辟一段大小为M的数组，记为buff，用来储存计算过程中的，存在红色">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://zaizizaizai.github.io/2020/05/06/images/opencv/boxFilter.png">
+<meta property="og:updated_time" content="2020-05-06T07:02:37.424Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="图像处理算法">
+<meta name="twitter:description" content="A.模糊(滤波)1.归一化盒子滤波(BoxFilter) 主要功能：在给定的滑动窗口下，对每个窗口内的像素值进行快速相加求和  缺点：无法克服边缘像素信息丢失缺陷，原因是均值滤波是基于平均权重  原理：   给定图像，宽高为(M,N)，确定待求矩形模板的宽高(m,n)，如图紫色矩形。图中黑色方块代表像素点，红色方块代表假象像素。 开辟一段大小为M的数组，记为buff，用来储存计算过程中的，存在红色">
+<meta name="twitter:image" content="https://zaizizaizai.github.io/2020/05/06/images/opencv/boxFilter.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zaizizaizai.github.io/2020/05/06/图像处理算法/"/>
+
+
+
+
+
+  <title>图像处理算法 | zaizizaizai</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a424ce025cdc03482bf24891d3304bf2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zaizizaizai</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">a dream of a child</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2020/05/06/图像处理算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">图像处理算法</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T14:52:18+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/图像处理/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/06/图像处理算法/" class="leancloud_visitors" data-flag-title="图像处理算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="A-模糊-滤波"><a href="#A-模糊-滤波" class="headerlink" title="A.模糊(滤波)"></a>A.模糊(滤波)</h2><h3 id="1-归一化盒子滤波-BoxFilter"><a href="#1-归一化盒子滤波-BoxFilter" class="headerlink" title="1.归一化盒子滤波(BoxFilter)"></a>1.归一化盒子滤波(BoxFilter)</h3><ul>
+<li><p>主要功能：在给定的滑动窗口下，对每个窗口内的像素值进行快速相加求和</p>
+</li>
+<li><p>缺点：无法克服边缘像素信息丢失缺陷，原因是均值滤波是基于平均权重</p>
+</li>
+<li><p>原理：</p>
+<p><img src="../images/opencv/boxFilter.png" alt=""></p>
+<ol>
+<li>给定图像，宽高为(M,N)，确定待求矩形模板的宽高(m,n)，如图紫色矩形。图中黑色方块代表像素点，红色方块代表假象像素。</li>
+<li>开辟一段大小为M的数组，记为buff，用来储存计算过程中的，存在红色假象像素点中</li>
+<li>将矩形模板(紫色)从左上角，从左往右，从上往下单元素移动，每移动到新位置，计算矩形内的像素和保存在数组A(输出图片)中。以(0,0)位置为例：<ul>
+<li>将绿色矩形内的每一列像素求和，结果放在buff内(红色方块)</li>
+<li>对蓝色矩形内的像素点求和，结果即为紫色特征矩形内的像素和，把它存放到数组A</li>
+</ul>
+</li>
+<li>每次紫色矩形向右移动时，实际上就是求对应的蓝色矩形的像素和，此时只需把上次的求和结果减去蓝色矩形内的第一个红色快，再加上其右边的红色块，就是当提前位置的和，公式表达为：sum[i] = sum[i-1] - buf[x-1] + buff[x+m-1]</li>
+<li>当紫色矩形移动到行末时，需对buff进行更新。因整个绿色矩形下移一个像素，所以对于每个buff[i]需要加一个新进来的像素，再减去一个出去的像素，开始新一行的计算</li>
+</ol>
+</li>
+<li><p>此处为原理流程，源码见代码部分</p>
+</li>
+</ul>
+<h3 id="2-高斯滤波"><a href="#2-高斯滤波" class="headerlink" title="2.高斯滤波"></a>2.高斯滤波</h3><ul>
+<li>功能：</li>
+<li>缺点：部分克服边缘像素信息丢失缺陷，但无法完全避免，因为没有考虑像素值的不同</li>
+<li>原理：</li>
+</ul>
+<h3 id="3-中值滤波"><a href="#3-中值滤波" class="headerlink" title="3.中值滤波"></a>3.中值滤波</h3><ul>
+<li>功能：</li>
+<li>缺点：部分克服边缘像素信息丢失缺陷，但无法完全避免，因为没有考虑像素值的不同</li>
+<li>原理：</li>
+</ul>
+<h3 id="4-双边滤波"><a href="#4-双边滤波" class="headerlink" title="4.双边滤波"></a>4.双边滤波</h3><ul>
+<li>功能：</li>
+<li>优缺点：避免边缘信息丢失，保留图像轮廓不变</li>
+<li>原理：</li>
+</ul>
+<h2 id="B-形态学操作"><a href="#B-形态学操作" class="headerlink" title="B.形态学操作"></a>B.形态学操作</h2><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">形态学定义</th>
+<th style="text-align:center">函数定义</th>
+<th style="text-align:center">原理</th>
+<th style="text-align:center">应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">膨胀</td>
+<td style="text-align:center">dilate</td>
+<td style="text-align:center">取领域内最大值作为中心点新像素值</td>
+<td style="text-align:center">前景为黑，变小；前景为白，变大</td>
+</tr>
+<tr>
+<td style="text-align:center">腐蚀</td>
+<td style="text-align:center">erode</td>
+<td style="text-align:center">取领域内最小值作为中心点新像素值</td>
+<td style="text-align:center">前景为黑，变大；前景为白，变小</td>
+</tr>
+<tr>
+<td style="text-align:center">开操作</td>
+<td style="text-align:center">open</td>
+<td style="text-align:center">先腐蚀后膨胀(注意：结构元素需设置为包含部分目标对象)</td>
+<td style="text-align:center">假设对象是前景色，背景是黑色，可以去掉小的对象</td>
+</tr>
+<tr>
+<td style="text-align:center">闭操作</td>
+<td style="text-align:center">close</td>
+<td style="text-align:center">先膨胀后腐蚀</td>
+<td style="text-align:center">假设对象是前景色，背景是黑色，可以填补小的洞</td>
+</tr>
+<tr>
+<td style="text-align:center">形态学梯度</td>
+<td style="text-align:center">Morphological Gradient</td>
+<td style="text-align:center">膨胀减腐蚀，dst = morph(src, element) = dilate(src, element) - erode(src, element)</td>
+<td style="text-align:center">又称为基本梯度(其他还包括内部梯度、方向梯度)</td>
+</tr>
+<tr>
+<td style="text-align:center">顶帽</td>
+<td style="text-align:center">top hat</td>
+<td style="text-align:center">源图像与开操作之间的差值图像</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">黑帽</td>
+<td style="text-align:center">black hat</td>
+<td style="text-align:center">闭操作与源图像的差值图像</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-提取水平与垂直线"><a href="#2-提取水平与垂直线" class="headerlink" title="2.提取水平与垂直线"></a>2.提取水平与垂直线</h2><ul>
+<li>提取步骤<ul>
+<li>输入彩色图像-imread</li>
+<li>转换为灰度图像-cvtColor</li>
+<li>转换为二值图像-adaptiveThreshold</li>
+<li>定义结构元素</li>
+<li>开操作(腐蚀+膨胀)提取水平与垂直线</li>
+</ul>
+</li>
+<li>启示：<ul>
+<li>卷积核可根据需要更改形状，从原图提取想要的形状</li>
+<li>提取文字、图像(去除干扰点)，可用不同卷积核</li>
+</ul>
+</li>
+</ul>
+<h2 id="C-图像上采样和降采样"><a href="#C-图像上采样和降采样" class="headerlink" title="C.图像上采样和降采样"></a>C.图像上采样和降采样</h2><ul>
+<li><strong>图像金字塔</strong>：<ul>
+<li>高斯金字塔：用来对图像进行降采样<ul>
+<li>从底向上，逐层降采样得到</li>
+<li>降采样之后，图像大小是原图M<em>N的M/2 </em> N/2（1/4），即对原图像删除偶数行与列，得到降采样后上一层的图片</li>
+<li>两步生成过程：<ul>
+<li>对当前层进行高斯模糊</li>
+<li>删除当前层的偶数行与列</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>高斯不同：<ul>
+<li>定义：把同一张图像在不同的参数下做高斯模糊之后的结果相减，得到的输出图像成为高斯不同(DOG)</li>
+<li>高斯不同是图像的内在特征，在灰度图像增强‘角点检测中常用到 </li>
+</ul>
+</li>
+<li>拉普拉斯金字塔：用来重建一张图片，根据它的上层降采样图片</li>
+</ul>
+</li>
+</ul>
+<h2 id="D-基本阈值操作"><a href="#D-基本阈值操作" class="headerlink" title="D.基本阈值操作"></a>D.基本阈值操作</h2><ul>
+<li>图像阈值<ul>
+<li>定义：图像分割的标尺</li>
+<li>阈值产生的算法<ul>
+<li>THRESH_OTSU</li>
+<li>THRESH_TRIANGLE</li>
+</ul>
+</li>
+<li>阈值类型<ul>
+<li>阈值二值化(threshold binary)：大于取阈值，小于取零</li>
+<li>阈值反二值化(threshold binary inverted)：大于取零，小于取阈值</li>
+<li>截断(truncate)：大于处取阈值，小于不变</li>
+<li>阈值取零(threshold to zero)：大于不变，小于取零</li>
+<li>阈值反取零(threshold to zero inverted)：大于取零，小于不变</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="E-自定义线性滤波"><a href="#E-自定义线性滤波" class="headerlink" title="E.自定义线性滤波"></a>E.自定义线性滤波</h2><ul>
+<li>卷积概念<ul>
+<li>卷积是图像处理中一个操作，是kernrl在图像的每个像素上的操作</li>
+<li>kerner本质上是一个固定大小的矩阵数组，其中中心点为锚点(anchor point)</li>
+<li>求锚点周围覆盖的像素乘积之和(包括锚点)，除以卷积数组大小，用来替代锚点下像素点值</li>
+</ul>
+</li>
+<li>常见算子<ul>
+<li>Robert算子：2*2，{1, 0, 0, -1}或{0, 1, -1, 0}，寻找梯度、边缘</li>
+<li>Sobel算子：3*3，{-1, 0, 1, -2, 0, 2, -1, 0, 1}或{-1, -2, -1, 0, 0, 0, 1, 2, 1}，常用于边缘检测</li>
+<li>拉普拉斯算子：3*3，{0, -1, 0, -1, 4, -1, 0, -1, 0},寻找梯度、边缘</li>
+</ul>
+</li>
+<li>自定义卷积模糊</li>
+</ul>
+<h2 id="F-边缘处理"><a href="#F-边缘处理" class="headerlink" title="F.边缘处理"></a>F.边缘处理</h2><ul>
+<li>卷积边缘问题：<ul>
+<li>图像卷积的时候边界像素不能被卷积操作</li>
+<li>原因在于边界像素没有完全跟kernel重叠</li>
+</ul>
+</li>
+<li>边缘处理<ul>
+<li>在卷积开始之前增加边缘像素，填充像素值为0或RGB黑色</li>
+<li>opencv中默认方法为：BORDER_DEFAULT<ul>
+<li>BORDER_CONSTANT - 用指定像素值填充边缘</li>
+<li>BORDER_REPLICATE - 用已知的边缘像素值填充边缘像素</li>
+<li>BORDER_WRAP - 用另外一边的像素来补偿填充</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="G-sobel算子"><a href="#G-sobel算子" class="headerlink" title="G.sobel算子"></a>G.sobel算子</h2><ul>
+<li>卷积应用-图像边缘提取<ul>
+<li>图像像素值渐变或突变，求导取最高点即为跃迁点(变化最大)</li>
+</ul>
+</li>
+<li>Sobel算子<ul>
+<li>Sobel算子：3*3，{-1, 0, 1, -2, 0, 2, -1, 0, 1}或{-1, -2, -1, 0, 0, 0, 1, 2, 1}，常用于边缘检测</li>
+<li>是离散微分算子(discrete differentiation operator)，用来计算图像灰度的近似梯度</li>
+<li>Sobel算子功能集合高斯平滑和微分求导</li>
+<li>又称为一阶微分算子，求导算子，在水平和垂直两方向求导，再平方和开根号(绝对值之和)，得到(图像x与y方向)梯度图像</li>
+</ul>
+</li>
+<li>Schar函数<ul>
+<li>求取导数的近似值，kernel=3时不准确，opencv使用改进版本Scharr函数，3*3，{-3, 0, 3, -10, 0, 10, -3, 3}或{-3, -10, 3, 0, 0, 0, 3, 10, 3}</li>
+</ul>
+</li>
+<li>代码流程<ul>
+<li>高斯平滑：使图像像素平滑变化</li>
+<li>转灰度</li>
+<li>求梯度x和y</li>
+<li>混合xy</li>
+</ul>
+</li>
+<li>个人理解：<ul>
+<li>用卷积和扩大水平/垂直像素差异</li>
+</ul>
+</li>
+</ul>
+<h2 id="H-laplance算子"><a href="#H-laplance算子" class="headerlink" title="H.laplance算子"></a>H.laplance算子</h2><ul>
+<li>原理<ul>
+<li>比sobel算子更进一步，这里采用 二阶导为零处即为像素值变化最大处</li>
+</ul>
+</li>
+<li>流程<ul>
+<li>高斯模糊-去噪声GaussianBlur()</li>
+<li>转灰度cvtColor()</li>
+<li>拉普拉斯-二阶导计算Laplance()</li>
+<li>取绝对值convertScaleAbs()</li>
+</ul>
+</li>
+</ul>
+<h2 id="I-Canny边缘检测"><a href="#I-Canny边缘检测" class="headerlink" title="I.Canny边缘检测"></a>I.Canny边缘检测</h2><ul>
+<li>流程：<ul>
+<li>高斯模糊GaussianBlur<ul>
+<li>将高斯算子与原图像卷积</li>
+</ul>
+</li>
+<li>灰度转换cvtColor</li>
+<li>计算梯度Sobel/Scharr：像素值差异的地方</li>
+<li>非最大信号抑制<ol>
+<li>将当前像素的梯度强度与沿正负方向梯度方向上的两个像素比较</li>
+<li>若当前像素的梯度强度与另外两个像素相比最大，则该像素点保留位边缘点，否则该像素点会被抑制</li>
+</ol>
+</li>
+<li>高低阈值输出二值图像：抑制噪声引起的弱边缘</li>
+</ul>
+</li>
+</ul>
+<h2 id="J-霍夫变换"><a href="#J-霍夫变换" class="headerlink" title="J.霍夫变换"></a>J.霍夫变换</h2><ul>
+<li><p>霍夫直线变换</p>
+<ul>
+<li>简介<ul>
+<li>用来做直线检测</li>
+<li>前提条件：边缘检测已完成</li>
+<li>平面空间到极坐标空间转换</li>
+</ul>
+</li>
+<li>原理<ul>
+<li>图形原理在notability中，后续整理</li>
+<li>r = x <em> cos(theta) + y </em> sin(theta)<ol>
+<li>canny边缘检测</li>
+<li>逐像素点进行霍夫空间变换：由像素坐标系(x,y)变换到笛卡尔坐标系(r, theta)</li>
+<li>局部非极大值抑制：去除噪声点</li>
+<li>对笛卡尔坐标系中的点排序</li>
+<li>求得笛卡尔坐标系中点极大值对应的角度和距离</li>
+<li>将笛卡尔坐标转为像素坐标，画线</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>霍夫圆变换(21HT)</p>
+<ul>
+<li><p>$r^2 = (x-a)^2 + (y-b)^2$</p>
+</li>
+<li><p>第一阶段：检测圆心</p>
+<ul>
+<li>（中值滤波：去除噪声）</li>
+</ul>
+<ol>
+<li>canny边缘检测</li>
+<li>sobel计算图形梯度，并确定圆周线，其中圆周的梯度就是其法线</li>
+<li>在二维霍夫空间内，绘出所有图形的梯度直线，某坐标点上累加和的值越大，说明在该点上直线相交的次数越多，也就是越有可能是圆心 </li>
+<li>在霍夫空间的4邻域内进行非最大值抑制 </li>
+<li>设定一个阈值，霍夫空间内累加和大于该阈值的点就对应于圆心 </li>
+</ol>
+</li>
+<li><p>第二阶段：检测半径</p>
+<ol>
+<li>计算某一个圆心到所有圆周线的距离，这些距离中就有该圆心所对应的圆的半径的值，这些半径值当然是相等的，并且这些圆半径的数量要远远大于其他距离值相等的数量</li>
+<li>设定两个阈值，定义为最大半径和最小半径，保留距离在这两个半径之间的值，这意味着我们检测的圆不能太大，也不能太小 </li>
+<li>对保留下来的距离进行排序</li>
+<li>找到距离相同的那些值，并计算相同值的数量 </li>
+<li>设定一个阈值，只有相同值的数量大于该阈值，才认为该值是该圆心对应的圆半径 </li>
+<li>对每一个圆心，完成上面的2.1～2.5步骤，得到所有的圆半径 </li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="K-像素重映射"><a href="#K-像素重映射" class="headerlink" title="K.像素重映射"></a>K.像素重映射</h2><ul>
+<li>定义：g(x, y) = f(h(x, y))<ul>
+<li>把输入图像中各个像素按照一定规则映射到另一张图像对应位置</li>
+</ul>
+</li>
+<li>cv::remap()</li>
+</ul>
+<h2 id="L-直方图均衡化"><a href="#L-直方图均衡化" class="headerlink" title="L.直方图均衡化"></a>L.直方图均衡化</h2><ul>
+<li>图像直方图<ul>
+<li>定义：统计整个图像在灰度范围内的像素值(0-255)出现的频率次数</li>
+<li>反映：图像灰度的分布情况</li>
+</ul>
+</li>
+<li>流程<ol>
+<li>计算原图像素值概率</li>
+<li>从小到大累加像素值概率</li>
+<li>用 累加概率 * 像素最大值 之积 替换原图像像素值</li>
+</ol>
+</li>
+<li>cv::equalizeHist(src, dst)<ul>
+<li>输入为灰度图</li>
+</ul>
+</li>
+<li>应用：提高图像对比度、拉伸图像灰度值范围，同时图像的细节更为丰富 </li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag"><i class="fa fa-tag"></i> opencv</a>
+          
+            <a href="/tags/图像处理，人工智障/" rel="tag"><i class="fa fa-tag"></i> 图像处理，人工智障</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2020/05/06/Learning-OpenCV3/" rel="next" title="Learning OpenCV3">
+                <i class="fa fa-chevron-left"></i> Learning OpenCV3
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/06/binder-LinkToDeath/" rel="prev" title="binder-LinkToDeath">
+                binder-LinkToDeath <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+       
+         <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+         <div id="gitment-container" style="display:none"></div>
+       
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/dog.jpg"
+               alt="pinocchio" />
+          <p class="site-author-name" itemprop="name">pinocchio</p>
+           
+              <p class="site-description motion-element" itemprop="description">喜欢探索，热爱编程</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zaizizaizai" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      Github
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="zaizizaizai@163.com" target="_blank" title="E-mail">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      E-mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-模糊-滤波"><span class="nav-number">1.</span> <span class="nav-text">A.模糊(滤波)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-归一化盒子滤波-BoxFilter"><span class="nav-number">1.1.</span> <span class="nav-text">1.归一化盒子滤波(BoxFilter)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-高斯滤波"><span class="nav-number">1.2.</span> <span class="nav-text">2.高斯滤波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-中值滤波"><span class="nav-number">1.3.</span> <span class="nav-text">3.中值滤波</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-双边滤波"><span class="nav-number">1.4.</span> <span class="nav-text">4.双边滤波</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-形态学操作"><span class="nav-number">2.</span> <span class="nav-text">B.形态学操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-定义"><span class="nav-number">3.</span> <span class="nav-text">1.定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-提取水平与垂直线"><span class="nav-number">4.</span> <span class="nav-text">2.提取水平与垂直线</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-图像上采样和降采样"><span class="nav-number">5.</span> <span class="nav-text">C.图像上采样和降采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-基本阈值操作"><span class="nav-number">6.</span> <span class="nav-text">D.基本阈值操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#E-自定义线性滤波"><span class="nav-number">7.</span> <span class="nav-text">E.自定义线性滤波</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#F-边缘处理"><span class="nav-number">8.</span> <span class="nav-text">F.边缘处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#G-sobel算子"><span class="nav-number">9.</span> <span class="nav-text">G.sobel算子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#H-laplance算子"><span class="nav-number">10.</span> <span class="nav-text">H.laplance算子</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#I-Canny边缘检测"><span class="nav-number">11.</span> <span class="nav-text">I.Canny边缘检测</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#J-霍夫变换"><span class="nav-number">12.</span> <span class="nav-text">J.霍夫变换</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#K-像素重映射"><span class="nav-number">13.</span> <span class="nav-text">K.像素重映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#L-直方图均衡化"><span class="nav-number">14.</span> <span class="nav-text">L.直方图均衡化</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pinocchio</span>
+</div>
+
+
+<div class="powered-by">
+  <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+
+<div class="theme-info">
+  <!--主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>-->
+  <span class="post-count">博客全站共38.9k字</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+   
+   
+   
+   
+   <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+   <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+   
+       <script type="text/javascript">
+           function ShowGitment(){
+               document.getElementById("gitment-display-button").style.display = "none";
+               document.getElementById("gitment-container").style.display = "block";
+               var gitment = new Gitment({
+                   id: document.location.href, 
+                   owner: 'zaizizaizai',
+                   repo: 'https://github.com/zaizizaizai/zaizizaizai.github.io',
+                   oauth: {
+                       client_id: '99a4ed9392e86260d470',
+                       client_secret: '808b1009e229efdf5d14516a0706c101a1056b99',
+                   }});
+               gitment.render('gitment-container');
+           }
+       </script>
+   
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("V2xxC5ludJHh8x195zQs3nEa-gzGzoHsz", "BgC5g2t5PWARmVQNEqzo7cKj");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

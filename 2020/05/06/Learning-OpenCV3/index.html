@@ -1,0 +1,1600 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+  <script>
+  (function(i,s,o,g,r,a,m){i["DaoVoiceObject"]=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;a.charset="utf-8";m.parentNode.insertBefore(a,m)})(window,document,"script",('https:' == document.location.protocol ? 'https:' : 'http:') + "//widget.daovoice.io/widget/0f81ff2f.js","daovoice")
+  daovoice('init', {
+      app_id: "4c12b6eb"
+    });
+  daovoice('update');
+  </script>
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="opencv,图像处理，人工智障," />
+
+
+
+
+
+  <link rel="alternate" href="/atom.xml" title="zaizizaizai" type="application/atom+xml" />
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.2" />
+
+
+
+
+
+
+<meta name="description" content="Learning OpenCV3一、Overview1.计算机视觉概念类比于人在道路两侧停放的车中寻找特定的车，图像信号通过眼睛传输到大脑，大脑有注意力识别系统：通过任务依赖的方式，检查图像重要区域，抑制其他区域。利用人生活多年来形成的交叉关联的感觉识别重要信息，再由大脑的反馈回路返回到传感器(眼睛肌肉)，进一步去获取">
+<meta name="keywords" content="opencv,图像处理，人工智障">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Learning OpenCV3">
+<meta property="og:url" content="https://zaizizaizai.github.io/2020/05/06/Learning-OpenCV3/index.html">
+<meta property="og:site_name" content="zaizizaizai">
+<meta property="og:description" content="Learning OpenCV3一、Overview1.计算机视觉概念类比于人在道路两侧停放的车中寻找特定的车，图像信号通过眼睛传输到大脑，大脑有注意力识别系统：通过任务依赖的方式，检查图像重要区域，抑制其他区域。利用人生活多年来形成的交叉关联的感觉识别重要信息，再由大脑的反馈回路返回到传感器(眼睛肌肉)，进一步去获取需要的图像。 ###2.遇到的问题 用2D去描绘3D世界的误差，数据的失真和噪声">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://zaizizaizai.github.io/2020/05/06/images/opencv/1-10.png">
+<meta property="og:image" content="https://zaizizaizai.github.io/2020/05/06/images/opencv/10-100.png">
+<meta property="og:image" content="https://zaizizaizai.github.io/2020/05/06/images/opencv/100-500.png">
+<meta property="og:updated_time" content="2020-05-06T07:01:34.616Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Learning OpenCV3">
+<meta name="twitter:description" content="Learning OpenCV3一、Overview1.计算机视觉概念类比于人在道路两侧停放的车中寻找特定的车，图像信号通过眼睛传输到大脑，大脑有注意力识别系统：通过任务依赖的方式，检查图像重要区域，抑制其他区域。利用人生活多年来形成的交叉关联的感觉识别重要信息，再由大脑的反馈回路返回到传感器(眼睛肌肉)，进一步去获取需要的图像。 ###2.遇到的问题 用2D去描绘3D世界的误差，数据的失真和噪声">
+<meta name="twitter:image" content="https://zaizizaizai.github.io/2020/05/06/images/opencv/1-10.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://zaizizaizai.github.io/2020/05/06/Learning-OpenCV3/"/>
+
+
+
+
+
+  <title>Learning OpenCV3 | zaizizaizai</title>
+  
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a424ce025cdc03482bf24891d3304bf2";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+	
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zaizizaizai</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">a dream of a child</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2020/05/06/Learning-OpenCV3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Learning OpenCV3</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T14:47:06+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/图像处理/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/06/Learning-OpenCV3/" class="leancloud_visitors" data-flag-title="Learning OpenCV3">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Learning-OpenCV3"><a href="#Learning-OpenCV3" class="headerlink" title="Learning OpenCV3"></a>Learning OpenCV3</h1><h2 id="一、Overview"><a href="#一、Overview" class="headerlink" title="一、Overview"></a>一、Overview</h2><h3 id="1-计算机视觉概念"><a href="#1-计算机视觉概念" class="headerlink" title="1.计算机视觉概念"></a>1.计算机视觉概念</h3><p>类比于人在道路两侧停放的车中寻找特定的车，图像信号通过眼睛传输到大脑，大脑有注意力识别系统：通过任务依赖的方式，检查图像重要区域，抑制其他区域。利用人生活多年来形成的交叉关联的感觉识别重要信息，再由大脑的反馈回路返回到传感器(眼睛肌肉)，进一步去获取需要的图像。</p>
+<p>###2.遇到的问题</p>
+<p>用2D去描绘3D世界的误差，数据的失真和噪声破坏。具体如下：</p>
+<ul>
+<li><p><strong>上下文信息</strong>：</p>
+<ul>
+<li><p>例子：</p>
+<p>机器人在房子里捡起订书机，首先机器人可能会用到以下事实：办公桌是办公室内的对象，而订书机是最大可能在办公桌上找到，这是一个隐式的大小位置参考；且机器人需要忽略相同大小形状的小木盒、以及墙画上的订书机图片。</p>
+<p>相反，对于图像检索任务，机器人查询的数据库里都是真实的订书机，很可能就只拍摄了正常尺寸的订书机；在拍摄这些图片时，也隐藏这很多无意的隐式信息。</p>
+</li>
+<li><p>解决：</p>
+<p>使用机器学习进行显示建模，对隐藏变量(大小、形状、重力方向等)用与他们值相关的标签训练集中进行校正。或者使用其他传感器测量隐藏的偏差分量。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>噪音</strong></p>
+<ul>
+<li><p>例子：</p>
+<p>仅通过几个点比较无法检查出物体边缘，有些像素点可能在生成、传输的途中遭到破坏，不能准确识别。</p>
+</li>
+<li><p>解决</p>
+<p>统计局部区域可较准确的进行边缘检测</p>
+<p>通过建立直接从数据中学到的显式模型来描述，如人们已经很了解镜头畸变，只需建立一个多项式模型参数，通过调整参数从而更正失真。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、opencv入门示例"><a href="#二、opencv入门示例" class="headerlink" title="二、opencv入门示例"></a>二、opencv入门示例</h2><p>简单的入门示例，这里有一个正好前段时间涉及到的边缘检测算法(二值化-&gt;区分前后景)，效果如下：</p>
+<p>​    阈值为1、10，可以看到边缘检测很不清晰，把很多rgb值高的点也包含进来</p>
+<p><img src="../images/opencv/1-10.png" alt="阈值为1，10"></p>
+<p>​    阈值为10、100，可以看到颜色较重的区域也能区分出来</p>
+<p><img src="../images/opencv/10-100.png" alt="阈值10,100"></p>
+<p>​    阈值为100、500，这样小鱼的边缘就很清晰了</p>
+<p><img src="../images/opencv/100-500.png" alt="阈值100，500"></p>
+<h2 id="三、OpenCV数据类型"><a href="#三、OpenCV数据类型" class="headerlink" title="三、OpenCV数据类型"></a>三、OpenCV数据类型</h2><p>从组织的角度来看，数据分为以下三类：</p>
+<ul>
+<li>c++原语(int, float等)：简单向量和矩阵、简单几何概念(点、矩阵、尺寸等)</li>
+<li>辅助对象：抽象概念，如垃圾回收指针、切片对象、终止条件等</li>
+<li>大数组类型</li>
+</ul>
+<h3 id="1-基本类型"><a href="#1-基本类型" class="headerlink" title="1.基本类型"></a>1.基本类型</h3><ul>
+<li><p><strong>Point</strong></p>
+<p>基于模板结构实现的，可以是任何类型的点</p>
+<ul>
+<li><p>分类：</p>
+<ul>
+<li>二维、三维、四维点</li>
+<li>cv::Point2i，最后一个字母表示构造点的原语类型。（b:无符号字符，s:短整型，i:32位整数，f:32位浮点数，d:64位浮点数）</li>
+</ul>
+</li>
+<li><p>操作：</p>
+<p>|       运行方式       |           例子            |<br>| :——————: | :———————–: |<br>|     默认构造函数     |      cv::Point2i p;       |<br>|     复制构造函数     |    cv::Point3f p2(p1)     |<br>|      值构造函数      | cv::Point3d p(x0, x1, x2) |<br>|   转换为固定向量类   |        (cv::Vec3f)        |<br>|       访问成员       |           p.x;            |<br>|         点乘         |   float x = p1.dot(p2);   |<br>|      双精度点乘      |  double x = p1.ddot(p2);  |<br>|         叉乘         |       p1.cross(p2);       |<br>| 查询点p是否在矩形r里 |       p.inside(r);        |</p>
+</li>
+<li><p>cv::Scalar类  </p>
+<p>四维点类，所有成员时双精度浮点数</p>
+<p>|     运行方式      |                        示例                         |<br>| :—————: | :————————————————-: |<br>|   默认构造函数    |                    cv::Scalar s;                    |<br>|   复制构造函数    |                 cv::Scalar s2(s1);                  |<br>|    值构造函数     |            cv::Scalar s(x0, x1, x2, x3);            |<br>|    逐元素乘法     |                     s1.mul(s2);                     |<br>|   (四元数)共轭    | s.conj(); // (return cv::Scalar(s0, -s1, -s2, -s3)) |<br>| (四元数)real test |   s.isReal(); // (returns true if s1==s2==s3==0)    |</p>
+<p>该类操作强制转换到固定向量类，与point类不同，cv::Scalar直接从固定向量类模板的实例化中继承</p>
+</li>
+</ul>
+</li>
+<li><p><strong>size</strong></p>
+<p>size类类似于point类，类型有Size、Size2i、Size2f,唯一区别就是命名区别(x、y与width、height)</p>
+<p>|   运行方式   |         示例         |<br>| :———-: | :——————: |<br>| 默认构造函数 |     cv::Size sz;     |<br>| 复制构造函数 |  cv::Size sz2(sz1);  |<br>|  值构造函数  | cv::Size2f sz(w, h); |<br>|   访问成员   | sz.width; sz.height; |<br>|   计算面积   |      sz.area();      |</p>
+</li>
+<li><p><strong>Rect</strong></p>
+<p>矩形类包含point类的成员x，y(代表矩形左上角坐标)，和宽高类(矩形的大小)，但矩形不继承点类</p>
+<p>|           运作方式           |               示例                |<br>| :————————–: | :——————————-: |<br>|       r1、r2矩形的交点       |  cv::Rect r3 = r1&r2; r1 &amp;= r2;   |<br>| 包含矩形r1、r2的最小面积矩形 | cv::Rect r3 = r1 ! r2; r1 |= r2; |<br>|         用x平移矩形r         |   cv::Rect rx = r + x; r += x;    |<br>|      将矩形r按大小s增大      |   cv::Rect rs = r + s; r += s;    |<br>|       比较矩形是否相等       |       bool eq = (r1 == r2);       |<br>|        比较矩形是否不        |       bool eq = (r1 != r2);       |</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>RotatedRect</strong></p>
+<p>c++ Opencv接口中为数不多的没有模板的类之一，相反，这是一个容器，保存了一个cv::Point2f(中心)，一个cv::Size2f(大小)和一个额外的浮点数(角度)，角度表示矩形围绕中心的旋转</p>
+<p>|          运行方式          |              示例              |<br>| :————————: | :—————————-: |<br>|        默认构造函数        |     cv::RotatedRect rr();      |<br>|        复制构造函数        |   cv::RotatedRect rr2(rr1);    |<br>|       从两个角度构建       |    cv::RotatedRect(p1, p2);    |<br>| 值构造函数(点，大小，角度) | cv::RotatedRect(p, sz, theta); |<br>|          访问成员          | rr.center; rr.size; rr.angle;  |<br>|         返回角列表         |       rr.points(pts[4]);       |</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>fixed matrix</strong></p>
+<p>固定矩阵类是指在编译时位数已知的矩阵，其数据的所有内存都分配在堆栈上，意味着可以快速地分配和清理。在c++ Opencv接口中，固定矩阵类实际上是一个模板，是许多其他基本类的核心(固定向量类派自固定矩阵类，其他类则派生自固定向量类)。</p>
+<p>|             运作方式             |                             示例                             |<br>| :——————————: | :———————————————————-: |<br>|           默认构造函数           |             cv::Matx33f m33f; cv::MAtx43d m43d;              |<br>|           复制构造函数           |                   cv::Matx22d m22d(n22d);                    |<br>|            值构造函数            |                    cv::Matx21f m(x0, x1);                    |<br>|          相同元素的矩阵          |                 m33f = cv::Matx33f::all(x);                  |<br>|              零矩阵              |                 m23d = cv::Matx23d::zeros();                 |<br>|             一个矩阵             |                 m16f = cv::Matx16f::ones();                  |<br>|           创建单位矩阵           |                  m33f = cv::Matx33f::eye();                  |<br>| 创建一个可容纳另一个对角线的矩阵 |            m31f = cv::Matx33f:diag(); //3<em>1的矩阵            |<br>|   创建一个具有均匀分布项的矩阵   |              m33f = cv::Matxf::randu(min, max);              |<br>|  创建一个具有正态分布条项的矩阵  |          m33f = cv::Matx33f::nrandn(mean, virance);          |<br>|             访问成员             |                        m(i, j); m(i);                        |<br>|             矩阵代数             |             m1 = m0;  m0 </em> m1; m0 + m1; m0 -m1;              |<br>|             单例代数             |                     m <em> a; a </em> m; m / a;                     |<br>|               比较               |                     m1 == m2; m1 != m2;                      |<br>|               点积               |                    m1.dot(m2); //m的精度                     |<br>|               点积               |                    m1.ddot(m2); //双精度                     |<br>|             重塑矩阵             |                 m91f = m33f.reshape<9, 1="">();                 |<br>|             类型转换             |                    m44f = (Matx44f)m44d;                     |<br>|            提取子矩阵            |                  m44f.get_minor<2,2>(i,j);                   |<br>|            提取第i行             |                     m14f = m44f.row(i);                      |<br>|            提取第j列             |                     m14f = m44f.col(j);                      |<br>|          提取矩阵对角线          |                     m41f = m44f.diag();                      |<br>|             计算转置             |                       n44f = m44f.t();                       |<br>|             求逆矩阵             |      n44f = m44f.inv(method); //默认方法为cv::DECOMP_LU      |<br>|           解线性方程组           | m31f = m33f.solve(rhs31f, method); m32f = m33f.solve2(rhs32f, method); // 模板表单，默认方法为DECOMP_LU |<br>|            逐元素乘法            |                         m1.mul(m2);                          |</2,2></9,></p>
+<p>注意，许多固定矩阵函数相对于类都是静态的(作为类的成员而不是特定的成员直接访问他们)，如构造3*3的矩阵，cv::Mat33f::eye()。</p>
+</li>
+<li><p><strong>fixed vector</strong></p>
+<p>固定向量类是从固定矩阵类派生的，可以看作cv::Matx&lt;&gt;的便捷功能。</p>
+<p>|   运作方式   |         示例          |<br>| :———-: | :——————-: |<br>| 默认构造函数 | Vec2s v2s; Vec6f v6s; |<br>| 复制构造函数 |    Vec3s u3f(v3f);    |<br>|  值构造函数  |  Vec2f v2f(x0, x1);   |<br>|   访问成员   |    v4f[i]; v3w(j);    |<br>|   向量叉乘   |    v3f.cross(u3f);    |</p>
+<p>主要便利是使用单顺序访问元素</p>
+</li>
+<li><p><strong>complex number</strong></p>
+<p>复数类与STL复合体关联的类最实质的区别在于：在STL类中，通过real()和image()访问实数和虚数；而在OpenCV类中，直接访问公共成员变量re和im</p>
+</li>
+<li></li>
+</ul>
+<h3 id="2-辅助对象"><a href="#2-辅助对象" class="headerlink" title="2.辅助对象"></a>2.辅助对象</h3><ul>
+<li><p><strong>TermCriteria</strong></p>
+<p>停止条件</p>
+</li>
+<li><p><strong>Range</strong></p>
+<p>范围</p>
+</li>
+<li><p><strong>Ptr模板和垃圾回收</strong></p>
+<p>c++中智能指针，该指针是我们能创建对对象的引用，所有引用被计数，当引用超出范围时，智能指针的引用计数将减少，一旦所有引用(指针的实例)减到0，实例对象将被自动清除(已分配)。</p>
+<p>与c++中智能指针类似，为想要“包装”的类对象实例化一个指针模板(cv::Ptr<matx33f> p = makePtr<cv::matx33f>())，模板对象的构造函数指向对象的指针。此操作后，智能指针p可像普通指针一样传递和使用(即，支持运算符operator*()和operator-&gt;()),可创建其他相同类型的对象，而不需要向它们传递新对象的指针。如：Ptr<mat33f> q，并将p的值赋给q。这里只有一个实际的p和q指向的cv::Mat33f对象，p和q都知道他们各自为1.若p消失(超出范围)，则q知道它时唯一剩下的对源实矩阵的引用；若q消失，且其析构函数被调用，q就知道它时唯一引用的指针，q会取消分配原始矩阵。</mat33f></cv::matx33f></matx33f></p>
+</li>
+<li><p><strong>Exception类和异常处理</strong></p>
+</li>
+<li><p><strong>DataType</strong></p>
+<p>当OpenCV库函数需要传递特殊概念的数据类型时，可通过创建cv::DataType&lt;&gt;类型的对象来实现。传递的实际对象时这个模板的实例对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// OpenCV中DataType的定义</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">DataType</span>&lt;float&gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">float</span>		value_type;</span><br><span class="line">	<span class="keyword">typedef</span> value_type   work_type;</span><br><span class="line">	<span class="keyword">typedef</span> value_type	 channel_type;</span><br><span class="line">	<span class="keyword">typedef</span> value_type	 vec_type;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">enum</span> &#123;</span><br><span class="line">      generix_type = <span class="number">0</span>,</span><br><span class="line">      depth        = DataDepth&lt;channel_type&gt;::value,</span><br><span class="line">      channels     = <span class="number">1</span>,</span><br><span class="line">      fmt          = DataDepth&lt;channel_type&gt;::fmt,</span><br><span class="line">      type         = CV_MAKETYPE(depth, channels)</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>InputArray和OutputArray</strong></p>
+<p>输入、输出对象</p>
+</li>
+</ul>
+<h3 id="3-实用函数"><a href="#3-实用函数" class="headerlink" title="3.实用函数"></a>3.实用函数</h3><p>除了上述专用原始数据类型，OpenCV还提供一些有效处理数学运算和其他运算的专用功能，该使用功能包含数学工具、测试、错误生成、内存和线程处理、优化等</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">cv::aliginPtr()</td>
+<td style="text-align:center">将指针对齐到给定的字节数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::aliginSize()</td>
+<td style="text-align:center">将缓冲区大小与给定的字节数对齐</td>
+</tr>
+<tr>
+<td style="text-align:center">cv :: allocate()</td>
+<td style="text-align:center">分配c样式的对象数组</td>
+</tr>
+<tr>
+<td style="text-align:center">cvCeil()</td>
+<td style="text-align:center">将浮点数向上取整</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::cubeRoot()</td>
+<td style="text-align:center">计算立方根</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::CV_Assert()</td>
+<td style="text-align:center">若给定条件不成立，则引发异常</td>
+</tr>
+<tr>
+<td style="text-align:center">CV_Error()</td>
+<td style="text-align:center">宏以构建cv :: Exception （从固定字符串）并将其抛出</td>
+</tr>
+<tr>
+<td style="text-align:center">CV<em>Errpr</em>()</td>
+<td style="text-align:center">宏来构建cv :: Exception （从格式化的字符串）并抛出它</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::deallocate()</td>
+<td style="text-align:center">取消分配c样式的对象数组</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::error()</td>
+<td style="text-align:center">提示错误并引发异常</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::fastAtan2()</td>
+<td style="text-align:center">计算向量的二维角度</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::fastFree()</td>
+<td style="text-align:center">取消分配内存缓冲区</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::fastMalloc()</td>
+<td style="text-align:center">分配对齐的内存缓冲区</td>
+</tr>
+<tr>
+<td style="text-align:center">cvFloor()</td>
+<td style="text-align:center">将浮点数向下取整</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::format()</td>
+<td style="text-align:center">使用类似sprintf的格式，创建STL字符串</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getCPUTickCount()</td>
+<td style="text-align:center">从内部cpu计时器获得滴答计数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getNumThreads()</td>
+<td style="text-align:center">计算OpenCV当前使用的线程</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getOptimalDFTSize()</td>
+<td style="text-align:center">为计划传递给cv::DFT()的数组计算最佳大小</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getThreadNum()</td>
+<td style="text-align:center">获取当前线程的索引</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getTickCount()</td>
+<td style="text-align:center">从系统获取滴答计数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getTickFrequency()</td>
+<td style="text-align:center">每秒获取数字/刻度</td>
+</tr>
+<tr>
+<td style="text-align:center">cvIsInf()</td>
+<td style="text-align:center">检查浮点数x是否为无穷大</td>
+</tr>
+<tr>
+<td style="text-align:center">cvIsNan()</td>
+<td style="text-align:center">检查浮点数是否为“非数字“</td>
+</tr>
+<tr>
+<td style="text-align:center">cvRound()</td>
+<td style="text-align:center">将浮点数舍入到最近的整数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::setNumThreads()</td>
+<td style="text-align:center">设置OpenCV使用的线程数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::setUseOptimized()</td>
+<td style="text-align:center">启/禁用代码优化</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::useOptimized()</td>
+<td style="text-align:center">指示代码优化启用的状态</td>
+</tr>
+</tbody>
+</table>
+<p>具有旧版界面的功能，为c定义的。</p>
+<h3 id="4-模板结构"><a href="#4-模板结构" class="headerlink" title="4.模板结构"></a>4.模板结构</h3><h2 id="四、图像和大数组类型"><a href="#四、图像和大数组类型" class="headerlink" title="四、图像和大数组类型"></a>四、图像和大数组类型</h2><h3 id="1-动态和可变存储"><a href="#1-动态和可变存储" class="headerlink" title="1.动态和可变存储"></a>1.动态和可变存储</h3><ul>
+<li><p><strong>cv::Mat类：N维密集数组</strong></p>
+<p>cv::mat类可用于任何数目维度的阵列，数据储存在数组中，可以认为是一个n维“光栅扫描”的模拟。每个矩阵包含一个表示数组内容的flags元素、一个表示维度的dims元素、行列元素、一个表示位置的数据指针、以及一个引用计数器 .可把数组理解为.</p>
+</li>
+<li><p><strong>生成一个数组</strong></p>
+<p>实例化一个cv::Mat类，并通过其成员函数create()来分配数据，其所需参数：行数、列数、类型、以及数组代表二维对象的配置。有效数组类型指定元素的基本类型和通道数量，所有这些类型都在库头文件中定义，其形式为:CV_{8U,16S,16U,32S,32F,64F}C{1,2,3}.如：CV_32FC3代表一个32位浮点三通道数组.</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//示例</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">cv</span>::Mat m;</span><br><span class="line"><span class="selector-tag">m</span><span class="selector-class">.create</span>(<span class="number">3</span>, <span class="number">10</span>, CV_32FC3);	<span class="comment">// 为一个3行10列3通道的32位浮点数组分配数据</span></span><br><span class="line"><span class="selector-tag">m</span><span class="selector-class">.setTo</span>(<span class="attribute">cv</span>::Scalar(<span class="number">1.0</span>f, <span class="number">0.0</span>f, <span class="number">1.0</span>f));	<span class="comment">// 三通道值分别为1.0, 0.0, 1.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 等效上三行</span></span><br><span class="line"><span class="selector-tag">cv</span><span class="selector-pseudo">::Mat</span> <span class="selector-tag">m</span>( <span class="number">3</span>, <span class="number">10</span>, CV_32FC3, <span class="attribute">cv</span>::Scalar( <span class="number">1.0</span>f, <span class="number">0.0</span>f, <span class="number">1.0</span>f ) );</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>构造函数</p>
+<p>|                             函数                             |                   功能                    |<br>| :———————————————————-: | :—————————————: |<br>|                          cv::Mat();                          |               默认构造函数                |<br>|            cv::Mat(int rows, int cols, int type);            |                 二维数组                  |<br>|   cv::Mat(int rows, int cols, int type, const Scalar&amp; s);    |            带初始值的二维数组             |<br>| cv::Mat(int rows, int cols, int type, void data, size_t step=AUTO_STEP); |    具有类型的二维数组，预先存在的数据     |<br>|               cv::Mat(cv::Size sz, int type);                |             二维数组，sz大小              |<br>|       cv::Mat(cv::Size sz, int type, const Scalar&amp; s);       |         带初始值的二维数组,sz大小         |<br>| cv::Mat(cv::Size sz, int type, void<em> data, size_t step=AUTO_STEP); | 具有类型的二维数组，预先存在的数据,sz大小 |<br>|       cv::Mat(int ndims, const int</em> sizes, int type);        |                 多维数组                  |<br>| cv::Mat(int ndims, const int<em> sizes, int type, const Scalar&amp; s); |                                           |<br>| cv::Mat(int ndims, const int</em> sizes, int type, const Scalar&amp; s, size_t step=AUTO_STEP); |                                           |</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>复制构造函数</p>
+<p>|                             函数                             |                       功能                        |<br>| :———————————————————-: | :———————————————–: |<br>|                   cv::Mat(const Mat&amp; mat);                   |                   复制构造函数                    |<br>| cv::Mat(const Mat&amp; mat, const cv::Range&amp; rows, const cv::Range&amp; cols); |           复制构造函数，仅能复制行和列            |<br>|        cv::Mat(const Mat&amp; mat, const cv::Rect&amp; roi);         |   复制构造函数，仅能复制感兴趣区域(roi)的行和列   |<br>|      cv::Mat(const Mat&amp; mat, const cv::Range* ranges);       |      通用区域复制构造函数，复制一块范维数组       |<br>|              cv::Mat(const cv::MatExpr&amp; expr);               | 复制用其他矩阵的代数表达式的结果初始化m的构造函数 |</p>
+</li>
+</ul>
+<ul>
+<li><p>模板构造函数</p>
+<p>|                             函数                             |                          功能                           |<br>| :———————————————————-: | :—————————————————–: |<br>|   cv::Mat(const cv::vec<t, n="">&amp; vec, bool copyData = true);   | 从同一类型的cv::Vec中构造一个类型为T、大小为n的一维数组 |<br>| cv::Mat(const cv::Matx<t, m,="" n="">&amp; vec, bool copyData = true); |  从同一类型的cv::Matx中构造一个尺寸为m×n的T型二维数组   |<br>|  cv::Mat(const std::vector<t>&amp; vec, bool copyData = true);   |     从包含相同类型元素的STL向量构造T类型的一维数组      |</t></t,></t,></p>
+</li>
+<li><p>静态函数</p>
+<p>|                函数                |                           功能                           |<br>| :——————————–: | :——————————————————: |<br>| scv::Mat::zeros(rows, cols, type); |     创建rows行cols列的cv::Mat,初始全为0，类型为type      |<br>| scv::Mat::ones(rows, cols, type);  |     创建rows行cols列的cv::Mat,初始全为1，类型为type      |<br>|  scv::Mat::eye(rows, cols, type);  | 创建rows行cols列的cv::Mat,初始为identity矩阵，类型为type |</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>分别访问数组元素</strong></p>
+<ul>
+<li><p>几种访问函数</p>
+<p>|         函数          |                功能                |<br>| :——————-: | :——————————–: |<br>|     M.at<int>(i);     |        整数数组M中第i个元素        |<br>|  M.at<float>(i, j);   |      浮点数组M中(i,j)位置元素      |<br>|    M.at<int>(pt);     | 整数矩阵M中(pt.x, pt.y)位置的元素  |<br>| M.at<float>(i, j, k); | 三维浮点数组M中(i, j, k)位置的元素 |<br>|   M.at<uchar>(idx);   |    uchar数组M中idx[]位置的元素     |</uchar></float></int></float></int></p>
+<p>还可通过怕c样式的指针访问二维数组</p>
+<p>对于矩阵，有两种方法获取其数据指针：</p>
+<ul>
+<li>成员函数ptr&lt;&gt;()</li>
+<li>M.at&lt;&gt;()</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>N元数组迭代器:NAryMatlterator</strong></p>
+<p>一次遍历多个数组，返回数组块，称为planes，常用于多数组计算(多点代表面)</p>
+</li>
+<li><p><strong>按快访问数组元素</strong></p>
+</li>
+</ul>
+<p>未完待续！</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/opencv/" rel="tag"><i class="fa fa-tag"></i> opencv</a>
+          
+            <a href="/tags/图像处理，人工智障/" rel="tag"><i class="fa fa-tag"></i> 图像处理，人工智障</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/08/24/c-plus/" rel="next" title="c知识点">
+                <i class="fa fa-chevron-left"></i> c知识点
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2020/05/06/图像处理算法/" rel="prev" title="图像处理算法">
+                图像处理算法 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        
+<script>
+  with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='//bdimg.share.baidu.com/static/api/js/share.js?cdnversion='+~(-new Date()/36e5)];
+</script>
+
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+       
+         <div onclick="ShowGitment()" id="gitment-display-button">显示 Gitment 评论</div>
+         <div id="gitment-container" style="display:none"></div>
+       
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/dog.jpg"
+               alt="pinocchio" />
+          <p class="site-author-name" itemprop="name">pinocchio</p>
+           
+              <p class="site-description motion-element" itemprop="description">喜欢探索，热爱编程</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives/">
+                <span class="site-state-item-count">59</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">18</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">42</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+          <div class="feed-link motion-element">
+            <a href="/atom.xml" rel="alternate">
+              <i class="fa fa-rss"></i>
+              RSS
+            </a>
+          </div>
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/zaizizaizai" target="_blank" title="Github">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      Github
+                    
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="zaizizaizai@163.com" target="_blank" title="E-mail">
+                  
+                    <i class="fa fa-fw fa-globe"></i>
+                  
+                    
+                      E-mail
+                    
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Learning-OpenCV3"><span class="nav-number">1.</span> <span class="nav-text">Learning OpenCV3</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、Overview"><span class="nav-number">1.1.</span> <span class="nav-text">一、Overview</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-计算机视觉概念"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.计算机视觉概念</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二、opencv入门示例"><span class="nav-number">1.2.</span> <span class="nav-text">二、opencv入门示例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三、OpenCV数据类型"><span class="nav-number">1.3.</span> <span class="nav-text">三、OpenCV数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-基本类型"><span class="nav-number">1.3.1.</span> <span class="nav-text">1.基本类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-辅助对象"><span class="nav-number">1.3.2.</span> <span class="nav-text">2.辅助对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-实用函数"><span class="nav-number">1.3.3.</span> <span class="nav-text">3.实用函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-模板结构"><span class="nav-number">1.3.4.</span> <span class="nav-text">4.模板结构</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#四、图像和大数组类型"><span class="nav-number">1.4.</span> <span class="nav-text">四、图像和大数组类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-动态和可变存储"><span class="nav-number">1.4.1.</span> <span class="nav-text">1.动态和可变存储</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<div class="copyright" >
+  
+  &copy;  2017 - 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">pinocchio</span>
+</div>
+
+
+<div class="powered-by">
+  <!--由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动-->
+  <i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
+    本站访客数:<span id="busuanzi_value_site_uv"></span>
+  </span>
+</div>
+
+<div class="theme-info">
+  <!--主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>-->
+  <span class="post-count">博客全站共38.9k字</span>
+</div>
+
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.2"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.2"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.2"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.2"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+   
+   
+   
+   
+   <link rel="stylesheet" href="https://imsun.github.io/gitment/style/default.css">
+   <script src="https://imsun.github.io/gitment/dist/gitment.browser.js"></script>
+   
+       <script type="text/javascript">
+           function ShowGitment(){
+               document.getElementById("gitment-display-button").style.display = "none";
+               document.getElementById("gitment-container").style.display = "block";
+               var gitment = new Gitment({
+                   id: document.location.href, 
+                   owner: 'zaizizaizai',
+                   repo: 'https://github.com/zaizizaizai/zaizizaizai.github.io',
+                   oauth: {
+                       client_id: '99a4ed9392e86260d470',
+                       client_secret: '808b1009e229efdf5d14516a0706c101a1056b99',
+                   }});
+               gitment.render('gitment-container');
+           }
+       </script>
+   
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("V2xxC5ludJHh8x195zQs3nEa-gzGzoHsz", "BgC5g2t5PWARmVQNEqzo7cKj");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -338,6 +338,1357 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2020/05/06/binder监测连接状态/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/binder监测连接状态/" itemprop="url">binder监测连接状态</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T15:05:34+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/06/binder监测连接状态/" class="leancloud_visitors" data-flag-title="binder监测连接状态">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Binder监测连接状态，以及断开后的重连"><a href="#Binder监测连接状态，以及断开后的重连" class="headerlink" title="Binder监测连接状态，以及断开后的重连"></a>Binder监测连接状态，以及断开后的重连</h1><h3 id="一、监测连接状态"><a href="#一、监测连接状态" class="headerlink" title="一、监测连接状态"></a>一、监测连接状态</h3><h3 id="1-binder对象死亡通知机制"><a href="#1-binder对象死亡通知机制" class="headerlink" title="1. binder对象死亡通知机制"></a>1. binder对象死亡通知机制</h3><h4 id="1-1-注册死亡通知"><a href="#1-1-注册死亡通知" class="headerlink" title="1.1. 注册死亡通知"></a>1.1. 注册死亡通知</h4><p>client和server通过binder通信，且binder提供一个方法，即传入死亡代理binder.linkToDeath(IBinder.DeathRecipient) ，当client于server断开的时候，client收到DeathRecipient的binderDied()方法回调 ，从而知道连接断开，以下为binder源码：</p>
+<ul>
+<li><p>BBinder::linkToDeath ()</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> BBinder::linkToDeath(</span><br><span class="line">    <span class="keyword">const</span> sp&lt;DeathRecipient&gt;&amp; <span class="comment">/*recipient*/</span>, <span class="keyword">void</span>* <span class="comment">/*cookie*/</span>,</span><br><span class="line">    <span class="keyword">uint32_t</span> <span class="comment">/*flags*/</span>)</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">return</span> INVALID_OPERATION;	<span class="comment">// 返回无效操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>server端的linkToDeath只返回无效操作</p>
+</li>
+<li><p>BpBinder::linkToDeath ()</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> BpBinder::linkToDeath(</span><br><span class="line">    <span class="keyword">const</span> sp&lt;DeathRecipient&gt;&amp; recipient, <span class="keyword">void</span>* cookie, <span class="keyword">uint32_t</span> flags)</span><br><span class="line">&#123;</span><br><span class="line">    Obituary ob;</span><br><span class="line">    ob.recipient = recipient;</span><br><span class="line">    ob.cookie = cookie;	<span class="comment">//标识死亡接收者</span></span><br><span class="line">    ob.flags = flags;	<span class="comment">//</span></span><br><span class="line"></span><br><span class="line">    LOG_ALWAYS_FATAL_IF(recipient == <span class="literal">NULL</span>,</span><br><span class="line">                        <span class="string">"linkToDeath(): recipient must be non-NULL"</span>);</span><br><span class="line"></span><br><span class="line">    &#123;</span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (!mObitsSent) &#123;	<span class="comment">//mObitsSent用来表示Binder驱动程序是否已经向它发送过死亡通知，如果是，直接返回DEAD_OBJECT</span></span><br><span class="line">            <span class="keyword">if</span> (!mObituaries) &#123;	<span class="comment">//第一次注册</span></span><br><span class="line">                mObituaries = <span class="keyword">new</span> Vector&lt;Obituary&gt;;	<span class="comment">//死亡通知对象列表</span></span><br><span class="line">                <span class="keyword">if</span> (!mObituaries) &#123;</span><br><span class="line">                    <span class="keyword">return</span> NO_MEMORY;</span><br><span class="line">                &#125;</span><br><span class="line">                ALOGV(<span class="string">"Requesting death notification: %p handle %d\n"</span>, <span class="keyword">this</span>, mHandle);</span><br><span class="line">                getWeakRefs()-&gt;incWeak(<span class="keyword">this</span>);	<span class="comment">//增加了弱引用计数</span></span><br><span class="line">                IPCThreadState* self = IPCThreadState::self();</span><br><span class="line">                self-&gt;requestDeathNotification(mHandle, <span class="keyword">this</span>);	<span class="comment">// 记录对象</span></span><br><span class="line">                self-&gt;flushCommands();	<span class="comment">//促使当前线程马上通过IO控制命令BINDER_WRITE_READ进入到Binder驱动程序中，以便可以执行注册死亡接受通知的操作</span></span><br><span class="line">            &#125;</span><br><span class="line">            <span class="keyword">ssize_t</span> res = mObituaries-&gt;add(ob);	<span class="comment">//非第一个注册</span></span><br><span class="line">            <span class="keyword">return</span> res &gt;= (<span class="keyword">ssize_t</span>)NO_ERROR ? (<span class="keyword">status_t</span>)NO_ERROR : res;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> DEAD_OBJECT;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> Binder代理对象内部的成员变量mObitsSent用来表示Binder驱动程序是否已经向它发送过死亡通知</p>
+<ul>
+<li>若是，表示Binder本地对象已经死亡，返回DEAD_OBJECT</li>
+<li>若否，<ul>
+<li>若第一次注册，记录Binder代理对象的地址，并立马调用Binder Driver执行注册死亡通知</li>
+<li>非第一次注册，直接加入死亡通知对象列表mObituaries</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>binderDied()</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">IBinder</span> :</span> <span class="keyword">public</span> <span class="keyword">virtual</span> RefBase</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">   </span><br><span class="line">    <span class="class"><span class="keyword">class</span> <span class="title">DeathRecipient</span> :</span> <span class="keyword">public</span> <span class="keyword">virtual</span> RefBase</span><br><span class="line">    &#123;</span><br><span class="line">    <span class="keyword">public</span>:</span><br><span class="line">        <span class="function"><span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">binderDied</span><span class="params">(<span class="keyword">const</span> wp&lt;IBinder&gt;&amp; who)</span> </span>= <span class="number">0</span>;<span class="comment">//重写父类DeathRecipient的成员函数binderDied</span></span><br><span class="line">    &#125;;</span><br><span class="line"> </span><br><span class="line">    ......</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p> 自定义的死亡通知接受者必须要重写父类DeathRecipient的成员函数binderDied。当Binder驱动程序通知一个Binder代理对象它所引用的Binder本地对象已经死亡时，就会调用它所指定的死亡通知接受者的成员函数binderDied </p>
+</li>
+<li><p>简述流程</p>
+<ul>
+<li>Binder代理对象将一个死亡接收通知注册到Binder驱动程序中</li>
+<li>当Binder驱动程序监控到它所引用的Binder本地对象死亡时，Binder驱动程序就会向Binder代理对象发送一个死亡通知 </li>
+</ul>
+<p>由BBinder::linkToDeath ()和BpBinder::linkToDeath ()代码可见</p>
+<ul>
+<li>server进程死亡时，运行在其里的Binder对象就死亡，通过比较Binder代理存在，本地对象为空可知server端死亡，会通知到client代理对象，pmcs模块中即为BnPmcsProxy对象</li>
+<li>client进程死亡时，没有通知任何对象。这时候Binder驱动程序就应该向那些引用了它的Binder代理对象发送死亡接受通知，以便它们可以知道自己引用了一个无效的Binder本地对象 </li>
+</ul>
+</li>
+<li><p>一句话总结</p>
+<p>client可以知道连接断开，server不知道什么时候断开，只有通过连接它的client来获得连接状态</p>
+</li>
+</ul>
+<h4 id="1-2-发送死亡接收通知"><a href="#1-2-发送死亡接收通知" class="headerlink" title="1.2. 发送死亡接收通知"></a>1.2. 发送死亡接收通知</h4><p>​    暂略</p>
+<h3 id="2-client检测连接状态"><a href="#2-client检测连接状态" class="headerlink" title="2. client检测连接状态"></a>2. client检测连接状态</h3><p>由 binder对象死亡通知机制 可知，client端(PmcsProxy )可通过binder.linkToDeath(IBinder.DeathRecipient)获得连接状态，即server挂掉，通知Binder代理对象</p>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> PmcsProxy::attachServer()</span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">const</span> sp&lt;IPmcsService&gt;&amp; service(getPmcsService());</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span>(service.get() != <span class="keyword">NULL</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span> (mDeathNotifier == <span class="keyword">NULL</span>) &#123;</span><br><span class="line">            mDeathNotifier = <span class="keyword">new</span> DeathNotifier&lt;PmcsProxy&gt;(this);</span><br><span class="line">        &#125;</span><br><span class="line">        service-&gt;asBinder()-&gt;linkToDeath(mDeathNotifier);	<span class="comment">// 注册死亡通知</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="3-server检测连接状态"><a href="#3-server检测连接状态" class="headerlink" title="3. server检测连接状态"></a>3. server检测连接状态</h3><p>由 binder对象死亡通知机制 可知，server自身无法检测连接状态，只能通过与server端连接的client端来获取连接状态，即通过client端(PmcsProxy )的binder.linkToDeath(IBinder.DeathRecipient)，那么server端只要获取到client对象就可以检测连接状态</p>
+<ul>
+<li>server如何获取和区分client？两种方法<ul>
+<li>server端给每个连接上的client端一个标识token<ul>
+<li>client类增加一个token属性</li>
+<li>当创建一个client时，server给其分配一个token标识</li>
+</ul>
+</li>
+<li>利用Binder的static方法，Binder.getCallingPid()来拿到client端的pid</li>
+</ul>
+</li>
+</ul>
+<h3 id="二、连接断开后的重连"><a href="#二、连接断开后的重连" class="headerlink" title="二、连接断开后的重连"></a>二、连接断开后的重连</h3><p>由上文 监测连接状态 可知，在重写binderDied函数时，再次连接就好了</p>
+<ul>
+<li>client检测到server断开，client重启server</li>
+<li>server检测到client断开，server重创建一个client</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2020/05/06/binder-LinkToDeath/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/binder-LinkToDeath/" itemprop="url">binder-LinkToDeath</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T14:55:51+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/android/" itemprop="url" rel="index">
+                    <span itemprop="name">android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/06/binder-LinkToDeath/" class="leancloud_visitors" data-flag-title="binder-LinkToDeath">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Pmcs类图理解"><a href="#Pmcs类图理解" class="headerlink" title="Pmcs类图理解"></a>Pmcs类图理解</h1><h3 id="1-名词定义"><a href="#1-名词定义" class="headerlink" title="1. 名词定义"></a>1. 名词定义</h3><table>
+<thead>
+<tr>
+<th style="text-align:center">名词</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">BBinder</td>
+<td style="text-align:center">服务端接口</td>
+</tr>
+<tr>
+<td style="text-align:center">BpBinder</td>
+<td style="text-align:center">客户端接口</td>
+</tr>
+</tbody>
+</table>
+<h3 id="2-使用Binder流程"><a href="#2-使用Binder流程" class="headerlink" title="2. 使用Binder流程"></a>2. 使用Binder流程</h3><ul>
+<li>开发native service<ol>
+<li>定义服务端接口文件，即IPmcsService类，其继承于IInterface类</li>
+<li>定义BnPmcsService类，继承于BnInterface<ipmcsservice></ipmcsservice></li>
+<li>实现一个PmcsService类，继承于BnPmcsService类，并实现响应客户端请求onTransact()</li>
+</ol>
+</li>
+<li>开发client</li>
+</ul>
+<p>BpBinder(客户端)如何把请求发送给BBinder(服务端)，BBinder又如何将响应传回给客户端的呢?</p>
+<h3 id="3-BBinder服务端"><a href="#3-BBinder服务端" class="headerlink" title="3. BBinder服务端"></a>3. BBinder服务端</h3><p><img src="../images/android/server.png" alt="服务端类"></p>
+<ul>
+<li><strong>BBinder</strong> 实现了大部分的IBinder 接口，除了onTransact() 和 queryLocalInterface()， getInterfaceDescriptor() </li>
+<li><strong>IInterface</strong><ul>
+<li>实现queryLocalInterface()，该函数可查询服务端提供的服务</li>
+<li>INTERFACE模板继承和实现IInterface</li>
+</ul>
+</li>
+<li><strong>BnInterface</strong><ul>
+<li>BnInterface<interface> 对象将自己强制转换成 IInterface对象返回给客户端</interface></li>
+<li><strong>BnInterface</strong>是一个模板类，继承了<strong>BBinder</strong>和模板<strong>INTERFACE</strong></li>
+<li>BnInterface 实现了IBinder的queryLocalInterface()和getInterfaceDescriptor() </li>
+</ul>
+</li>
+<li><strong>BnPmcsServer</strong>同时继承<strong>IInterface</strong>和<strong>IBinder</strong>，定义了onTransact()，没有实现</li>
+<li><strong>PmcsService</strong>里具体实现了onTransact()</li>
+</ul>
+<h3 id="4-BpBinder客户端"><a href="#4-BpBinder客户端" class="headerlink" title="4. BpBinder客户端"></a>4. BpBinder客户端</h3><p>​    目标：找到一个类，它必须同时拥有IBinder 和 IIterface的特性 </p>
+<p><img src="../images/android/client.png" alt="client"></p>
+<ul>
+<li><strong>BpRefBase</strong>里有<strong>IBinder</strong>成员变量</li>
+<li><strong>BpInterface</strong><ul>
+<li>BpInterface继承于BpRefBase，而BpRefBase里有IBinder成员变量，从而获取到IBinder特性</li>
+<li>BpInterface继承于INTRFACE，这里INTRFACE就是IPmcsService</li>
+</ul>
+</li>
+<li><strong>IInterface</strong>中函数asBinder()-&gt;BpInterface::onAsBinder()-&gt;BpInterface::remote()，返回得到mRemote </li>
+<li><strong>BpPmcsService</strong>为客户端，具体向服务端发起请求</li>
+<li><strong>PmcsProxy</strong>为客户端的回调，服务端响应完请求后，调用回调向调用发起者通知执行结果</li>
+</ul>
+<p><strong>BpRefbase的mRemote是如何被赋值的？</strong> </p>
+<p>最后追溯到 IPmcsService.cpp</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">interface_cast&lt;IMediaPlayer&gt;(reply.readStrongBinder()); <span class="comment">//reply里读出IBinder,然后转成IMediaPlayer接口对象</span></span><br></pre></td></tr></table></figure>
+<p>通过子类一级一级注入，即new一个BpPmcsService，然后将其转换为父父类IPmcsService</p>
+<p><strong>客户端流程</strong></p>
+<p>​    客户端从远端生成一个IBinder对象，再生成BpPmcsService，将其转换为IpmcsService接口对象，调用其接口方法，最终调用到BpBinder的transact()</p>
+<p>​    而客户端的transact()函数通过<strong>Binder Driver</strong>获取到BBinder对象(IBinder的实现)，并调用onTransact()</p>
+<h3 id="5-总流程"><a href="#5-总流程" class="headerlink" title="5. 总流程"></a>5. 总流程</h3><p><img src="../images/android/pmcs.png" alt="pmcs"></p>
+<ul>
+<li>应用程序的角度<ol>
+<li>已知服务名，APP通过getService() 从ServiceManager 获取存储在<strong>Parcel对象</strong>的服务的信息</li>
+<li>APP收到Parcel对象 (通过kernel)，获取到服务对应的服务号，mHandle</li>
+<li>以mHandle作为参数输入生成一个IBinder对象(实际是<strong>BpBinder</strong>)</li>
+<li>APP获取到IBinder对象，通过asInterface(IBinder<em>)生成服务对应的Proxy对象(BpPmcsService)，将其强转到<em>*IPmcsService</em></em>，调用接口函数</li>
+<li>所有的接口对象调用最终会走到<strong>BpBinder-&gt;transact</strong>()函数，这个函数调用IPCThreadState-&gt;transact()并以Service号作为参数之一 </li>
+<li>最终通过系统调用ioctrl() 进入内核空间，Binder驱动根据传进来的Service 号寻找该Service正处于等待状态的Binder Thread, 唤醒它并在该线程内执行相应的函数，并返回结果给APP </li>
+</ol>
+</li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2020/05/06/图像处理算法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/图像处理算法/" itemprop="url">图像处理算法</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T14:52:18+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/图像处理/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/06/图像处理算法/" class="leancloud_visitors" data-flag-title="图像处理算法">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="A-模糊-滤波"><a href="#A-模糊-滤波" class="headerlink" title="A.模糊(滤波)"></a>A.模糊(滤波)</h2><h3 id="1-归一化盒子滤波-BoxFilter"><a href="#1-归一化盒子滤波-BoxFilter" class="headerlink" title="1.归一化盒子滤波(BoxFilter)"></a>1.归一化盒子滤波(BoxFilter)</h3><ul>
+<li><p>主要功能：在给定的滑动窗口下，对每个窗口内的像素值进行快速相加求和</p>
+</li>
+<li><p>缺点：无法克服边缘像素信息丢失缺陷，原因是均值滤波是基于平均权重</p>
+</li>
+<li><p>原理：</p>
+<p><img src="../images/opencv/boxFilter.png" alt=""></p>
+<ol>
+<li>给定图像，宽高为(M,N)，确定待求矩形模板的宽高(m,n)，如图紫色矩形。图中黑色方块代表像素点，红色方块代表假象像素。</li>
+<li>开辟一段大小为M的数组，记为buff，用来储存计算过程中的，存在红色假象像素点中</li>
+<li>将矩形模板(紫色)从左上角，从左往右，从上往下单元素移动，每移动到新位置，计算矩形内的像素和保存在数组A(输出图片)中。以(0,0)位置为例：<ul>
+<li>将绿色矩形内的每一列像素求和，结果放在buff内(红色方块)</li>
+<li>对蓝色矩形内的像素点求和，结果即为紫色特征矩形内的像素和，把它存放到数组A</li>
+</ul>
+</li>
+<li>每次紫色矩形向右移动时，实际上就是求对应的蓝色矩形的像素和，此时只需把上次的求和结果减去蓝色矩形内的第一个红色快，再加上其右边的红色块，就是当提前位置的和，公式表达为：sum[i] = sum[i-1] - buf[x-1] + buff[x+m-1]</li>
+<li>当紫色矩形移动到行末时，需对buff进行更新。因整个绿色矩形下移一个像素，所以对于每个buff[i]需要加一个新进来的像素，再减去一个出去的像素，开始新一行的计算</li>
+</ol>
+</li>
+<li><p>此处为原理流程，源码见代码部分</p>
+</li>
+</ul>
+<h3 id="2-高斯滤波"><a href="#2-高斯滤波" class="headerlink" title="2.高斯滤波"></a>2.高斯滤波</h3><ul>
+<li>功能：</li>
+<li>缺点：部分克服边缘像素信息丢失缺陷，但无法完全避免，因为没有考虑像素值的不同</li>
+<li>原理：</li>
+</ul>
+<h3 id="3-中值滤波"><a href="#3-中值滤波" class="headerlink" title="3.中值滤波"></a>3.中值滤波</h3><ul>
+<li>功能：</li>
+<li>缺点：部分克服边缘像素信息丢失缺陷，但无法完全避免，因为没有考虑像素值的不同</li>
+<li>原理：</li>
+</ul>
+<h3 id="4-双边滤波"><a href="#4-双边滤波" class="headerlink" title="4.双边滤波"></a>4.双边滤波</h3><ul>
+<li>功能：</li>
+<li>优缺点：避免边缘信息丢失，保留图像轮廓不变</li>
+<li>原理：</li>
+</ul>
+<h2 id="B-形态学操作"><a href="#B-形态学操作" class="headerlink" title="B.形态学操作"></a>B.形态学操作</h2><h2 id="1-定义"><a href="#1-定义" class="headerlink" title="1.定义"></a>1.定义</h2><table>
+<thead>
+<tr>
+<th style="text-align:center">形态学定义</th>
+<th style="text-align:center">函数定义</th>
+<th style="text-align:center">原理</th>
+<th style="text-align:center">应用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">膨胀</td>
+<td style="text-align:center">dilate</td>
+<td style="text-align:center">取领域内最大值作为中心点新像素值</td>
+<td style="text-align:center">前景为黑，变小；前景为白，变大</td>
+</tr>
+<tr>
+<td style="text-align:center">腐蚀</td>
+<td style="text-align:center">erode</td>
+<td style="text-align:center">取领域内最小值作为中心点新像素值</td>
+<td style="text-align:center">前景为黑，变大；前景为白，变小</td>
+</tr>
+<tr>
+<td style="text-align:center">开操作</td>
+<td style="text-align:center">open</td>
+<td style="text-align:center">先腐蚀后膨胀(注意：结构元素需设置为包含部分目标对象)</td>
+<td style="text-align:center">假设对象是前景色，背景是黑色，可以去掉小的对象</td>
+</tr>
+<tr>
+<td style="text-align:center">闭操作</td>
+<td style="text-align:center">close</td>
+<td style="text-align:center">先膨胀后腐蚀</td>
+<td style="text-align:center">假设对象是前景色，背景是黑色，可以填补小的洞</td>
+</tr>
+<tr>
+<td style="text-align:center">形态学梯度</td>
+<td style="text-align:center">Morphological Gradient</td>
+<td style="text-align:center">膨胀减腐蚀，dst = morph(src, element) = dilate(src, element) - erode(src, element)</td>
+<td style="text-align:center">又称为基本梯度(其他还包括内部梯度、方向梯度)</td>
+</tr>
+<tr>
+<td style="text-align:center">顶帽</td>
+<td style="text-align:center">top hat</td>
+<td style="text-align:center">源图像与开操作之间的差值图像</td>
+<td style="text-align:center"></td>
+</tr>
+<tr>
+<td style="text-align:center">黑帽</td>
+<td style="text-align:center">black hat</td>
+<td style="text-align:center">闭操作与源图像的差值图像</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-提取水平与垂直线"><a href="#2-提取水平与垂直线" class="headerlink" title="2.提取水平与垂直线"></a>2.提取水平与垂直线</h2><ul>
+<li>提取步骤<ul>
+<li>输入彩色图像-imread</li>
+<li>转换为灰度图像-cvtColor</li>
+<li>转换为二值图像-adaptiveThreshold</li>
+<li>定义结构元素</li>
+<li>开操作(腐蚀+膨胀)提取水平与垂直线</li>
+</ul>
+</li>
+<li>启示：<ul>
+<li>卷积核可根据需要更改形状，从原图提取想要的形状</li>
+<li>提取文字、图像(去除干扰点)，可用不同卷积核</li>
+</ul>
+</li>
+</ul>
+<h2 id="C-图像上采样和降采样"><a href="#C-图像上采样和降采样" class="headerlink" title="C.图像上采样和降采样"></a>C.图像上采样和降采样</h2><ul>
+<li><strong>图像金字塔</strong>：<ul>
+<li>高斯金字塔：用来对图像进行降采样<ul>
+<li>从底向上，逐层降采样得到</li>
+<li>降采样之后，图像大小是原图M<em>N的M/2 </em> N/2（1/4），即对原图像删除偶数行与列，得到降采样后上一层的图片</li>
+<li>两步生成过程：<ul>
+<li>对当前层进行高斯模糊</li>
+<li>删除当前层的偶数行与列</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>高斯不同：<ul>
+<li>定义：把同一张图像在不同的参数下做高斯模糊之后的结果相减，得到的输出图像成为高斯不同(DOG)</li>
+<li>高斯不同是图像的内在特征，在灰度图像增强‘角点检测中常用到 </li>
+</ul>
+</li>
+<li>拉普拉斯金字塔：用来重建一张图片，根据它的上层降采样图片</li>
+</ul>
+</li>
+</ul>
+<h2 id="D-基本阈值操作"><a href="#D-基本阈值操作" class="headerlink" title="D.基本阈值操作"></a>D.基本阈值操作</h2><ul>
+<li>图像阈值<ul>
+<li>定义：图像分割的标尺</li>
+<li>阈值产生的算法<ul>
+<li>THRESH_OTSU</li>
+<li>THRESH_TRIANGLE</li>
+</ul>
+</li>
+<li>阈值类型<ul>
+<li>阈值二值化(threshold binary)：大于取阈值，小于取零</li>
+<li>阈值反二值化(threshold binary inverted)：大于取零，小于取阈值</li>
+<li>截断(truncate)：大于处取阈值，小于不变</li>
+<li>阈值取零(threshold to zero)：大于不变，小于取零</li>
+<li>阈值反取零(threshold to zero inverted)：大于取零，小于不变</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="E-自定义线性滤波"><a href="#E-自定义线性滤波" class="headerlink" title="E.自定义线性滤波"></a>E.自定义线性滤波</h2><ul>
+<li>卷积概念<ul>
+<li>卷积是图像处理中一个操作，是kernrl在图像的每个像素上的操作</li>
+<li>kerner本质上是一个固定大小的矩阵数组，其中中心点为锚点(anchor point)</li>
+<li>求锚点周围覆盖的像素乘积之和(包括锚点)，除以卷积数组大小，用来替代锚点下像素点值</li>
+</ul>
+</li>
+<li>常见算子<ul>
+<li>Robert算子：2*2，{1, 0, 0, -1}或{0, 1, -1, 0}，寻找梯度、边缘</li>
+<li>Sobel算子：3*3，{-1, 0, 1, -2, 0, 2, -1, 0, 1}或{-1, -2, -1, 0, 0, 0, 1, 2, 1}，常用于边缘检测</li>
+<li>拉普拉斯算子：3*3，{0, -1, 0, -1, 4, -1, 0, -1, 0},寻找梯度、边缘</li>
+</ul>
+</li>
+<li>自定义卷积模糊</li>
+</ul>
+<h2 id="F-边缘处理"><a href="#F-边缘处理" class="headerlink" title="F.边缘处理"></a>F.边缘处理</h2><ul>
+<li>卷积边缘问题：<ul>
+<li>图像卷积的时候边界像素不能被卷积操作</li>
+<li>原因在于边界像素没有完全跟kernel重叠</li>
+</ul>
+</li>
+<li>边缘处理<ul>
+<li>在卷积开始之前增加边缘像素，填充像素值为0或RGB黑色</li>
+<li>opencv中默认方法为：BORDER_DEFAULT<ul>
+<li>BORDER_CONSTANT - 用指定像素值填充边缘</li>
+<li>BORDER_REPLICATE - 用已知的边缘像素值填充边缘像素</li>
+<li>BORDER_WRAP - 用另外一边的像素来补偿填充</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="G-sobel算子"><a href="#G-sobel算子" class="headerlink" title="G.sobel算子"></a>G.sobel算子</h2><ul>
+<li>卷积应用-图像边缘提取<ul>
+<li>图像像素值渐变或突变，求导取最高点即为跃迁点(变化最大)</li>
+</ul>
+</li>
+<li>Sobel算子<ul>
+<li>Sobel算子：3*3，{-1, 0, 1, -2, 0, 2, -1, 0, 1}或{-1, -2, -1, 0, 0, 0, 1, 2, 1}，常用于边缘检测</li>
+<li>是离散微分算子(discrete differentiation operator)，用来计算图像灰度的近似梯度</li>
+<li>Sobel算子功能集合高斯平滑和微分求导</li>
+<li>又称为一阶微分算子，求导算子，在水平和垂直两方向求导，再平方和开根号(绝对值之和)，得到(图像x与y方向)梯度图像</li>
+</ul>
+</li>
+<li>Schar函数<ul>
+<li>求取导数的近似值，kernel=3时不准确，opencv使用改进版本Scharr函数，3*3，{-3, 0, 3, -10, 0, 10, -3, 3}或{-3, -10, 3, 0, 0, 0, 3, 10, 3}</li>
+</ul>
+</li>
+<li>代码流程<ul>
+<li>高斯平滑：使图像像素平滑变化</li>
+<li>转灰度</li>
+<li>求梯度x和y</li>
+<li>混合xy</li>
+</ul>
+</li>
+<li>个人理解：<ul>
+<li>用卷积和扩大水平/垂直像素差异</li>
+</ul>
+</li>
+</ul>
+<h2 id="H-laplance算子"><a href="#H-laplance算子" class="headerlink" title="H.laplance算子"></a>H.laplance算子</h2><ul>
+<li>原理<ul>
+<li>比sobel算子更进一步，这里采用 二阶导为零处即为像素值变化最大处</li>
+</ul>
+</li>
+<li>流程<ul>
+<li>高斯模糊-去噪声GaussianBlur()</li>
+<li>转灰度cvtColor()</li>
+<li>拉普拉斯-二阶导计算Laplance()</li>
+<li>取绝对值convertScaleAbs()</li>
+</ul>
+</li>
+</ul>
+<h2 id="I-Canny边缘检测"><a href="#I-Canny边缘检测" class="headerlink" title="I.Canny边缘检测"></a>I.Canny边缘检测</h2><ul>
+<li>流程：<ul>
+<li>高斯模糊GaussianBlur<ul>
+<li>将高斯算子与原图像卷积</li>
+</ul>
+</li>
+<li>灰度转换cvtColor</li>
+<li>计算梯度Sobel/Scharr：像素值差异的地方</li>
+<li>非最大信号抑制<ol>
+<li>将当前像素的梯度强度与沿正负方向梯度方向上的两个像素比较</li>
+<li>若当前像素的梯度强度与另外两个像素相比最大，则该像素点保留位边缘点，否则该像素点会被抑制</li>
+</ol>
+</li>
+<li>高低阈值输出二值图像：抑制噪声引起的弱边缘</li>
+</ul>
+</li>
+</ul>
+<h2 id="J-霍夫变换"><a href="#J-霍夫变换" class="headerlink" title="J.霍夫变换"></a>J.霍夫变换</h2><ul>
+<li><p>霍夫直线变换</p>
+<ul>
+<li>简介<ul>
+<li>用来做直线检测</li>
+<li>前提条件：边缘检测已完成</li>
+<li>平面空间到极坐标空间转换</li>
+</ul>
+</li>
+<li>原理<ul>
+<li>图形原理在notability中，后续整理</li>
+<li>r = x <em> cos(theta) + y </em> sin(theta)<ol>
+<li>canny边缘检测</li>
+<li>逐像素点进行霍夫空间变换：由像素坐标系(x,y)变换到笛卡尔坐标系(r, theta)</li>
+<li>局部非极大值抑制：去除噪声点</li>
+<li>对笛卡尔坐标系中的点排序</li>
+<li>求得笛卡尔坐标系中点极大值对应的角度和距离</li>
+<li>将笛卡尔坐标转为像素坐标，画线</li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p>霍夫圆变换(21HT)</p>
+<ul>
+<li><p>$r^2 = (x-a)^2 + (y-b)^2$</p>
+</li>
+<li><p>第一阶段：检测圆心</p>
+<ul>
+<li>（中值滤波：去除噪声）</li>
+</ul>
+<ol>
+<li>canny边缘检测</li>
+<li>sobel计算图形梯度，并确定圆周线，其中圆周的梯度就是其法线</li>
+<li>在二维霍夫空间内，绘出所有图形的梯度直线，某坐标点上累加和的值越大，说明在该点上直线相交的次数越多，也就是越有可能是圆心 </li>
+<li>在霍夫空间的4邻域内进行非最大值抑制 </li>
+<li>设定一个阈值，霍夫空间内累加和大于该阈值的点就对应于圆心 </li>
+</ol>
+</li>
+<li><p>第二阶段：检测半径</p>
+<ol>
+<li>计算某一个圆心到所有圆周线的距离，这些距离中就有该圆心所对应的圆的半径的值，这些半径值当然是相等的，并且这些圆半径的数量要远远大于其他距离值相等的数量</li>
+<li>设定两个阈值，定义为最大半径和最小半径，保留距离在这两个半径之间的值，这意味着我们检测的圆不能太大，也不能太小 </li>
+<li>对保留下来的距离进行排序</li>
+<li>找到距离相同的那些值，并计算相同值的数量 </li>
+<li>设定一个阈值，只有相同值的数量大于该阈值，才认为该值是该圆心对应的圆半径 </li>
+<li>对每一个圆心，完成上面的2.1～2.5步骤，得到所有的圆半径 </li>
+</ol>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="K-像素重映射"><a href="#K-像素重映射" class="headerlink" title="K.像素重映射"></a>K.像素重映射</h2><ul>
+<li>定义：g(x, y) = f(h(x, y))<ul>
+<li>把输入图像中各个像素按照一定规则映射到另一张图像对应位置</li>
+</ul>
+</li>
+<li>cv::remap()</li>
+</ul>
+<h2 id="L-直方图均衡化"><a href="#L-直方图均衡化" class="headerlink" title="L.直方图均衡化"></a>L.直方图均衡化</h2><ul>
+<li>图像直方图<ul>
+<li>定义：统计整个图像在灰度范围内的像素值(0-255)出现的频率次数</li>
+<li>反映：图像灰度的分布情况</li>
+</ul>
+</li>
+<li>流程<ol>
+<li>计算原图像素值概率</li>
+<li>从小到大累加像素值概率</li>
+<li>用 累加概率 * 像素最大值 之积 替换原图像像素值</li>
+</ol>
+</li>
+<li>cv::equalizeHist(src, dst)<ul>
+<li>输入为灰度图</li>
+</ul>
+</li>
+<li>应用：提高图像对比度、拉伸图像灰度值范围，同时图像的细节更为丰富 </li>
+</ul>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2020/05/06/Learning-OpenCV3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2020/05/06/Learning-OpenCV3/" itemprop="url">Learning OpenCV3</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2020-05-06T14:47:06+08:00">
+                2020-05-06
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/图像处理/" itemprop="url" rel="index">
+                    <span itemprop="name">图像处理</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2020/05/06/Learning-OpenCV3/" class="leancloud_visitors" data-flag-title="Learning OpenCV3">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="Learning-OpenCV3"><a href="#Learning-OpenCV3" class="headerlink" title="Learning OpenCV3"></a>Learning OpenCV3</h1><h2 id="一、Overview"><a href="#一、Overview" class="headerlink" title="一、Overview"></a>一、Overview</h2><h3 id="1-计算机视觉概念"><a href="#1-计算机视觉概念" class="headerlink" title="1.计算机视觉概念"></a>1.计算机视觉概念</h3><p>类比于人在道路两侧停放的车中寻找特定的车，图像信号通过眼睛传输到大脑，大脑有注意力识别系统：通过任务依赖的方式，检查图像重要区域，抑制其他区域。利用人生活多年来形成的交叉关联的感觉识别重要信息，再由大脑的反馈回路返回到传感器(眼睛肌肉)，进一步去获取需要的图像。</p>
+<p>###2.遇到的问题</p>
+<p>用2D去描绘3D世界的误差，数据的失真和噪声破坏。具体如下：</p>
+<ul>
+<li><p><strong>上下文信息</strong>：</p>
+<ul>
+<li><p>例子：</p>
+<p>机器人在房子里捡起订书机，首先机器人可能会用到以下事实：办公桌是办公室内的对象，而订书机是最大可能在办公桌上找到，这是一个隐式的大小位置参考；且机器人需要忽略相同大小形状的小木盒、以及墙画上的订书机图片。</p>
+<p>相反，对于图像检索任务，机器人查询的数据库里都是真实的订书机，很可能就只拍摄了正常尺寸的订书机；在拍摄这些图片时，也隐藏这很多无意的隐式信息。</p>
+</li>
+<li><p>解决：</p>
+<p>使用机器学习进行显示建模，对隐藏变量(大小、形状、重力方向等)用与他们值相关的标签训练集中进行校正。或者使用其他传感器测量隐藏的偏差分量。</p>
+</li>
+</ul>
+</li>
+<li><p><strong>噪音</strong></p>
+<ul>
+<li><p>例子：</p>
+<p>仅通过几个点比较无法检查出物体边缘，有些像素点可能在生成、传输的途中遭到破坏，不能准确识别。</p>
+</li>
+<li><p>解决</p>
+<p>统计局部区域可较准确的进行边缘检测</p>
+<p>通过建立直接从数据中学到的显式模型来描述，如人们已经很了解镜头畸变，只需建立一个多项式模型参数，通过调整参数从而更正失真。</p>
+</li>
+</ul>
+</li>
+</ul>
+<h2 id="二、opencv入门示例"><a href="#二、opencv入门示例" class="headerlink" title="二、opencv入门示例"></a>二、opencv入门示例</h2><p>简单的入门示例，这里有一个正好前段时间涉及到的边缘检测算法(二值化-&gt;区分前后景)，效果如下：</p>
+<p>​    阈值为1、10，可以看到边缘检测很不清晰，把很多rgb值高的点也包含进来</p>
+<p><img src="../images/opencv/1-10.png" alt="阈值为1，10"></p>
+<p>​    阈值为10、100，可以看到颜色较重的区域也能区分出来</p>
+<p><img src="../images/opencv/10-100.png" alt="阈值10,100"></p>
+<p>​    阈值为100、500，这样小鱼的边缘就很清晰了</p>
+<p><img src="../images/opencv/100-500.png" alt="阈值100，500"></p>
+<h2 id="三、OpenCV数据类型"><a href="#三、OpenCV数据类型" class="headerlink" title="三、OpenCV数据类型"></a>三、OpenCV数据类型</h2><p>从组织的角度来看，数据分为以下三类：</p>
+<ul>
+<li>c++原语(int, float等)：简单向量和矩阵、简单几何概念(点、矩阵、尺寸等)</li>
+<li>辅助对象：抽象概念，如垃圾回收指针、切片对象、终止条件等</li>
+<li>大数组类型</li>
+</ul>
+<h3 id="1-基本类型"><a href="#1-基本类型" class="headerlink" title="1.基本类型"></a>1.基本类型</h3><ul>
+<li><p><strong>Point</strong></p>
+<p>基于模板结构实现的，可以是任何类型的点</p>
+<ul>
+<li><p>分类：</p>
+<ul>
+<li>二维、三维、四维点</li>
+<li>cv::Point2i，最后一个字母表示构造点的原语类型。（b:无符号字符，s:短整型，i:32位整数，f:32位浮点数，d:64位浮点数）</li>
+</ul>
+</li>
+<li><p>操作：</p>
+<p>|       运行方式       |           例子            |<br>| :——————: | :———————–: |<br>|     默认构造函数     |      cv::Point2i p;       |<br>|     复制构造函数     |    cv::Point3f p2(p1)     |<br>|      值构造函数      | cv::Point3d p(x0, x1, x2) |<br>|   转换为固定向量类   |        (cv::Vec3f)        |<br>|       访问成员       |           p.x;            |<br>|         点乘         |   float x = p1.dot(p2);   |<br>|      双精度点乘      |  double x = p1.ddot(p2);  |<br>|         叉乘         |       p1.cross(p2);       |<br>| 查询点p是否在矩形r里 |       p.inside(r);        |</p>
+</li>
+<li><p>cv::Scalar类  </p>
+<p>四维点类，所有成员时双精度浮点数</p>
+<p>|     运行方式      |                        示例                         |<br>| :—————: | :————————————————-: |<br>|   默认构造函数    |                    cv::Scalar s;                    |<br>|   复制构造函数    |                 cv::Scalar s2(s1);                  |<br>|    值构造函数     |            cv::Scalar s(x0, x1, x2, x3);            |<br>|    逐元素乘法     |                     s1.mul(s2);                     |<br>|   (四元数)共轭    | s.conj(); // (return cv::Scalar(s0, -s1, -s2, -s3)) |<br>| (四元数)real test |   s.isReal(); // (returns true if s1==s2==s3==0)    |</p>
+<p>该类操作强制转换到固定向量类，与point类不同，cv::Scalar直接从固定向量类模板的实例化中继承</p>
+</li>
+</ul>
+</li>
+<li><p><strong>size</strong></p>
+<p>size类类似于point类，类型有Size、Size2i、Size2f,唯一区别就是命名区别(x、y与width、height)</p>
+<p>|   运行方式   |         示例         |<br>| :———-: | :——————: |<br>| 默认构造函数 |     cv::Size sz;     |<br>| 复制构造函数 |  cv::Size sz2(sz1);  |<br>|  值构造函数  | cv::Size2f sz(w, h); |<br>|   访问成员   | sz.width; sz.height; |<br>|   计算面积   |      sz.area();      |</p>
+</li>
+<li><p><strong>Rect</strong></p>
+<p>矩形类包含point类的成员x，y(代表矩形左上角坐标)，和宽高类(矩形的大小)，但矩形不继承点类</p>
+<p>|           运作方式           |               示例                |<br>| :————————–: | :——————————-: |<br>|       r1、r2矩形的交点       |  cv::Rect r3 = r1&r2; r1 &amp;= r2;   |<br>| 包含矩形r1、r2的最小面积矩形 | cv::Rect r3 = r1 ! r2; r1 |= r2; |<br>|         用x平移矩形r         |   cv::Rect rx = r + x; r += x;    |<br>|      将矩形r按大小s增大      |   cv::Rect rs = r + s; r += s;    |<br>|       比较矩形是否相等       |       bool eq = (r1 == r2);       |<br>|        比较矩形是否不        |       bool eq = (r1 != r2);       |</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>RotatedRect</strong></p>
+<p>c++ Opencv接口中为数不多的没有模板的类之一，相反，这是一个容器，保存了一个cv::Point2f(中心)，一个cv::Size2f(大小)和一个额外的浮点数(角度)，角度表示矩形围绕中心的旋转</p>
+<p>|          运行方式          |              示例              |<br>| :————————: | :—————————-: |<br>|        默认构造函数        |     cv::RotatedRect rr();      |<br>|        复制构造函数        |   cv::RotatedRect rr2(rr1);    |<br>|       从两个角度构建       |    cv::RotatedRect(p1, p2);    |<br>| 值构造函数(点，大小，角度) | cv::RotatedRect(p, sz, theta); |<br>|          访问成员          | rr.center; rr.size; rr.angle;  |<br>|         返回角列表         |       rr.points(pts[4]);       |</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>fixed matrix</strong></p>
+<p>固定矩阵类是指在编译时位数已知的矩阵，其数据的所有内存都分配在堆栈上，意味着可以快速地分配和清理。在c++ Opencv接口中，固定矩阵类实际上是一个模板，是许多其他基本类的核心(固定向量类派自固定矩阵类，其他类则派生自固定向量类)。</p>
+<p>|             运作方式             |                             示例                             |<br>| :——————————: | :———————————————————-: |<br>|           默认构造函数           |             cv::Matx33f m33f; cv::MAtx43d m43d;              |<br>|           复制构造函数           |                   cv::Matx22d m22d(n22d);                    |<br>|            值构造函数            |                    cv::Matx21f m(x0, x1);                    |<br>|          相同元素的矩阵          |                 m33f = cv::Matx33f::all(x);                  |<br>|              零矩阵              |                 m23d = cv::Matx23d::zeros();                 |<br>|             一个矩阵             |                 m16f = cv::Matx16f::ones();                  |<br>|           创建单位矩阵           |                  m33f = cv::Matx33f::eye();                  |<br>| 创建一个可容纳另一个对角线的矩阵 |            m31f = cv::Matx33f:diag(); //3<em>1的矩阵            |<br>|   创建一个具有均匀分布项的矩阵   |              m33f = cv::Matxf::randu(min, max);              |<br>|  创建一个具有正态分布条项的矩阵  |          m33f = cv::Matx33f::nrandn(mean, virance);          |<br>|             访问成员             |                        m(i, j); m(i);                        |<br>|             矩阵代数             |             m1 = m0;  m0 </em> m1; m0 + m1; m0 -m1;              |<br>|             单例代数             |                     m <em> a; a </em> m; m / a;                     |<br>|               比较               |                     m1 == m2; m1 != m2;                      |<br>|               点积               |                    m1.dot(m2); //m的精度                     |<br>|               点积               |                    m1.ddot(m2); //双精度                     |<br>|             重塑矩阵             |                 m91f = m33f.reshape<9, 1="">();                 |<br>|             类型转换             |                    m44f = (Matx44f)m44d;                     |<br>|            提取子矩阵            |                  m44f.get_minor<2,2>(i,j);                   |<br>|            提取第i行             |                     m14f = m44f.row(i);                      |<br>|            提取第j列             |                     m14f = m44f.col(j);                      |<br>|          提取矩阵对角线          |                     m41f = m44f.diag();                      |<br>|             计算转置             |                       n44f = m44f.t();                       |<br>|             求逆矩阵             |      n44f = m44f.inv(method); //默认方法为cv::DECOMP_LU      |<br>|           解线性方程组           | m31f = m33f.solve(rhs31f, method); m32f = m33f.solve2(rhs32f, method); // 模板表单，默认方法为DECOMP_LU |<br>|            逐元素乘法            |                         m1.mul(m2);                          |</2,2></9,></p>
+<p>注意，许多固定矩阵函数相对于类都是静态的(作为类的成员而不是特定的成员直接访问他们)，如构造3*3的矩阵，cv::Mat33f::eye()。</p>
+</li>
+<li><p><strong>fixed vector</strong></p>
+<p>固定向量类是从固定矩阵类派生的，可以看作cv::Matx&lt;&gt;的便捷功能。</p>
+<p>|   运作方式   |         示例          |<br>| :———-: | :——————-: |<br>| 默认构造函数 | Vec2s v2s; Vec6f v6s; |<br>| 复制构造函数 |    Vec3s u3f(v3f);    |<br>|  值构造函数  |  Vec2f v2f(x0, x1);   |<br>|   访问成员   |    v4f[i]; v3w(j);    |<br>|   向量叉乘   |    v3f.cross(u3f);    |</p>
+<p>主要便利是使用单顺序访问元素</p>
+</li>
+<li><p><strong>complex number</strong></p>
+<p>复数类与STL复合体关联的类最实质的区别在于：在STL类中，通过real()和image()访问实数和虚数；而在OpenCV类中，直接访问公共成员变量re和im</p>
+</li>
+<li></li>
+</ul>
+<h3 id="2-辅助对象"><a href="#2-辅助对象" class="headerlink" title="2.辅助对象"></a>2.辅助对象</h3><ul>
+<li><p><strong>TermCriteria</strong></p>
+<p>停止条件</p>
+</li>
+<li><p><strong>Range</strong></p>
+<p>范围</p>
+</li>
+<li><p><strong>Ptr模板和垃圾回收</strong></p>
+<p>c++中智能指针，该指针是我们能创建对对象的引用，所有引用被计数，当引用超出范围时，智能指针的引用计数将减少，一旦所有引用(指针的实例)减到0，实例对象将被自动清除(已分配)。</p>
+<p>与c++中智能指针类似，为想要“包装”的类对象实例化一个指针模板(cv::Ptr<matx33f> p = makePtr<cv::matx33f>())，模板对象的构造函数指向对象的指针。此操作后，智能指针p可像普通指针一样传递和使用(即，支持运算符operator*()和operator-&gt;()),可创建其他相同类型的对象，而不需要向它们传递新对象的指针。如：Ptr<mat33f> q，并将p的值赋给q。这里只有一个实际的p和q指向的cv::Mat33f对象，p和q都知道他们各自为1.若p消失(超出范围)，则q知道它时唯一剩下的对源实矩阵的引用；若q消失，且其析构函数被调用，q就知道它时唯一引用的指针，q会取消分配原始矩阵。</mat33f></cv::matx33f></matx33f></p>
+</li>
+<li><p><strong>Exception类和异常处理</strong></p>
+</li>
+<li><p><strong>DataType</strong></p>
+<p>当OpenCV库函数需要传递特殊概念的数据类型时，可通过创建cv::DataType&lt;&gt;类型的对象来实现。传递的实际对象时这个模板的实例对象。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// OpenCV中DataType的定义</span></span><br><span class="line"><span class="keyword">template</span>&lt;&gt; <span class="class"><span class="keyword">class</span> <span class="title">DataType</span>&lt;float&gt;</span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">	<span class="keyword">typedef</span> <span class="keyword">float</span>		value_type;</span><br><span class="line">	<span class="keyword">typedef</span> value_type   work_type;</span><br><span class="line">	<span class="keyword">typedef</span> value_type	 channel_type;</span><br><span class="line">	<span class="keyword">typedef</span> value_type	 vec_type;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">enum</span> &#123;</span><br><span class="line">      generix_type = <span class="number">0</span>,</span><br><span class="line">      depth        = DataDepth&lt;channel_type&gt;::value,</span><br><span class="line">      channels     = <span class="number">1</span>,</span><br><span class="line">      fmt          = DataDepth&lt;channel_type&gt;::fmt,</span><br><span class="line">      type         = CV_MAKETYPE(depth, channels)</span><br><span class="line">	&#125;;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>InputArray和OutputArray</strong></p>
+<p>输入、输出对象</p>
+</li>
+</ul>
+<h3 id="3-实用函数"><a href="#3-实用函数" class="headerlink" title="3.实用函数"></a>3.实用函数</h3><p>除了上述专用原始数据类型，OpenCV还提供一些有效处理数学运算和其他运算的专用功能，该使用功能包含数学工具、测试、错误生成、内存和线程处理、优化等</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">函数</th>
+<th style="text-align:center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">cv::aliginPtr()</td>
+<td style="text-align:center">将指针对齐到给定的字节数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::aliginSize()</td>
+<td style="text-align:center">将缓冲区大小与给定的字节数对齐</td>
+</tr>
+<tr>
+<td style="text-align:center">cv :: allocate()</td>
+<td style="text-align:center">分配c样式的对象数组</td>
+</tr>
+<tr>
+<td style="text-align:center">cvCeil()</td>
+<td style="text-align:center">将浮点数向上取整</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::cubeRoot()</td>
+<td style="text-align:center">计算立方根</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::CV_Assert()</td>
+<td style="text-align:center">若给定条件不成立，则引发异常</td>
+</tr>
+<tr>
+<td style="text-align:center">CV_Error()</td>
+<td style="text-align:center">宏以构建cv :: Exception （从固定字符串）并将其抛出</td>
+</tr>
+<tr>
+<td style="text-align:center">CV<em>Errpr</em>()</td>
+<td style="text-align:center">宏来构建cv :: Exception （从格式化的字符串）并抛出它</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::deallocate()</td>
+<td style="text-align:center">取消分配c样式的对象数组</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::error()</td>
+<td style="text-align:center">提示错误并引发异常</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::fastAtan2()</td>
+<td style="text-align:center">计算向量的二维角度</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::fastFree()</td>
+<td style="text-align:center">取消分配内存缓冲区</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::fastMalloc()</td>
+<td style="text-align:center">分配对齐的内存缓冲区</td>
+</tr>
+<tr>
+<td style="text-align:center">cvFloor()</td>
+<td style="text-align:center">将浮点数向下取整</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::format()</td>
+<td style="text-align:center">使用类似sprintf的格式，创建STL字符串</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getCPUTickCount()</td>
+<td style="text-align:center">从内部cpu计时器获得滴答计数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getNumThreads()</td>
+<td style="text-align:center">计算OpenCV当前使用的线程</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getOptimalDFTSize()</td>
+<td style="text-align:center">为计划传递给cv::DFT()的数组计算最佳大小</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getThreadNum()</td>
+<td style="text-align:center">获取当前线程的索引</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getTickCount()</td>
+<td style="text-align:center">从系统获取滴答计数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::getTickFrequency()</td>
+<td style="text-align:center">每秒获取数字/刻度</td>
+</tr>
+<tr>
+<td style="text-align:center">cvIsInf()</td>
+<td style="text-align:center">检查浮点数x是否为无穷大</td>
+</tr>
+<tr>
+<td style="text-align:center">cvIsNan()</td>
+<td style="text-align:center">检查浮点数是否为“非数字“</td>
+</tr>
+<tr>
+<td style="text-align:center">cvRound()</td>
+<td style="text-align:center">将浮点数舍入到最近的整数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::setNumThreads()</td>
+<td style="text-align:center">设置OpenCV使用的线程数</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::setUseOptimized()</td>
+<td style="text-align:center">启/禁用代码优化</td>
+</tr>
+<tr>
+<td style="text-align:center">cv::useOptimized()</td>
+<td style="text-align:center">指示代码优化启用的状态</td>
+</tr>
+</tbody>
+</table>
+<p>具有旧版界面的功能，为c定义的。</p>
+<h3 id="4-模板结构"><a href="#4-模板结构" class="headerlink" title="4.模板结构"></a>4.模板结构</h3><h2 id="四、图像和大数组类型"><a href="#四、图像和大数组类型" class="headerlink" title="四、图像和大数组类型"></a>四、图像和大数组类型</h2><h3 id="1-动态和可变存储"><a href="#1-动态和可变存储" class="headerlink" title="1.动态和可变存储"></a>1.动态和可变存储</h3><ul>
+<li><p><strong>cv::Mat类：N维密集数组</strong></p>
+<p>cv::mat类可用于任何数目维度的阵列，数据储存在数组中，可以认为是一个n维“光栅扫描”的模拟。每个矩阵包含一个表示数组内容的flags元素、一个表示维度的dims元素、行列元素、一个表示位置的数据指针、以及一个引用计数器 .可把数组理解为.</p>
+</li>
+<li><p><strong>生成一个数组</strong></p>
+<p>实例化一个cv::Mat类，并通过其成员函数create()来分配数据，其所需参数：行数、列数、类型、以及数组代表二维对象的配置。有效数组类型指定元素的基本类型和通道数量，所有这些类型都在库头文件中定义，其形式为:CV_{8U,16S,16U,32S,32F,64F}C{1,2,3}.如：CV_32FC3代表一个32位浮点三通道数组.</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//示例</span></span><br><span class="line"></span><br><span class="line"><span class="attribute">cv</span>::Mat m;</span><br><span class="line"><span class="selector-tag">m</span><span class="selector-class">.create</span>(<span class="number">3</span>, <span class="number">10</span>, CV_32FC3);	<span class="comment">// 为一个3行10列3通道的32位浮点数组分配数据</span></span><br><span class="line"><span class="selector-tag">m</span><span class="selector-class">.setTo</span>(<span class="attribute">cv</span>::Scalar(<span class="number">1.0</span>f, <span class="number">0.0</span>f, <span class="number">1.0</span>f));	<span class="comment">// 三通道值分别为1.0, 0.0, 1.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 等效上三行</span></span><br><span class="line"><span class="selector-tag">cv</span><span class="selector-pseudo">::Mat</span> <span class="selector-tag">m</span>( <span class="number">3</span>, <span class="number">10</span>, CV_32FC3, <span class="attribute">cv</span>::Scalar( <span class="number">1.0</span>f, <span class="number">0.0</span>f, <span class="number">1.0</span>f ) );</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>构造函数</p>
+<p>|                             函数                             |                   功能                    |<br>| :———————————————————-: | :—————————————: |<br>|                          cv::Mat();                          |               默认构造函数                |<br>|            cv::Mat(int rows, int cols, int type);            |                 二维数组                  |<br>|   cv::Mat(int rows, int cols, int type, const Scalar&amp; s);    |            带初始值的二维数组             |<br>| cv::Mat(int rows, int cols, int type, void data, size_t step=AUTO_STEP); |    具有类型的二维数组，预先存在的数据     |<br>|               cv::Mat(cv::Size sz, int type);                |             二维数组，sz大小              |<br>|       cv::Mat(cv::Size sz, int type, const Scalar&amp; s);       |         带初始值的二维数组,sz大小         |<br>| cv::Mat(cv::Size sz, int type, void<em> data, size_t step=AUTO_STEP); | 具有类型的二维数组，预先存在的数据,sz大小 |<br>|       cv::Mat(int ndims, const int</em> sizes, int type);        |                 多维数组                  |<br>| cv::Mat(int ndims, const int<em> sizes, int type, const Scalar&amp; s); |                                           |<br>| cv::Mat(int ndims, const int</em> sizes, int type, const Scalar&amp; s, size_t step=AUTO_STEP); |                                           |</p>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li><p>复制构造函数</p>
+<p>|                             函数                             |                       功能                        |<br>| :———————————————————-: | :———————————————–: |<br>|                   cv::Mat(const Mat&amp; mat);                   |                   复制构造函数                    |<br>| cv::Mat(const Mat&amp; mat, const cv::Range&amp; rows, const cv::Range&amp; cols); |           复制构造函数，仅能复制行和列            |<br>|        cv::Mat(const Mat&amp; mat, const cv::Rect&amp; roi);         |   复制构造函数，仅能复制感兴趣区域(roi)的行和列   |<br>|      cv::Mat(const Mat&amp; mat, const cv::Range* ranges);       |      通用区域复制构造函数，复制一块范维数组       |<br>|              cv::Mat(const cv::MatExpr&amp; expr);               | 复制用其他矩阵的代数表达式的结果初始化m的构造函数 |</p>
+</li>
+</ul>
+<ul>
+<li><p>模板构造函数</p>
+<p>|                             函数                             |                          功能                           |<br>| :———————————————————-: | :—————————————————–: |<br>|   cv::Mat(const cv::vec<t, n="">&amp; vec, bool copyData = true);   | 从同一类型的cv::Vec中构造一个类型为T、大小为n的一维数组 |<br>| cv::Mat(const cv::Matx<t, m,="" n="">&amp; vec, bool copyData = true); |  从同一类型的cv::Matx中构造一个尺寸为m×n的T型二维数组   |<br>|  cv::Mat(const std::vector<t>&amp; vec, bool copyData = true);   |     从包含相同类型元素的STL向量构造T类型的一维数组      |</t></t,></t,></p>
+</li>
+<li><p>静态函数</p>
+<p>|                函数                |                           功能                           |<br>| :——————————–: | :——————————————————: |<br>| scv::Mat::zeros(rows, cols, type); |     创建rows行cols列的cv::Mat,初始全为0，类型为type      |<br>| scv::Mat::ones(rows, cols, type);  |     创建rows行cols列的cv::Mat,初始全为1，类型为type      |<br>|  scv::Mat::eye(rows, cols, type);  | 创建rows行cols列的cv::Mat,初始为identity矩阵，类型为type |</p>
+</li>
+</ul>
+<ul>
+<li><p><strong>分别访问数组元素</strong></p>
+<ul>
+<li><p>几种访问函数</p>
+<p>|         函数          |                功能                |<br>| :——————-: | :——————————–: |<br>|     M.at<int>(i);     |        整数数组M中第i个元素        |<br>|  M.at<float>(i, j);   |      浮点数组M中(i,j)位置元素      |<br>|    M.at<int>(pt);     | 整数矩阵M中(pt.x, pt.y)位置的元素  |<br>| M.at<float>(i, j, k); | 三维浮点数组M中(i, j, k)位置的元素 |<br>|   M.at<uchar>(idx);   |    uchar数组M中idx[]位置的元素     |</uchar></float></int></float></int></p>
+<p>还可通过怕c样式的指针访问二维数组</p>
+<p>对于矩阵，有两种方法获取其数据指针：</p>
+<ul>
+<li>成员函数ptr&lt;&gt;()</li>
+<li>M.at&lt;&gt;()</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><strong>N元数组迭代器:NAryMatlterator</strong></p>
+<p>一次遍历多个数组，返回数组块，称为planes，常用于多数组计算(多点代表面)</p>
+</li>
+<li><p><strong>按快访问数组元素</strong></p>
+</li>
+</ul>
+<p>未完待续！</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2019/08/24/c-plus/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1589,650 +2940,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/08/04/关于自信/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/04/关于自信/" itemprop="url">关于自信</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-04T14:21:05+08:00">
-                2018-08-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/08/04/关于自信/" class="leancloud_visitors" data-flag-title="关于自信">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          「胡说八道一通」
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/04/关于自信/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/07/07/致未来的你/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/07/致未来的你/" itemprop="url">致未来的你</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-07T14:12:27+08:00">
-                2018-07-07
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/07/07/致未来的你/" class="leancloud_visitors" data-flag-title="致未来的你">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          「期待」
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/07/致未来的你/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/07/04/做饭/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/07/04/做饭/" itemprop="url">做饭</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-07-04T14:04:32+08:00">
-                2018-07-04
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/07/04/做饭/" class="leancloud_visitors" data-flag-title="做饭">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          「密码不能告诉你」
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/07/04/做饭/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/06/24/未来的自己/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/06/24/未来的自己/" itemprop="url">未来的自己</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-24T13:54:58+08:00">
-                2018-06-24
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/随想/" itemprop="url" rel="index">
-                    <span itemprop="name">随想</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2018/06/24/未来的自己/" class="leancloud_visitors" data-flag-title="未来的自己">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          「密码不能告诉你」
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/06/24/未来的自己/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2282,7 +2989,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">59</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2293,7 +3000,7 @@
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2304,7 +3011,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2378,7 +3085,7 @@
 <div class="copyright" >
   
   &copy;  2017 - 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -2398,7 +3105,7 @@
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Pisces
   </a>-->
-  <span class="post-count">博客全站共30.6k字</span>
+  <span class="post-count">博客全站共38.9k字</span>
 </div>
 
 

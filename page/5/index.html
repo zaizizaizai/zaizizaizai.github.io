@@ -338,6 +338,851 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--原型/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/25/理解JavaScript--原型/" itemprop="url">理解JavaScript--原型</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T13:26:32+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/25/理解JavaScript--原型/" class="leancloud_visitors" data-flag-title="理解JavaScript--原型">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="四、原型"><a href="#四、原型" class="headerlink" title="四、原型"></a>四、原型</h1><hr>
+<h4 id="1-原型对象"><a href="#1-原型对象" class="headerlink" title="1.原型对象"></a>1.原型对象</h4><p>绝大部分的函数(少数内建函数除外)都有一个<code>prototype</code>属性,这个属性是原型对象用来创建新对象实例,而所有被创建的对象都会共享原型对象,因此这些对象便可以访问原型对象的属性,例如<code>hasOwnProperty()</code>方法存在于Obejct原型对象中,它便可以被任何对象当做自己的方法使用.</p>
+<blockquote>
+<p><code>object.hasOwnProperty( propertyName )</code><br><code>hasOwnProperty()</code>函数的返回值为<code>Boolean</code>类型。如果对象<code>object</code>具有名称为<code>propertyName</code>的属性，则返回<code>true</code>，否则返回<code>false</code>。<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">var</span> person = &#123;</span><br><span class="line">    name: <span class="string">"Messi"</span>,</span><br><span class="line">    age: <span class="number">29</span>,</span><br><span class="line">    profession: <span class="string">"football player"</span></span><br><span class="line">  &#125;;</span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">"name"</span>)); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
+</blockquote>
+<p>由以上代码可知,<code>hasOwnProperty()</code>并不存在于<code>person</code>对象中,但是<code>person</code>依然可以拥有此方法.</p>
+<p>很多人此时会好奇,<code>person</code>对象是如何找到<code>Object</code>对象中的方法的呢?这其中的内部机制是什么?<br>这便是我们接下来要说的原型链.</p>
+<hr>
+<h4 id="2-proto-与-Prototype"><a href="#2-proto-与-Prototype" class="headerlink" title="2.__proto__与[[Prototype]]"></a>2.<code>__proto__</code>与<code>[[Prototype]]</code></h4><p>上一篇我们的示意图中曾经出现过<code>__proto__</code>,在ES6之前这个<code>__proto__</code>是大部分主流浏览器(IE除外)引擎提供的,还尚属非ECMA标准,在解析一个对象实例的时候为对象实例添加一个<code>__proto__</code>属性,此属性指向原型对象,我们便可以通过此属性找到原型对象.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>); <span class="comment">//person1 = &#123;name:"Messi", age: 29, profession: "football player"&#125;;</span></span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Bale"</span>, <span class="number">28</span>); <span class="comment">//person2 = &#123;name:"Bale", age: 28, profession: "football player"&#125;;</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.__proto__ === person.prototype); <span class="comment">//true</span></span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p><code>__proto__</code>除了被主流浏览器支持外,还被Node.js支持,在ES2015进入到规范附录部分,算是被正式纳入了标准.</p>
+</blockquote>
+<p>而在标准的语法里,实例对象是通过内置的内部属性<code>[[Prototype]]</code>来追踪原型对象的,这个<code>[[Prototype]]</code>的指针始终指向原型对象,此属性通常情况下是不可见的,我们需要用<code>getPrototypeOf()</code>来读取<code>[[Prototype]]</code>属性值(这个值就是原型对象).</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(obj) === <span class="built_in">Object</span>.prototype); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>同时我们也可以用<code>isPrototypeOf</code>来检验某个对象是否是另一个对象的原型对象.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> obj = &#123;&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.prototype.isPrototypeOf(obj)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<hr>
+<h3 id="３．原型链"><a href="#３．原型链" class="headerlink" title="３．原型链"></a>３．原型链</h3><p>在我们了解了<code>__proto__</code>与<code>[[Prototype]]</code>之后,就可以相对容易理解原型链了,由于<code>__proto__</code>与<code>[[Prototype]]</code>功能相似,但是<code>__proto__</code>更容易测试方便学习,我们选择<code>__proto__</code>来进行原型链的讲解.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>); <span class="comment">//person1 = &#123;name:"Messi", age: 29, profession: "football player"&#125;;</span></span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Bale"</span>, <span class="number">28</span>); <span class="comment">//person2 = &#123;name:"Bale", age: 28, profession: "football player"&#125;;</span></span><br><span class="line">person1.hasOwnProperty(<span class="string">"name"</span>);</span><br><span class="line"><span class="built_in">console</span>.log(person1.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//fasle</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.__proto__ === person.prototype); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.prototype.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(person1.__proto__.__proto__ === person.prototype.__proto__); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">console</span>.log(person.prototype.__proto__.hasOwnProperty(<span class="string">"hasOwnProperty"</span>)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p>我们可以分析这个例子,看看<code>person1</code>对象实例是如何调用<code>hasOwnProperty()</code>这个方法的.</p>
+<ol>
+<li>首先<code>person1</code>对象实例中寻找<code>hasOwnProperty()</code>方法,<code>person1.hasOwnProperty(&quot;hasOwnProperty&quot;)</code>返回<code>false</code>,发现不存在此方法,这时通过<code>__proto__</code>找到<code>person1</code>的原型对象.</li>
+<li>在<code>person1</code>的原型对象<code>person1.__proto__</code>即<code>person.prototype</code>中寻找<code>hasOwnProperty()</code>方法,<code>person.prototype.hasOwnProperty(&quot;hasOwnProperty&quot;)</code>返回<code>false</code>,依然没有找到,此时顺着<code>person.prototype</code>的<code>__proto__</code>找到其原型对象.</li>
+<li>在<code>person.prototype</code>原型对象<code>person.prototype.__proto__</code>即<code>Object.prototype</code>中寻找<code>hasOwnProperty()</code>方法,<code>Object.prototype.hasOwnProperty(&quot;hasOwnProperty&quot;)</code>返回<code>true</code>,由于<code>hasOwnProperty()</code>为<code>Object.prototype</code>内置方法,因此<code>person1</code>顺利找到此方法并调用.</li>
+</ol>
+<p>总而言之,实例对象方法调用,是现在实力对象内部找,如果找到则立即返回调用,如果没有找到就顺着<code>__proto__</code>向上寻找,如果找到该方法则调用,没有找到会直接报错,这便是<strong>原型链</strong>.</p>
+<p>如图所示,会更加直观.</p>
+<hr>
+<h4 id="4-ES6中的-proto"><a href="#4-ES6中的-proto" class="headerlink" title="4.ES6中的__proto__"></a>4.ES6中的<code>__proto__</code></h4><p>虽然<code>__proto__</code>在最新的ECMA标准中被纳入了规范,但是由于<code>__proto__</code>前后的双下划线，说明它本质上是一个内部属性，而不是一个正式的对外的 API.<br>标准明确规定，只有浏览器必须部署这个属性，其他运行环境不一定需要部署，而且新的代码最好认为这个属性是不存在的。因此，无论从语义的角度，还是从兼容性的角度，都不要使用这个属性，而是使用下面的<code>Object.setPrototypeOf()</code>（写操作）、<code>Object.getPrototypeOf()</code>（读操作）代替。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Object</span>.getPrototypeOf(person1) === person.prototype); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">Object</span>.setPrototypeOf(person1, &#123;<span class="attr">League</span>: <span class="string">"La Liga"</span>&#125;); </span><br><span class="line"><span class="built_in">console</span>.log(person1.League); <span class="comment">//La Liga</span></span><br></pre></td></tr></table></figure>
+<p>以上为具体用法,但是值得注意的是<code>Object.setPrototypeOf()</code>在使用中有一个坑,如代码所示:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">person</span>(<span class="params">pname, page</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">this</span>.name = pname;</span><br><span class="line">  <span class="keyword">this</span>.age = page;</span><br><span class="line">&#125;</span><br><span class="line">person.prototype.profession = <span class="string">"football player"</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="keyword">new</span> person(<span class="string">"Messi"</span>, <span class="number">29</span>); </span><br><span class="line"><span class="keyword">var</span> person2 = <span class="keyword">new</span> person(<span class="string">"Bale"</span>, <span class="number">28</span>);</span><br><span class="line"></span><br><span class="line"> <span class="built_in">Object</span>.setPrototypeOf(person1, &#123; <span class="attr">League</span>: <span class="string">"La Liga"</span>&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person1.League); <span class="comment">//La Liga</span></span><br><span class="line"><span class="built_in">console</span>.log(person2.League); <span class="comment">//undefind</span></span><br></pre></td></tr></table></figure></p>
+<p>也就是说不同于直接用<code>person1.__proto__.League = &quot;La Liga&quot;;</code>会使得两个实例同时生效,<code>Object.setPrototypeOf()</code>只能生效一个实例对象.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript-作用域/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/25/理解JavaScript-作用域/" itemprop="url">理解JavaScript--作用域</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T13:02:22+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/25/理解JavaScript-作用域/" class="leancloud_visitors" data-flag-title="理解JavaScript--作用域">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="三、作用域"><a href="#三、作用域" class="headerlink" title="三、作用域"></a>三、作用域</h1><hr>
+<h4 id="1-为什么要理解作用域"><a href="#1-为什么要理解作用域" class="headerlink" title="1. 为什么要理解作用域"></a>1. 为什么要理解作用域</h4><p>原因很简单,JavaScript中最重要的一个概念<strong>闭包</strong>的理解就建立在对<strong>作用域</strong>的理解之上,而一个对象的的构成往往离不开<strong>闭包</strong>以及<strong>作用域</strong>.</p>
+<hr>
+<h4 id="2-动态作用域or静态作用域"><a href="#2-动态作用域or静态作用域" class="headerlink" title="2. 动态作用域or静态作用域?"></a>2. 动态作用域or静态作用域?</h4><p>首先我们要搞清楚JavaScript的作用域类型,这有助于我们在分析作用域时的判断.</p>
+<blockquote>
+<p>静态作用域:静态作用域是指声明的作用域是根据程序正文在编译时就确定的，有时也称为词法作用域。</p>
+<p>动态作用域:程序中某个变量所引用的对象是在程序运行时刻根据程序的控制流信息来确定的。</p>
+</blockquote>
+<p>大多数现代编程语言都采用的静态作用域,即代码在写出来的时候就已经确定的,并非在执行时再确定,我们可以根据以下代码一探究竟.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">7</span>;</span><br><span class="line">  f();</span><br><span class="line">&#125;</span><br><span class="line">g(); <span class="comment">// a is not defined</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码在执行时候会报错,很明显,如果JavaScript采用了动态作用域,<code>a</code>在执行时确定的话,那么以上代码相当于这样:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">g</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">7</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(a);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">g(); <span class="comment">//undefind</span></span><br></pre></td></tr></table></figure></p>
+<p>因此,我们可以判断出JavaScript属于静态作用域.</p>
+<hr>
+<h4 id="3-函数作用域"><a href="#3-函数作用域" class="headerlink" title="3.函数作用域"></a>3.函数作用域</h4><p>函数是存在自身作用域的,在创建函数之初,函数体内就产生了作用域,为了方便理解,我们引用了《你不知道的JavaScript》书中的代码及图例,他会很清晰地帮助我们理解函数作用域.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = a * <span class="number">2</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a, b, c);</span><br><span class="line">    &#125;</span><br><span class="line">    bar(b * <span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="number">2</span>); <span class="comment">// 2, 4, 12</span></span><br></pre></td></tr></table></figure></p>
+<p>由于JavaScript是采用静态作用域,作用域是在函数创建的时候就确定下来的.</p>
+<hr>
+<h4 id="4-作用域链"><a href="#4-作用域链" class="headerlink" title="4.作用域链"></a>4.作用域链</h4><p>那么,我们可以仔细分析一下这个作用域链.<br><img src="http://omrbgpqyl.bkt.clouddn.com/17-8-25/32385127.jpg" alt=""><br>我们可以看到<code>scope chain</code>通过指向本函数的变量对象,并通过本函数的变量对象与整个父级函数变量对象联系在一起,这就是作用域链.</p>
+<p>所以说，作用域链与一个执行上下文相关，是<strong>内部上下文所有变量对象（包括父变量对象）</strong>的<strong>列表</strong>，用于变量查询。</p>
+<hr>
+<h4 id="5-块级作用域"><a href="#5-块级作用域" class="headerlink" title="5. 块级作用域"></a>5. 块级作用域</h4><p>在ES2015之前,JavaScript中实际上是没有语法层面的块级作用域,这就造成了很多意外的产生.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(i); <span class="comment">//3</span></span><br></pre></td></tr></table></figure></p>
+<p>如果是在有块级作用域的语言中,<code>i</code>是不会被打印出来的,但是在JavaScript中却被打印出来,这就是变量泄露的情况,也就是说看似在块级作用域的变量泄漏到全局作用域中,这也就造成了全局污染.</p>
+<p>在ES5中,人们为了解决这个问题,一般采用立即执行函数IIFE来模拟块级作用域,但是这种写法不易读也不优雅,因此,在ES2015中引入了<code>let</code>,通过<code>let</code>可以创建块级作用域.</p>
+<blockquote>
+<p><code>let</code>与<code>var</code>在使用上基本是类似的,但是<code>let</code>有三个主要的特点</p>
+<ul>
+<li>可创建块级作用域</li>
+<li>不存在变量提升</li>
+<li>存在暂时性死区</li>
+</ul>
+</blockquote>
+<p>例如上面的代码如果改用<code>let</code>声明,就不存在变量污染全局的情况<br><figure class="highlight maxima"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="built_in">let</span> i = <span class="number">0</span>; i&lt;<span class="number">3</span>; i++) &#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">console.<span class="built_in">log</span>(i); //i <span class="built_in">is</span> <span class="keyword">not</span> defind</span><br></pre></td></tr></table></figure></p>
+<p>至于其它let的具体用法,可以直接参考<a href="http://es6.ruanyifeng.com/#docs/let" target="_blank" rel="noopener">《ES6入门教程》</a>.</p>
+<hr>
+<h4 id="6-什么是闭包"><a href="#6-什么是闭包" class="headerlink" title="6.什么是闭包"></a>6.什么是闭包</h4><p>我们先简单地描述一下闭包:闭包是一个函数读取其它函数变量的桥梁.</p>
+<p>我们先从上面这个简单的例子开始<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">foo</span>(<span class="params">a</span>) </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> b = a * <span class="number">2</span>;</span><br><span class="line">    <span class="function"><span class="keyword">function</span> <span class="title">bar</span>(<span class="params">c</span>) </span>&#123;</span><br><span class="line">        <span class="built_in">console</span>.log(a, b, c);</span><br><span class="line">    &#125;</span><br><span class="line">    bar(b * <span class="number">3</span>);</span><br><span class="line">&#125;</span><br><span class="line">foo(<span class="number">2</span>); <span class="comment">// 2, 4, 12</span></span><br></pre></td></tr></table></figure></p>
+<p>根据前面所学作用域的概念,函数<code>f2</code>将引用函数<code>f1</code>的变量<code>a</code>并打印,这个嵌套函数中,子函数对父函数中的变量进行了引用,而使得这个引用得以成行的桥梁就是<strong>‘闭包’</strong>.</p>
+<blockquote>
+<ul>
+<li>很多讲解闭包的文章都用<code>return</code>做实例,值得注意的是,闭包的形成并不一定要有<code>return</code>,只要对其它函数变量产生了引用,就会产生闭包，而<code>return</code>的作用是方便外部访问.  </li>
+</ul>
+</blockquote>
+<p>可以看到bar通过作用域链向上寻找到变量,我理解的闭包是一个对象,包含了<strong>函数本身</strong>以及它<strong>引用的上下文环境</strong>,本实例函数的闭包可以用这段代码来示意下:<br><code>{Funtion:bar, bar.variableObject:{c=12, ...},  foo.variableObject:{b=4, ...},window/global.variableObject:{a=2, ...}}</code><br>具体地说，函数A包含函数B，函数B可以获取函数A中的数据，而函数A不能获取函数B中的数据，则函数A作用域以外可以通过调用函数B改变函数A的数据。</p>
+<blockquote>
+<p>闭包只是javascript函数作用域产生的附属品</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--预解释/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/25/理解JavaScript--预解释/" itemprop="url">理解JavaScript--预解释</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T11:58:39+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/25/理解JavaScript--预解释/" class="leancloud_visitors" data-flag-title="理解JavaScript--预解释">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="二、预解释"><a href="#二、预解释" class="headerlink" title="二、预解释"></a>二、预解释</h1><hr>
+<h4 id="1-从一个实例开始"><a href="#1-从一个实例开始" class="headerlink" title="1.从一个实例开始"></a>1.从一个实例开始</h4><p>仔细阅读以下JavaScript代码,你觉得运行结果会是什么呢?是 <code>1</code> 还是<code>2</code>?<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a= <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">  <span class="keyword">var</span> a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">f();</span><br></pre></td></tr></table></figure></p>
+<p>答案是undefined.</p>
+<p>那么到底是什么原因导致了这个让人意外的结果呢?这就要从JavaScript解释阶段说起。</p>
+<hr>
+<h4 id="2-JavaScript预解释"><a href="#2-JavaScript预解释" class="headerlink" title="2.JavaScript预解释"></a>2.JavaScript预解释</h4><p>我们可以大致把JavaScript在浏览器中运行的过程分为两个阶段<code>预解释阶段</code>（有人说准确的说法是应该是Parser，我们以预解释方便理解） <code>执行阶段</code>,在JavaScript引擎对JavaScript代码进行执行之前,需要进行预先处理,然后再对处理后的代码进行执行。</p>
+<blockquote>
+<p> 我们平时书写的JavaScript代码并不是JavaScript执行的代码(V8引擎读取一行执行一行这种理解是错误的),它需要预解释后,再由引擎进行执行.</p>
+</blockquote>
+<p>具体的解释过程涉及到浏览器内核的技术不属于前端领域,不过我们可以浅显的理解一下V8在处理JavaScript的一般过程:</p>
+<p>以上例中的<code>var a = 2;</code>为例,我们一般人的理解为<strong>声明了一个值为2的变量a</strong>,但是在JavaScript引擎处理时却分为了两个步骤:</p>
+<blockquote>
+<ol>
+<li><p>读取<code>var a</code>后,在当前作用域中查找是否有相同声明,如果没有就在当前作用域集合中创建一个名为<code>a</code>的变量,否则忽略此声明继续进行解析.</p>
+</li>
+<li><p>接下来,V8引擎会处理<code>a = 2</code>的赋值操作,首先会询问当前作用域中是否有名为<code>a</code>的变量,如果有进行赋值,否则继续向上级作用域询问.</p>
+</li>
+</ol>
+</blockquote>
+<hr>
+<h4 id="3-JavaScript执行环境"><a href="#3-JavaScript执行环境" class="headerlink" title="3.JavaScript执行环境"></a>3.JavaScript执行环境</h4><p>我们上面提到的所谓javascript预解释正是创建函数的<strong>执行环境</strong>（又称“执行上下文”），只有搞定了javascript的执行环境我们才能搞清楚一段代码在执行过后为什么产生这样的结果。</p>
+<p>我们用一段伪代码表示创立的<strong>执行环境</strong><br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">executionContextObj = &#123;</span><br><span class="line">    <span class="string">'scopeChain'</span>: &#123; <span class="comment">/* 变量对象 + 所有父级执行上下文中的变量对象 */</span> &#125;,</span><br><span class="line">    <span class="string">'variableObject'</span>: &#123; <span class="comment">/*  函数参数 / 参数, 内部变量以及函数声明 */</span> &#125;,</span><br><span class="line">    <span class="string">'this'</span>: &#123;&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>作用域链(scopeChain)包括下面提到的变量对象(variableObject)和所有父级执行上下文中的变量对象.</p>
+<p>变量对象(variableObject)是与执行上下文相关的数据作用域,一个与上下文相关的特殊对象，其中存储了在上下文中定义的变量和函数声明:<br>     变量;<br>     函数声明;<br>     函数的形参</p>
+<p>在有了这些基板概念之后我们可以梳理一下js引擎创建执行的过程:  </p>
+<ul>
+<li>创建阶段<ul>
+<li>创建Scope chain  </li>
+<li>创建variableObject</li>
+<li>设置this</li>
+</ul>
+</li>
+<li>执行阶段<ul>
+<li>变量的值、函数的引用  </li>
+<li>执行代码</li>
+</ul>
+</li>
+</ul>
+<p>而变量对象的创建细节如下:</p>
+<ul>
+<li>根据函数的参数，创建并初始化arguments object</li>
+<li>扫描函数内部代码，查找函数声明（Function declaration）<ul>
+<li>对于所有找到的函数声明，将函数名和函数引用存入变量对象中</li>
+<li>如果变量对象中已经有同名的函数，那么就进行覆盖</li>
+</ul>
+</li>
+<li>扫描函数内部代码，查找变量声明（Variable declaration）<ul>
+<li>对于所有找到的变量声明，将变量名存入变量对象中，并初始化为”undefined”</li>
+<li>如果变量名称跟已经声明的形式参数或函数相同，则变量声明不会干扰已经存在的这类属性</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h4 id="4-变量提升"><a href="#4-变量提升" class="headerlink" title="4.变量提升"></a>4.变量提升</h4><p>正是由于以上的处理,产生了大家熟知的JavaScript中的<strong>变量提升</strong>,具体以上代码的执行过程如以下伪代码所示:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// global context</span></span><br><span class="line">executionContextObj = &#123;</span><br><span class="line">    <span class="string">'scopeChain'</span>: &#123; ... &#125;,</span><br><span class="line">    <span class="string">'variableObject'</span>: &#123; <span class="attr">a</span>: <span class="literal">undefined</span>, <span class="attr">f</span>: pointer to <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) &#125;,</span></span><br><span class="line"><span class="function">    '<span class="title">this</span>': </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line">...</span><br><span class="line">&#125;<span class="comment">//首先在全局执行环境中声明了变量a以及函数f,此时a虽然被声明,但是尚未赋值</span></span><br><span class="line">x = <span class="number">1</span>;</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    executionContextObj &#123;</span><br><span class="line">    <span class="string">'scopeChain'</span>: &#123; ... &#125;,</span><br><span class="line">    <span class="string">'variableObject'</span>: &#123;        </span><br><span class="line">    <span class="built_in">arguments</span>: &#123;&#125;, </span><br><span class="line">    a: <span class="literal">undefined</span> </span><br><span class="line">        &#125;,</span><br><span class="line">    <span class="string">'this'</span>: &#123;...&#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//内部词法环境中声明了变量a,此时a虽然被声明,但是尚未赋值</span></span><br><span class="line">    <span class="built_in">console</span>.log(a);<span class="comment">//此时a需要被被打印出来,在作用域内寻找a变量赋值,于是被赋值undefined</span></span><br><span class="line">    a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们可以明显看到,<code>a</code>变量在预解释阶段已经被赋值<code>undefined</code>,在执行阶段js是自上而下单线执行，当<code>console.log(a)</code>执行之时,<code>a=2</code>还没有被执行,<code>a</code>变量的值便是预处理阶段被赋予的<code>undefined</code>,</p>
+<hr>
+<h4 id="5-函数声明与函数表达式"><a href="#5-函数声明与函数表达式" class="headerlink" title="5.函数声明与函数表达式"></a>5.函数声明与函数表达式</h4><p>我们看到,在编译器处理阶段,除了被<code>var</code>声明的变量会有变量提升这一特性之外,函数也会产生这一特性,但是函数声明与函数表达式两种范式创建的函数却表现出不同的结果.  </p>
+<p>我们先看一个实例,运行以下代码<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">f();</span><br><span class="line">g();</span><br><span class="line"><span class="comment">//函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//函数表达式</span></span><br><span class="line"><span class="keyword">var</span> g = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'g'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><code>f</code>成功被打印出来,而<code>g函数</code>出现了类型错误,这是什么原因呢?  </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">executionContextObj = &#123;</span><br><span class="line">    <span class="string">'scopeChain'</span>: &#123; ... &#125;,</span><br><span class="line">    <span class="string">'variableObject'</span>: &#123; <span class="attr">f</span>: pointer to <span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>), <span class="title">g</span>: <span class="title">undefined</span>&#125;,</span></span><br><span class="line"><span class="function">    '<span class="title">this</span>': </span>&#123;...&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">f();</span><br><span class="line">g();</span><br><span class="line"><span class="comment">//函数声明</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//函数表达式</span></span><br><span class="line"><span class="keyword">var</span> g = <span class="function"><span class="keyword">function</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'g'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>我们看到,在预解释阶段函数声明的<code>f</code>是被指向了正确的函数得以执行,而函数表达式<code>g</code>被赋予<code>undefined</code>,<code>undefined</code>无法被当作函数执行因此报错<code>g is not a function</code>.</p>
+<hr>
+<h4 id="6-冲突处理"><a href="#6-冲突处理" class="headerlink" title="6.冲突处理"></a>6.冲突处理</h4><p>通常情况下我们不会将同一变量变量重复声明,但是出现了类似情况后,编译器会如何处理这些冲突呢?</p>
+<ol>
+<li>变量之间冲突<br>执行以下函数:<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">3</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="number">4</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a);</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>结果显而易见,后声明变量值覆盖前者的值</p>
+<ol>
+<li>函数之间冲突<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">f();</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f'</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'g'</span>);</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+<p>结果同变量冲突,后者覆盖前者.</p>
+<ol>
+<li>函数与变量之间冲突</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(f);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">'f'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> f =<span class="string">'g'</span>;</span><br></pre></td></tr></table></figure>
+<p>结果如下,函数声明将覆盖变量声明.</p>
+<h2 id="Function-f"><a href="#Function-f" class="headerlink" title="[Function: f]"></a><code>[Function: f]</code></h2><h4 id="7-ES6中的let"><a href="#7-ES6中的let" class="headerlink" title="7.ES6中的let"></a>7.ES6中的let</h4><p>在ES6中出现了两个最新的声明语法<code>let</code>与<code>const</code>,我们以<code>let</code>为例,进行测试看看与<code>var</code>的区别.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">f</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="built_in">console</span>.log(a);</span><br><span class="line">  <span class="keyword">let</span> a = <span class="number">2</span>;</span><br><span class="line">&#125;</span><br><span class="line">f(); <span class="comment">// ReferenceError: a is not defined</span></span><br></pre></td></tr></table></figure></p>
+<p>这段代码直接报错显示未定义,<code>let</code>与<code>const</code>拥有类似的特性,阻止了变量提升,当代码执行到<code>console.log(a)</code>时,执行换将中<code>a</code>还从未被定义,因此产生了错误.</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/25/理解JavaScript--类型判断/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="pinocchio">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/dog.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zaizizaizai">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/02/25/理解JavaScript--类型判断/" itemprop="url">理解javaScript--类型判断</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-25T10:44:41+08:00">
+                2018-02-25
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/JavaScript/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaScript</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/25/理解JavaScript--类型判断/" class="leancloud_visitors" data-flag-title="理解javaScript--类型判断">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h1 id="一、类型判断"><a href="#一、类型判断" class="headerlink" title="一、类型判断"></a>一、类型判断</h1><p>　　</p>
+<blockquote>
+<p>JavaScript原始类型:Undefined、Null、Boolean、Number、String、Symbol </p>
+<p>JavaScript引用类型:Object </p>
+</blockquote>
+<hr>
+<h4 id="1-原始类型与引用类型"><a href="#1-原始类型与引用类型" class="headerlink" title="1.原始类型与引用类型"></a>1.原始类型与引用类型</h4><h6 id="1-1"><a href="#1-1" class="headerlink" title="1.1"></a>1.1</h6><p>　　<strong>原始类型</strong>又被称为<strong>基本类型</strong>，原始类型保存的变量和值直接保存在<strong>栈内存</strong>(Stack)中,且空间相互独立,通过值来访问,通过一个例子来解释.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = <span class="string">'Messi'</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = person;</span><br></pre></td></tr></table></figure>
+<p>上述代码在栈内存的示意图是这样的,可以看到,虽然<code>person</code>赋值给了<code>person1</code>.但是两个变量并没有指向同一个值,而是<code>person1</code>自己单独建立一个内存空间,虽然两个变量的值相等,但却是相互独立的.<br><img src="http://omrbgpqyl.bkt.clouddn.com/18-2-20/84377115.jpg" alt=""></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = <span class="string">'Messi'</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = person;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> person = <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(person); <span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(person1); <span class="comment">//'Messi'</span></span><br></pre></td></tr></table></figure>
+<p>上述代码示意图是这样的,<code>person</code>的值虽然改变,但是由于<code>person1</code>的值是独立储存的,因此不受影响.</p>
+<p>值得一提的是,虽然原始类型的值是储存在相对独立空间,但是它们之间的比较是<strong>按值</strong>比较的.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> person = <span class="string">'Messi'</span>;</span><br><span class="line"><span class="keyword">var</span> person1 = <span class="string">'Messi'</span>;</span><br><span class="line"><span class="built_in">console</span>.log(person === person1); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<h6 id="1-2引用类型"><a href="#1-2引用类型" class="headerlink" title="1.2引用类型"></a>1.2引用类型</h6><p>剩下的就是引用类型了,即Object 类型,再往下细分，还可以分为：Object 类型、Array 类型、Date 类型、Function 类型 等。</p>
+<p>与原始类型不同的是,引用类型的内容是保存在<strong>堆内存</strong>中,而<strong>栈内存</strong>(Heap)中会有一个<strong>堆内存地址</strong>,通过这个地址变量被指向堆内存中<code>Object</code>真正的值,因此引用类型是按照引用访问的.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = &#123;<span class="attr">name</span>:<span class="string">"percy"</span>&#125;;</span><br><span class="line"><span class="keyword">var</span> b;</span><br><span class="line">b = a;</span><br><span class="line">a.name = <span class="string">"zyj"</span>;</span><br><span class="line"><span class="built_in">console</span>.log(b.name);    <span class="comment">// zyj</span></span><br><span class="line">b.age = <span class="number">22</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a.age);     <span class="comment">// 22</span></span><br><span class="line"><span class="keyword">var</span> c = &#123;</span><br><span class="line">  name: <span class="string">"zyj"</span>,</span><br><span class="line">  age: <span class="number">22</span></span><br><span class="line">&#125;;</span><br><span class="line"><span class="built_in">console</span>.log(a === c); <span class="comment">//false</span></span><br></pre></td></tr></table></figure>
+<p>我们可以逐行分析:</p>
+<pre><code>1. `b = a`,如果是原始类型的话,`b`会在栈内自己独自创建一个内存空间保存值,但是引用类型只是`b`的产生一个对内存地址,指向堆内存中的`Object`.
+2.`a.name = &quot;zyj&quot;`,这个操作属于改变了变量的值,在原始类型中会重新建立新的内存空间(可以看上一节的示意图),而引用类型只需要自己在堆内存中更新自己的属性即可.
+3.最后创建了一个新的对象`c`,看似跟`b` `a`一样,但是在堆内存中确实两个相互独立的`Object`,引用类型是按照**引用比较**,由于`a` `c`引用的是不同的`Object`所以得到的结果是`fasle`.  
+</code></pre><h2 id=""><a href="#" class="headerlink" title=""></a><img src="http://omrbgpqyl.bkt.clouddn.com/18-2-20/34304948.jpg" alt=""></h2><h4 id="2-类型中的坑"><a href="#2-类型中的坑" class="headerlink" title="2. 类型中的坑"></a>2. 类型中的坑</h4><p>2.1 数组中的坑<br>数组是JavaScript中最常见的类型之一了,但是在我们实践过程中同样会遇到各种各样的麻烦.</p>
+<p><strong>稀疏数组</strong>:指的是含有空白或空缺单元的数组<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a.length); <span class="comment">//0</span></span><br><span class="line"></span><br><span class="line">a[<span class="number">4</span>] = a[<span class="number">5</span>];</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a.length); <span class="comment">//5</span></span><br><span class="line"></span><br><span class="line">a.forEach(<span class="function"><span class="params">elem</span> =&gt;</span> &#123;</span><br><span class="line">  <span class="built_in">console</span>.log(elem); <span class="comment">//undefined</span></span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//[,,,,undefined]</span></span><br></pre></td></tr></table></figure></p>
+<p>这里需要注意:</p>
+<ol>
+<li>一开始建立的空数组<code>a</code>的长度为0,这可以理解,但是在<code>a[4] = a[5]</code>之后出现了问题,<code>a</code>的长度变成了5,此时<code>a</code>数组是<code>[,,,,undefined]</code>这种形态.</li>
+<li>我们通过遍历,只得到了<code>undefined</code>这一个值,这个<code>undefind</code>是由于<code>a[4] = a[5]</code>赋值,由于<code>a[5]</code>没有定义值为<code>undefined</code>被赋给了<code>a[4]</code>,可以等价为<code>a[4] = undefined</code>.</li>
+</ol>
+<p><strong>字符串索引</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = [];</span><br><span class="line">a[<span class="number">0</span>] = <span class="string">'Bale'</span>;</span><br><span class="line">a[<span class="string">'age'</span>] = <span class="number">28</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a.length); <span class="comment">//1</span></span><br><span class="line"><span class="built_in">console</span>.log(a[<span class="string">'age'</span>]); <span class="comment">//28</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//[ 'Bale', age: 28 ]</span></span><br></pre></td></tr></table></figure>
+<p>数组不仅可以通过数字索引,也可以通过字符串索引,但值得注意的是,字符串索引的键值对并不算在数组的长度里.</p>
+<p>2.2 数字中的坑<br><strong>二进制浮点数</strong></p>
+<p>JavaScript 中的数字类型是基于“二进制浮点数”实现的,使用的是“双精度”格式,这就带来了一些反常的问题,我们那一道经典面试提来讲解下.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">0.1</span> + <span class="number">0.2</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">0.3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a === b); <span class="comment">//false</span></span><br></pre></td></tr></table></figure></p>
+<p>这是个出人意料的结果,实际上a的值约为<code>0.30000000000000004</code>这并不是一个整数值,这就是<code>二进制浮点数</code>带来的副作用.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">0.1</span> + <span class="number">0.2</span>;</span><br><span class="line"><span class="keyword">var</span> b = <span class="number">0.3</span>;</span><br><span class="line"><span class="built_in">console</span>.log(a === b); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>.isInteger(a*<span class="number">10</span>)); <span class="comment">//false</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Number</span>.isInteger(b*<span class="number">10</span>)); <span class="comment">//true</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//0.30000000000000004</span></span><br></pre></td></tr></table></figure>
+<p>我们可以用<code>Number.isInteger()</code>来判断一个数字是否为整数.</p>
+<p><strong>NaN</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a = <span class="number">1</span>/<span class="keyword">new</span> <span class="built_in">Object</span>();</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">//Number</span></span><br><span class="line"><span class="built_in">console</span>.log(a); <span class="comment">//NaN</span></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">isNaN</span>(a)); <span class="comment">//true</span></span><br></pre></td></tr></table></figure>
+<p><code>NaN</code>属于特殊的<code>Number</code>类型,我们可以把它理解为<code>坏数值</code>,因为它属于数值计算中的错误,更加特殊的是它自己都不等价于自己<code>NaN === NaN //false</code>,我们只能用<code>isNaN()</code>来检测一个数字是否为<code>NaN</code>.</p>
+<hr>
+<h4 id="3-类型转换原理"><a href="#3-类型转换原理" class="headerlink" title="3.类型转换原理"></a>3.类型转换原理</h4><p><strong>类型转换</strong>指的是将一种类型转换为另一种类型,例如:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> b = <span class="number">2</span>;</span><br><span class="line"><span class="keyword">var</span> a = <span class="built_in">String</span>(b);</span><br><span class="line"><span class="built_in">console</span>.log(<span class="keyword">typeof</span> a); <span class="comment">//string</span></span><br></pre></td></tr></table></figure></p>
+<p>当然,<strong>类型转换</strong>分为显式和隐式,但是不管是隐式转换还是显式转换,都会遵循一定的原理,由于JavaScript是一门动态类型的语言,可以随时赋予任意值,但是各种运算符或条件判断中是需要特定类型的,因此JavaScript引擎会在运算时为变量设定类型.</p>
+<p>这看起来很美好,JavaScript引擎帮我们搞定了<code>类型</code>的问题,但是引擎毕竟不是ASI(超级人工智能),它的很多动作会跟我们预期相去甚远,我们可以从一到面试题开始.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&#125;+[] <span class="comment">//0</span></span><br></pre></td></tr></table></figure>
+<p>答案是0</p>
+<p>是什么原因造成了上述结果呢?那么我们得从ECMA-262中提到的转换规则和抽象操作说起,有兴趣的童鞋可以仔细阅读下这浩如烟海的<a href="http://ecma-international.org/ecma-262/5.1/" target="_blank" rel="noopener">语言规范</a>,如果没这个耐心还是往下看.</p>
+<p>这是JavaScript种类型转换可以从<strong>原始类型</strong>转为<strong>引用类型</strong>,同样可以将<strong>引用类型</strong>转为<strong>原始类型</strong>,转为原始类型的抽象操作为<code>ToPrimitive</code>,而后续更加细分的操作为:<code>ToNumber ToString ToBoolean</code>,这三种抽象操作的转换表如下所示<br><img src="http://omrbgpqyl.bkt.clouddn.com/17-9-13/15517231.jpg" alt=""></p>
+<p>如果想应付面试,我觉得这张表就差不多了,但是为了更深入的探究JavaScript引擎是如何处理代码中类型转换问题的,就需要看 ECMA-262详细的规范,从而探究其内部原理,我们从这段内部原理示意代码开始.<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// ECMA-262, section 9.1, page 30. Use null/undefined for no hint,</span></span><br><span class="line"><span class="comment">// (1) for number hint, and (2) for string hint.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">ToPrimitive</span>(<span class="params">x, hint</span>) </span>&#123;  </span><br><span class="line">  <span class="comment">// Fast case check.</span></span><br><span class="line">  <span class="keyword">if</span> (IS_STRING(x)) <span class="keyword">return</span> x;</span><br><span class="line">  <span class="comment">// Normal behavior.</span></span><br><span class="line">  <span class="keyword">if</span> (!IS_SPEC_OBJECT(x)) <span class="keyword">return</span> x;</span><br><span class="line">  <span class="keyword">if</span> (IS_SYMBOL_WRAPPER(x)) <span class="keyword">throw</span> MakeTypeError(kSymbolToPrimitive);</span><br><span class="line">  <span class="keyword">if</span> (hint == NO_HINT) hint = (IS_DATE(x)) ? STRING_HINT : NUMBER_HINT;</span><br><span class="line">  <span class="keyword">return</span> (hint == NUMBER_HINT) ? DefaultNumber(x) : DefaultString(x);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ECMA-262, section 8.6.2.6, page 28.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DefaultNumber</span>(<span class="params">x</span>) </span>&#123;  </span><br><span class="line">  <span class="keyword">if</span> (!IS_SYMBOL_WRAPPER(x)) &#123;</span><br><span class="line">    <span class="keyword">var</span> valueOf = x.valueOf;</span><br><span class="line">    <span class="keyword">if</span> (IS_SPEC_FUNCTION(valueOf)) &#123;</span><br><span class="line">      <span class="keyword">var</span> v = %_CallFunction(x, valueOf);</span><br><span class="line">      <span class="keyword">if</span> (IsPrimitive(v)) <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> toString = x.toString;</span><br><span class="line">    <span class="keyword">if</span> (IS_SPEC_FUNCTION(toString)) &#123;</span><br><span class="line">      <span class="keyword">var</span> s = %_CallFunction(x, toString);</span><br><span class="line">      <span class="keyword">if</span> (IsPrimitive(s)) <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">throw</span> MakeTypeError(kCannotConvertToPrimitive);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// ECMA-262, section 8.6.2.6, page 28.</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">DefaultString</span>(<span class="params">x</span>) </span>&#123;  </span><br><span class="line">  <span class="keyword">if</span> (!IS_SYMBOL_WRAPPER(x)) &#123;</span><br><span class="line">    <span class="keyword">var</span> toString = x.toString;</span><br><span class="line">    <span class="keyword">if</span> (IS_SPEC_FUNCTION(toString)) &#123;</span><br><span class="line">      <span class="keyword">var</span> s = %_CallFunction(x, toString);</span><br><span class="line">      <span class="keyword">if</span> (IsPrimitive(s)) <span class="keyword">return</span> s;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">var</span> valueOf = x.valueOf;</span><br><span class="line">    <span class="keyword">if</span> (IS_SPEC_FUNCTION(valueOf)) &#123;</span><br><span class="line">      <span class="keyword">var</span> v = %_CallFunction(x, valueOf);</span><br><span class="line">      <span class="keyword">if</span> (IsPrimitive(v)) <span class="keyword">return</span> v;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">throw</span> MakeTypeError(kCannotConvertToPrimitive);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>上面代码的逻辑是这样的：</p>
+<ol>
+<li>如果变量为字符串，直接返回.</li>
+<li>如果<code>!IS_SPEC_OBJECT(x)</code>，直接返回.</li>
+<li>如果<code>IS_SYMBOL_WRAPPER(x)</code>，则抛出异常.</li>
+<li>否则会根据传入的<code>hint</code>来调用<code>DefaultNumber</code>和<code>DefaultString</code>，比如如果为<code>Date</code>对象，会调用<code>DefaultString</code>.</li>
+<li><code>DefaultNumber</code>：首<code>先x.valueOf</code>，如果为<code>primitive</code>，则返回<code>valueOf</code>后的值，否则继续调用<code>x.toString</code>，如果为<code>primitive</code>，则返回<code>toString</code>后的值，否则抛出异常</li>
+<li><code>DefaultString</code>：和<code>DefaultNumber</code>正好相反，先调用<code>toString</code>，如果不是<code>primitive</code>再调用<code>valueOf</code>.</li>
+</ol>
+<p>那讲了实现原理，这个<code>ToPrimitive</code>有什么用呢？实际很多操作会调用<code>ToPrimitive</code>，比如加、相等或比较操。在进行加操作时会将左右操作数转换为<code>primitive</code>，然后进行相加。</p>
+<p>下面来个实例，({}) + 1（将{}放在括号中是为了内核将其认为一个代码块）会输出啥？可能日常写代码并不会这样写，不过网上出过类似的面试题。</p>
+<p>加操作只有左右运算符同时为<code>String或Number</code>时会执行对应的<code>%_StringAdd或%NumberAdd</code>，下面看下<code>({}) + 1</code>内部会经过哪些步骤：</p>
+<p><code>{}</code>和<code>1</code>首先会调用ToPrimitive<br><code>{}</code>会走到<code>DefaultNumber</code>，首先会调用<code>valueOf</code>，返回的是<code>Object</code> <code>{}</code>，不是primitive类型，从而继续走到<code>toString</code>，返回<code>[object Object]</code>，是<code>String</code>类型<br>最后加操作，结果为<code>[object Object]1</code><br>再比如有人问你<code>[] + 1</code>输出啥时，你可能知道应该怎么去计算了，先对<code>[]</code>调用<code>ToPrimitive</code>，返回空字符串，最后结果为”1”。</p>
+<hr>
+<p>本系列主要参考：</p>
+<ol>
+<li><a href="https://segmentfault.com/a/1190000010352325" target="_blank" rel="noopener">JavaScript 类型的那些事</a></li>
+</ol>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2018/02/20/理解promise/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1431,664 +2276,6 @@ process.stdin.pipe(new MyWritable());
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/13/Git笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/13/Git笔记/" itemprop="url">Git笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T12:26:38+08:00">
-                2017-12-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Git/" itemprop="url" rel="index">
-                    <span itemprop="name">Git</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/13/Git笔记/" class="leancloud_visitors" data-flag-title="Git笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="显示仓库中的页面"><a href="#显示仓库中的页面" class="headerlink" title="显示仓库中的页面"></a>显示仓库中的页面</h1><h3 id="1、把文件放在-github-io仓库"><a href="#1、把文件放在-github-io仓库" class="headerlink" title="1、把文件放在**.github.io仓库"></a>1、把文件放在**.github.io仓库</h3><h3 id="2、在文件路径前面加http-htmlpreview-github-io"><a href="#2、在文件路径前面加http-htmlpreview-github-io" class="headerlink" title="2、在文件路径前面加http://htmlpreview.github.io/?"></a>2、在文件路径前面加<a href="http://htmlpreview.github.io/?" target="_blank" rel="noopener">http://htmlpreview.github.io/?</a></h3><pre><code>然后访问，如：
-http://htmlpreview.github.io/?https://github.com/**/example/index.html
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/12/13/Ubuntu笔记/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/12/13/Ubuntu笔记/" itemprop="url">Ubuntu笔记</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-13T12:22:50+08:00">
-                2017-12-13
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/12/13/Ubuntu笔记/" class="leancloud_visitors" data-flag-title="Ubuntu笔记">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="系统操作："><a href="#系统操作：" class="headerlink" title="系统操作："></a>系统操作：</h2><h3 id="1-在图形化界面下获取最高权限-sudo-nautilus"><a href="#1-在图形化界面下获取最高权限-sudo-nautilus" class="headerlink" title="1.在图形化界面下获取最高权限   sudo nautilus"></a>1.在图形化界面下获取最高权限   sudo nautilus</h3><h3 id="2-显示-隐藏文件-Ctrl-h"><a href="#2-显示-隐藏文件-Ctrl-h" class="headerlink" title="2.显示/隐藏文件    Ctrl+h"></a>2.显示/隐藏文件    Ctrl+h</h3><h2 id="npm"><a href="#npm" class="headerlink" title="npm:"></a>npm:</h2><h3 id="1-在使用npm下载包的时候出现无权限修改文件问题-在npm前面加上sudo"><a href="#1-在使用npm下载包的时候出现无权限修改文件问题-在npm前面加上sudo" class="headerlink" title="1.在使用npm下载包的时候出现无权限修改文件问题   在npm前面加上sudo"></a>1.在使用npm下载包的时候出现无权限修改文件问题   在npm前面加上sudo</h3><pre><code>2017-09-25
-</code></pre>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/11/27/电梯模拟程序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/27/电梯模拟程序/" itemprop="url">电梯模拟程序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-27T11:38:23+08:00">
-                2017-11-27
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/实践/" itemprop="url" rel="index">
-                    <span itemprop="name">实践</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/27/电梯模拟程序/" class="leancloud_visitors" data-flag-title="电梯模拟程序">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="whim"><a href="#whim" class="headerlink" title="whim"></a>whim</h1><p>今天在等电梯的时候，突然对电梯工作流程感兴趣，想写个电梯模拟小程序。<br>先来占个坑，写个大致思路,等考完试再来完成</p>
-<p>//这楼有20层<br><code>int max_floor = 20;</code></p>
-<h2 id="楼层构造一个类"><a href="#楼层构造一个类" class="headerlink" title="楼层构造一个类"></a>楼层构造一个类</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//楼层</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">floor</span> &#123;</span></span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">      <span class="comment">//楼层</span></span><br><span class="line">      <span class="keyword">int</span> <span class="built_in">floor</span> = <span class="number">0</span>;</span><br><span class="line">      <span class="comment">//有人上1，还是下2,或是没人按电梯0</span></span><br><span class="line">      <span class="keyword">int</span> uds = <span class="number">0</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="电梯构造一个类"><a href="#电梯构造一个类" class="headerlink" title="电梯构造一个类"></a>电梯构造一个类</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//电梯</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">elevator</span> &#123;</span></span><br><span class="line">   <span class="keyword">private</span>:</span><br><span class="line">      <span class="keyword">int</span> current_floor = <span class="number">0</span>;</span><br><span class="line">      <span class="comment">//三个状态，上升1，下降2，静止0</span></span><br><span class="line">      <span class="keyword">int</span> uds = <span class="number">0</span>;</span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">      <span class="comment">//上升</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">up</span><span class="params">()</span></span>;</span><br><span class="line">      <span class="comment">//下降</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">down</span><span class="params">()</span></span>;   </span><br><span class="line">      <span class="comment">//判断电梯上升还是下降</span></span><br><span class="line">      <span class="function"><span class="keyword">void</span> <span class="title">UpDown</span><span class="params">()</span></span>;     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="判断函数构造一个类"><a href="#判断函数构造一个类" class="headerlink" title="判断函数构造一个类"></a>判断函数构造一个类</h2><p>因为有两个电梯，所以把判断函数拿出来单独构造一个类。<br><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//判断电梯哪个电梯去载人，上升还是下降</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">select</span> </span>&#123;</span><br><span class="line">   <span class="keyword">public</span>:</span><br><span class="line">      <span class="comment">//判断哪个电梯去载人</span></span><br><span class="line">      <span class="keyword">void</span> which（）；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<h2 id="函数部分"><a href="#函数部分" class="headerlink" title="函数部分"></a>函数部分</h2><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> elevator::up()</span><br><span class="line">&#123;</span><br><span class="line">   <span class="comment">//用参数判断是否到达</span></span><br><span class="line">   <span class="keyword">int</span> arrived = <span class="number">0</span>;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= <span class="number">20</span>; i++)&#123;</span><br><span class="line">      <span class="comment">//判断是否到达目的楼层(类之间引用问题)</span></span><br><span class="line">      <span class="keyword">if</span>(current_floor != <span class="built_in">floor</span>.<span class="built_in">floor</span>)&#123;</span><br><span class="line">          current_floor++;</span><br><span class="line">      &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">         arrived = <span class="number">1</span>;</span><br><span class="line">         <span class="keyword">continue</span>;</span><br><span class="line">      &#125;</span><br><span class="line">   &#125;</span><br><span class="line">   </span><br><span class="line">   <span class="keyword">return</span> arrived;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>大致思路就先写到这，后续加上。</p>
-<p>真的蛮好玩诶！</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zaizizaizai.github.io/2017/11/26/nodejs-mysql实现小型web后台程序/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="pinocchio">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/dog.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="zaizizaizai">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/11/26/nodejs-mysql实现小型web后台程序/" itemprop="url">nodejs+mysql实现小型web后台程序</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-26T15:52:55+08:00">
-                2017-11-26
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/node/" itemprop="url" rel="index">
-                    <span itemprop="name">node</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/11/26/nodejs-mysql实现小型web后台程序/" class="leancloud_visitors" data-flag-title="nodejs+mysql实现小型web后台程序">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="项目地址"><a href="#项目地址" class="headerlink" title="项目地址"></a><a href="https://github.com/zaizizaizai/nodejs" target="_blank" rel="noopener">项目地址</a></h1><h2 id="主要实现功能："><a href="#主要实现功能：" class="headerlink" title="主要实现功能："></a>主要实现功能：</h2><p>1.用户名密码登录<br>2.增删改查管理员发布的网页数据</p>
-<h2 id="具体小功能："><a href="#具体小功能：" class="headerlink" title="具体小功能："></a>具体小功能：</h2><p>1.对用户名数据进行哈希加密（签名）<br>2.强制登录页面（重定向）<br>3.浏览器与服务器传输数据</p>
-<h2 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h2><h4 id="界面丑了点，当时主要把后台功能搭起来，功能基本齐全，后面会把界面做起来"><a href="#界面丑了点，当时主要把后台功能搭起来，功能基本齐全，后面会把界面做起来" class="headerlink" title="界面丑了点，当时主要把后台功能搭起来，功能基本齐全，后面会把界面做起来"></a>界面丑了点，当时主要把后台功能搭起来，功能基本齐全，后面会把界面做起来</h4><p>登录界面<br> <img src="/images/web/logIn.png" alt="&quot;登录界面&quot;"></p>
-<p>首页<br> <img src="/images/web/menu.png" alt="&quot;首页&quot;"></p>
-<p>发布信息<br> <img src="/images/web/releaseNews.png" alt="&quot;发布信息&quot;"></p>
-<p>用户评价<br> <img src="/images/web/evaluation.png" alt="&quot;用户评价&quot;"></p>
-<h2 id="项目结构："><a href="#项目结构：" class="headerlink" title="项目结构："></a>项目结构：</h2><p> <img src="/images/web/项目结构.png" alt="&quot;项目结构&quot;">  </p>
-<h1 id="server-js"><a href="#server-js" class="headerlink" title="/server.js"></a>/server.js</h1><p>其功能是建服务器监听8080端口。<br>具体代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> server=express();</span><br><span class="line">server.listen(<span class="number">8080</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//1.获取请求数据</span></span><br><span class="line"><span class="comment">//get自带</span></span><br><span class="line">server.<span class="keyword">use</span>(bodyParser.urlencoded());</span><br><span class="line">server.<span class="keyword">use</span>(multerObj.any());</span><br><span class="line"></span><br><span class="line"><span class="comment">//2.cookie、session</span></span><br><span class="line">server.<span class="keyword">use</span>(cookieParser());</span><br><span class="line">(<span class="function"><span class="keyword">function</span> <span class="params">()</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> keys=[];</span><br><span class="line">  <span class="keyword">for</span>(<span class="keyword">var</span> i=<span class="number">0</span>;i&lt;<span class="number">100000</span>;i++)&#123;</span><br><span class="line">    keys[i]=<span class="string">'a_'</span>+Math.random();</span><br><span class="line">  &#125;</span><br><span class="line">  server.<span class="keyword">use</span>(cookieSession(&#123;</span><br><span class="line">    name: <span class="string">'sess_id'</span>,</span><br><span class="line">    keys: keys,</span><br><span class="line">    maxAge: <span class="number">20</span>*<span class="number">60</span>*<span class="number">1000</span>  <span class="comment">//20min</span></span><br><span class="line">  &#125;));</span><br><span class="line">&#125;)();</span><br><span class="line"></span><br><span class="line"><span class="comment">//3.模板</span></span><br><span class="line">server.engine(<span class="string">'html'</span>, consolidate.ejs);</span><br><span class="line">server.set(<span class="string">'views'</span>, <span class="string">'template'</span>);</span><br><span class="line">server.set(<span class="string">'view engine'</span>, <span class="string">'html'</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//4.route</span></span><br><span class="line">server.<span class="keyword">use</span>(<span class="string">'/'</span>, <span class="keyword">require</span>(<span class="string">'./route/web'</span>)());</span><br><span class="line">server.<span class="keyword">use</span>(<span class="string">'/admin/'</span>, <span class="keyword">require</span>(<span class="string">'./route/admin'</span>)());</span><br><span class="line"></span><br><span class="line"><span class="comment">//5.default：static</span></span><br><span class="line">server.<span class="keyword">use</span>(<span class="keyword">static</span>(<span class="string">'./static/'</span>));</span><br><span class="line"></span><br><span class="line">console.log(<span class="string">'server is running at port 8080...'</span>);</span><br></pre></td></tr></table></figure>
-<h2 id="各段代码作用如下："><a href="#各段代码作用如下：" class="headerlink" title="各段代码作用如下："></a>各段代码作用如下：</h2><p>1.解析请求数据<br>2.并发给请求方cookie，<br>3.声明调用的模板<br>4.路由功能，区分请求并转入相应界面<br>5.处理静态文件请求</p>
-<h1 id="libs-common-js"><a href="#libs-common-js" class="headerlink" title="/libs/common.js"></a>/libs/common.js</h1><p>该文件封装模板，其功能是将登录时的用户输入的用户名密码等数据用哈希算法加密（签名），让该数据不可见，避免他人获取用户名密码。<br>代码如下：</p>
-<pre><code><figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">  MD5_SUFFIX: <span class="string">'*****'</span>,</span><br><span class="line">md5: <span class="function"><span class="keyword">function</span> <span class="params">(str)</span></span>&#123;</span><br><span class="line">  <span class="keyword">var</span> obj=crypto.createHash(<span class="string">'md5'</span>);</span><br><span class="line"></span><br><span class="line">  obj.update(str);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> obj.digest(<span class="string">'hex'</span>);</span><br></pre></td></tr></table></figure>
-</code></pre><p>其中，MD5_SUFFIX加在数据后面，再进行md5加密，该MD5_SUFFIX是自定义的数据的</p>
-<h1 id="route-index-js"><a href="#route-index-js" class="headerlink" title="/route/index.js"></a>/route/index.js</h1><p>在服务器运行后，服务器一直监听8080端口，当有请求访问，首先对该用户的登录状态和请求进行判定，如果不是管理<br>员，就重定向返回登录界面。如果想访问其他页面，也不行，重定向回登录界面。只有当既是管理员，请求访问的又是<br>登录界面才对请求予以响应。</p>
-<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="regexp">//</span>检查登录状态</span><br><span class="line">  router.use((req, res, <span class="keyword">next</span>)=&gt;&#123;</span><br><span class="line">    <span class="keyword">if</span>(!req.session[<span class="string">'admin_id'</span>] &amp;&amp; req.url!=<span class="string">'/login'</span>)&#123; <span class="regexp">//</span>没有登录</span><br><span class="line">      <span class="regexp">//</span>转向登录界面(重定向)</span><br><span class="line">      res.redirect(<span class="string">'/admin/login'</span>);</span><br><span class="line">    &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">      <span class="keyword">next</span>();</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;);</span><br></pre></td></tr></table></figure>
-<p>如果已确定是管理员，就再来判定其访问请求。</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//根据不同http请求，转向不同页面</span></span><br><span class="line">router.<span class="keyword">use</span>(<span class="string">'/login'</span>, <span class="keyword">require</span>(<span class="string">'./login'</span>)());</span><br><span class="line">router.<span class="keyword">use</span>(<span class="string">'/banners'</span>, <span class="keyword">require</span>(<span class="string">'./banners'</span>)());</span><br><span class="line">router.<span class="keyword">use</span>(<span class="string">'/custom'</span>,<span class="keyword">require</span>(<span class="string">'./custom'</span>)());</span><br></pre></td></tr></table></figure>
-<h1 id="route-login-js"><a href="#route-login-js" class="headerlink" title="/route/login.js"></a>/route/login.js</h1><p>那是怎么判断是否为管理员？<br> 当管理员登录时，后台就拿着页面获取的用户名密码和数据库的进行比对，成功就给浏览器发session，不成功就不发，<br>判定管理员的时候就是看有没有session。<br>为什么不直接不直接用用户名密码验证，而要再加一个session？<br> session可以理解为cookie的加强版，具有生存期，可以控制用户在一定时间内免登陆。若采用用户名密码验证，那每<br> 退一次，就得输入一次密码，这在实际操作中是很不方便的。</p>
-<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span>(<span class="keyword">data</span>[<span class="number">0</span>].password==password)&#123;</span><br><span class="line">   <span class="comment">//成功</span></span><br><span class="line">   req.session[<span class="string">'admin_id'</span>]=<span class="keyword">data</span>[<span class="number">0</span>].ID;</span><br><span class="line">   res.redirect(<span class="string">'/admin/'</span>);</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
-<h1 id="route和template"><a href="#route和template" class="headerlink" title="route和template"></a>route和template</h1><p>登录后，就对数据进行操作。route和template分别是存放js和静态文件的文件夹，文件夹内的js文件实现的功能相似，都是将页面和数据库连接起来，对数据进行增删改查的操作。就banners页面来说，其具体代码如下：</p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//连接数据库</span></span><br><span class="line">var db=mysql.createPool(&#123;<span class="string">host:</span> <span class="string">'localhost'</span>, <span class="string">user:</span> <span class="string">'root'</span>, <span class="string">password:</span> <span class="string">'***'</span>, <span class="string">database:</span> <span class="string">'learner'</span>&#125;);</span><br></pre></td></tr></table></figure>
-<p>修改banner数据</p>
-<figure class="highlight sml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">db.query(<span class="type">`SELECT</span> * <span class="type">FROM</span> banner_table <span class="type">WHERE</span> id=$&#123;req.query.id&#125;`, (err, data)=&gt;&#123;</span><br><span class="line">  <span class="keyword">if</span>(err)&#123;</span><br><span class="line">    console.error(err);</span><br><span class="line">    res.status(<span class="number">500</span>).send(<span class="symbol">'database</span> error').<span class="keyword">end</span><span class="literal">()</span>;</span><br><span class="line">  &#125;<span class="keyword">else</span> <span class="keyword">if</span>(data.length==<span class="number">0</span>)&#123;</span><br><span class="line">    res.status(<span class="number">404</span>).send(<span class="symbol">'data</span> not found').<span class="keyword">end</span><span class="literal">()</span>;</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    db.query(<span class="symbol">'SELECT</span> * <span class="type">FROM</span> banner_table', (err, banners)=&gt;&#123;</span><br><span class="line">      <span class="keyword">if</span>(err)&#123;</span><br><span class="line">        console.error(err);</span><br><span class="line">        res.status(<span class="number">500</span>).send(<span class="symbol">'database</span> error').<span class="keyword">end</span><span class="literal">()</span>;</span><br><span class="line">      &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">        res.render(<span class="symbol">'admin</span>/banners.ejs', &#123;banners, mod_data: data[<span class="number">0</span>]&#125;);</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
-<h3 id="其他数据操作功能同理"><a href="#其他数据操作功能同理" class="headerlink" title="其他数据操作功能同理"></a>其他数据操作功能同理</h3>
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2138,7 +2325,7 @@ http://htmlpreview.github.io/?https://github.com/**/example/index.html
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">55</span>
+                <span class="site-state-item-count">59</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -2149,7 +2336,7 @@ http://htmlpreview.github.io/?https://github.com/**/example/index.html
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-count">18</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -2160,7 +2347,7 @@ http://htmlpreview.github.io/?https://github.com/**/example/index.html
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">37</span>
+                <span class="site-state-item-count">42</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -2234,7 +2421,7 @@ http://htmlpreview.github.io/?https://github.com/**/example/index.html
 <div class="copyright" >
   
   &copy;  2017 - 
-  <span itemprop="copyrightYear">2019</span>
+  <span itemprop="copyrightYear">2020</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
@@ -2254,7 +2441,7 @@ http://htmlpreview.github.io/?https://github.com/**/example/index.html
   <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
     NexT.Pisces
   </a>-->
-  <span class="post-count">博客全站共30.6k字</span>
+  <span class="post-count">博客全站共38.9k字</span>
 </div>
 
 
